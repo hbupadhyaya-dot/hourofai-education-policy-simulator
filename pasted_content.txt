@@ -1,0 +1,24 @@
+AI Literacy
+Shape: Classic learning curve - starts slow, accelerates rapidly in the middle years, then levels off
+The graph begins flat with minimal growth as people struggle with new concepts and resist change. Around year 2-3, there's a dramatic upward sweep as training programs hit their stride, early adopters become advocates, and practical applications become clear. The curve then gradually flattens as most people reach their practical skill ceiling - not everyone needs to be an AI expert, just competent enough for their role.
+Community Trust
+Shape: Extremely flat start, then steady upward climb
+This line barely budges for the first 2-3 years - trust must be earned through demonstrated results, not promises. Once tangible benefits become visible and transparency efforts pay off, the line begins a steady, persistent climb. It never reaches the top because healthy skepticism is valuable, but it achieves a strong, stable level of confidence.
+Innovation Index
+Shape: Rocket ship launch followed by plateau
+The line shoots up dramatically in the first few years as new initiatives launch, creativity flourishes, and low-hanging fruit gets picked. Innovation peaks around years 3-4 when everything feels new and possible. Then it gradually levels off as the most obvious improvements are made and the focus shifts from innovation to optimization and standardization.
+Teacher Satisfaction
+Shape: Initial dip, then recovery and steady growth
+The line actually drops below the starting point in the first year or two as teachers face new demands, unfamiliar technology, and change fatigue. It then recovers to baseline as support systems kick in and training takes effect. From there, it climbs steadily as teachers discover the benefits and feel more confident with new tools.
+Digital Equity Score
+Shape: Step-wise improvements in distinct phases
+The line moves upward in distinct jumps rather than smooth growth. First, basic access issues get resolved (devices, internet). Then capability gaps get addressed (training, support). Finally, outcome gaps begin closing. Each phase creates a visible step up, but progress between phases can be frustratingly slow.
+Budget Strain
+Shape: Immediate spike, then gradual decline
+This line jumps up sharply right at the beginning as major investments hit the budget. It stays high for the first couple years, then begins a steady downward trend as efficiency gains kick in, economies of scale develop, and initial costs are absorbed. It never returns to the original baseline because ongoing maintenance and updates require continued investment.
+Employability
+Shape: Flat, flat, flat, then sudden upward movement
+The most delayed responder - the line barely moves for 3-4 years while programs are being built and students are learning. Then, as the first graduates enter the workforce and prove their value, the line begins climbing significantly. Employers need to see results before they change hiring practices and salary expectations.
+AI Vulnerability
+Shape: High start, improvement, brief spike, then continued improvement
+The line starts high because new systems always have unknown risks. It drops steadily for several years as security protocols develop and users learn safer practices. Then, surprisingly, it bumps back up around years 5-6 as overconfidence sets in and new, more complex technologies introduce fresh vulnerabilities. After this reality check, it resumes its downward trend but never reaches zero - some risk always remains.

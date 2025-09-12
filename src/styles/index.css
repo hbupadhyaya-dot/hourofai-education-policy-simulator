@@ -1,0 +1,562 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom styles for AI Policy Simulator */
+.policy-lever {
+  @apply p-4 rounded-lg bg-white shadow-sm transition-all duration-200;
+}
+
+.policy-lever:hover {
+  @apply shadow-md;
+}
+
+.policy-lever.selected {
+  @apply ring-2 ring-blue-500;
+}
+
+.metric-card {
+  @apply p-4 rounded-lg bg-white shadow-sm text-center;
+}
+
+.progress-bar {
+  @apply w-full h-2 bg-gray-200 rounded-full overflow-hidden;
+}
+
+.progress-fill {
+  @apply h-full transition-all duration-300;
+}
+
+.progress-fill.green {
+  @apply bg-green-500;
+}
+
+.progress-fill.yellow {
+  @apply bg-yellow-500;
+}
+
+.progress-fill.red {
+  @apply bg-red-500;
+}
+
+.impact-matrix {
+  @apply grid gap-2;
+}
+
+.impact-cell {
+  @apply p-2 text-center text-sm rounded;
+}
+
+.impact-positive {
+  @apply bg-green-100 text-green-800;
+}
+
+.impact-negative {
+  @apply bg-red-100 text-red-800;
+}
+
+.impact-neutral {
+  @apply bg-gray-100 text-gray-800;
+}
+
+.synergy-item {
+  @apply p-3 bg-blue-50 border border-blue-200 rounded-lg;
+}
+
+.tension-item {
+  @apply p-3 bg-red-50 border border-red-200 rounded-lg;
+}
+
+.fullscreen-overlay {
+  @apply fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center;
+}
+
+.fullscreen-content {
+  @apply bg-white rounded-lg shadow-xl max-w-4xl max-h-[90vh] overflow-hidden;
+}
+
+.tab-button {
+  @apply px-4 py-2 text-sm font-medium rounded-md transition-colors;
+}
+
+.tab-button.active {
+  @apply bg-blue-500 text-white;
+}
+
+.tab-button:not(.active) {
+  @apply text-gray-600 hover:text-gray-900 hover:bg-gray-100;
+}
+
+/* Color-coded slider styles with progress bar effect */
+.slider-blue {
+  @apply relative;
+  background: linear-gradient(to right, #2563eb 0%, #2563eb 50%, #e2e8f0 50%, #e2e8f0 100%);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.slider-blue::-webkit-slider-thumb {
+  @apply appearance-none w-4 h-4 bg-blue-600 rounded-full cursor-pointer shadow-lg border-2 border-white;
+}
+
+.slider-blue::-moz-range-thumb {
+  @apply w-4 h-4 bg-blue-600 rounded-full border-2 border-white cursor-pointer shadow-lg;
+}
+
+.slider-green {
+  @apply relative;
+  background: linear-gradient(to right, #16a34a 0%, #16a34a 50%, #e2e8f0 50%, #e2e8f0 100%);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.slider-green::-webkit-slider-thumb {
+  @apply appearance-none w-4 h-4 bg-green-600 rounded-full cursor-pointer shadow-lg border-2 border-white;
+}
+
+.slider-green::-moz-range-thumb {
+  @apply w-4 h-4 bg-green-600 rounded-full border-2 border-white cursor-pointer shadow-lg;
+}
+
+.slider-purple {
+  @apply relative;
+  background: linear-gradient(to right, #9333ea 0%, #9333ea 50%, #e2e8f0 50%, #e2e8f0 100%);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.slider-purple::-webkit-slider-thumb {
+  @apply appearance-none w-4 h-4 bg-purple-600 rounded-full cursor-pointer shadow-lg border-2 border-white;
+}
+
+.slider-purple::-moz-range-thumb {
+  @apply w-4 h-4 bg-purple-600 rounded-full border-2 border-white cursor-pointer shadow-lg;
+}
+
+.slider-orange {
+  @apply relative;
+  background: linear-gradient(to right, #ea580c 0%, #ea580c 50%, #e2e8f0 50%, #e2e8f0 100%);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.slider-orange::-webkit-slider-thumb {
+  @apply appearance-none w-4 h-4 bg-orange-600 rounded-full cursor-pointer shadow-lg border-2 border-white;
+}
+
+.slider-orange::-moz-range-thumb {
+  @apply w-4 h-4 bg-orange-600 rounded-full border-2 border-white cursor-pointer shadow-lg;
+}
+
+.slider-red {
+  @apply relative;
+  background: linear-gradient(to right, #dc2626 0%, #dc2626 50%, #e2e8f0 50%, #e2e8f0 100%);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.slider-red::-webkit-slider-thumb {
+  @apply appearance-none w-4 h-4 bg-red-600 rounded-full cursor-pointer shadow-lg border-2 border-white;
+}
+
+.slider-red::-moz-range-thumb {
+  @apply w-4 h-4 bg-red-600 rounded-full border-2 border-white cursor-pointer shadow-lg;
+}
+
+/* 🎨 BRIGHT & PLAYFUL STUDENT THEME 🎨 */
+@layer base {
+  :root {
+    /* Bright color palette */
+    --neon-blue: #00d4ff;
+    --neon-pink: #ff0080;
+    --neon-green: #00ff88;
+    --neon-purple: #8b5cf6;
+    --neon-orange: #ff6b35;
+    --neon-yellow: #ffd700;
+    --bubble-blue: #87ceeb;
+    --bubble-pink: #ffb6c1;
+    --bubble-green: #98fb98;
+    --bubble-purple: #dda0dd;
+    --bubble-orange: #ffa07a;
+  }
+}
+
+/* 🌈 Subtle Animated Background */
+.playful-bg {
+  background: linear-gradient(135deg, 
+    #f0f9ff 0%, #e0f2fe 25%, #f0fdf4 50%, #fefce8 75%, #fdf4ff 100%
+  );
+  background-size: 200% 200%;
+  animation: gradientShift 20s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ✨ Floating Elements */
+.floating {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+/* 🎯 Bounce Animation */
+.bounce-in {
+  animation: bounceIn 0.6s ease-out;
+}
+
+@keyframes bounceIn {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.05); }
+  70% { transform: scale(0.9); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* 🌟 Pulse Animation */
+.pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes pulseGlow {
+  from { box-shadow: 0 0 5px rgba(255, 0, 128, 0.5); }
+  to { box-shadow: 0 0 20px rgba(255, 0, 128, 0.8), 0 0 30px rgba(255, 0, 128, 0.6); }
+}
+
+/* 🎪 Accessible Policy Cards */
+.policy-card-fun {
+  @apply relative overflow-hidden rounded-xl border-2 transition-all duration-300;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.policy-card-fun:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.policy-card-fun::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.policy-card-fun:hover::before {
+  left: 100%;
+}
+
+/* 🎨 Accessible District Theme */
+.district-theme {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  border-color: #3b82f6;
+}
+
+/* 🎨 Accessible School Theme */
+.school-theme {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border-color: #10b981;
+}
+
+/* 🎨 Accessible Research Theme */
+.research-theme {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  border-color: #8b5cf6;
+}
+
+/* 🎯 Accessible Sliders */
+.fun-slider {
+  @apply relative h-3 rounded-full cursor-pointer;
+  background: linear-gradient(90deg, #f1f5f9, #e2e8f0, #cbd5e1);
+  background-size: 200% 100%;
+  animation: sliderShimmer 8s ease-in-out infinite;
+}
+
+/* District Policy Sliders - Orange/Red theme */
+.district-slider {
+  background: linear-gradient(90deg, #fed7aa, #fdba74, #fb923c);
+}
+
+/* School Policy Sliders - Yellow/Orange theme */
+.school-slider {
+  background: linear-gradient(90deg, #fde047, #facc15, #eab308);
+}
+
+/* Research Policy Sliders - Pink/Purple theme */
+.research-slider {
+  background: linear-gradient(90deg, #f0abfc, #e879f9, #d946ef);
+}
+
+@keyframes sliderShimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.fun-slider::-webkit-slider-thumb {
+  @apply appearance-none w-5 h-5 rounded-full cursor-pointer border-2 border-white;
+  background: linear-gradient(45deg, #6b7280, #4b5563);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+.fun-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* District slider thumbs - Orange theme */
+.district-slider::-webkit-slider-thumb {
+  background: linear-gradient(45deg, #ea580c, #dc2626);
+}
+
+/* School slider thumbs - Yellow theme */
+.school-slider::-webkit-slider-thumb {
+  background: linear-gradient(45deg, #ca8a04, #a16207);
+}
+
+/* Research slider thumbs - Pink theme */
+.research-slider::-webkit-slider-thumb {
+  background: linear-gradient(45deg, #c026d3, #a21caf);
+}
+
+/* 🎪 Accessible Metric Display */
+.metric-display-fun {
+  @apply relative px-3 py-2 rounded-full text-sm font-bold;
+  background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  animation: metricPulse 3s ease-in-out infinite;
+}
+
+@keyframes metricPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* 🌈 Rainbow Text */
+.rainbow-text {
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbowShift 3s ease-in-out infinite;
+}
+
+@keyframes rainbowShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 🎊 Celebration Animation */
+.celebration {
+  animation: celebrate 0.6s ease-out;
+}
+
+@keyframes celebrate {
+  0% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.1) rotate(-5deg); }
+  50% { transform: scale(1.2) rotate(5deg); }
+  75% { transform: scale(1.1) rotate(-3deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+/* 🎨 Interactive Hover Effects */
+.interactive-hover {
+  @apply transition-all duration-300 cursor-pointer;
+}
+
+.interactive-hover:hover {
+  transform: translateY(-2px) scale(1.02);
+  filter: brightness(1.1);
+}
+
+/* 🌟 Glow Effect */
+.glow-effect {
+  box-shadow: 0 0 20px rgba(255, 0, 128, 0.3);
+  transition: box-shadow 0.3s ease;
+}
+
+.glow-effect:hover {
+  box-shadow: 0 0 30px rgba(255, 0, 128, 0.6);
+}
+
+/* 🎪 Fun Button Styles */
+.fun-button {
+  @apply px-6 py-3 rounded-full font-bold text-white transition-all duration-300;
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.fun-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* 🎨 Tab Styling */
+.fun-tab {
+  @apply px-6 py-3 text-sm font-bold rounded-t-2xl transition-all duration-300;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.fun-tab:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* 🎯 Status Quo Indicator */
+.status-quo-fun {
+  @apply px-2 py-1 rounded-full text-xs font-bold;
+  background: linear-gradient(45deg, #ffd700, #ff6b35);
+  color: white;
+  animation: statusQuoPulse 2s ease-in-out infinite;
+}
+
+@keyframes statusQuoPulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+/* 🎨 SVG Icons and Animations */
+.icon-animated {
+  animation: iconBounce 2s ease-in-out infinite;
+}
+
+@keyframes iconBounce {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-3px); }
+}
+
+.icon-rotate {
+  animation: iconRotate 3s linear infinite;
+}
+
+@keyframes iconRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.icon-pulse {
+  animation: iconPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.icon-glow {
+  filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
+  animation: iconGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes iconGlow {
+  from { filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5)); }
+  to { filter: drop-shadow(0 0 16px rgba(59, 130, 246, 0.8)); }
+}
+
+/* 📊 Accessible Metrics Section */
+.metrics-container {
+  @apply bg-white/90 backdrop-blur-sm rounded-xl border border-slate-200 shadow-lg p-4;
+}
+
+.metric-card {
+  @apply text-center p-3 bg-gradient-to-br from-slate-50 to-slate-100 rounded-lg border border-slate-200 relative flex-1 flex flex-col items-center transition-all duration-300;
+}
+
+.metric-card:hover {
+  @apply transform scale-105 shadow-md;
+}
+
+.metric-title {
+  @apply text-sm font-semibold text-slate-700 leading-tight mb-2 min-h-[1.5rem] flex items-center justify-center;
+}
+
+.metric-value {
+  @apply text-lg font-bold text-slate-800;
+}
+
+.metric-info-btn {
+  @apply absolute top-2 right-2 w-5 h-5 bg-blue-100 hover:bg-blue-200 rounded-full flex items-center justify-center text-blue-600 hover:text-blue-800 transition-all duration-200 z-10;
+}
+
+/* 🎨 Chart Containers */
+.chart-container {
+  @apply bg-white/90 backdrop-blur-sm rounded-xl border border-slate-200 shadow-lg p-4;
+}
+
+.chart-title {
+  @apply text-lg font-bold text-slate-800 mb-4 flex items-center gap-2;
+}
+
+.chart-title-icon {
+  @apply text-2xl;
+} 
