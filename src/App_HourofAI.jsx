@@ -488,6 +488,9 @@ const StartScreenModal = ({ isOpen, onClose }) => {
               </h2>
               <div className="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-xl p-6 mb-6">
                 <p className="text-lg text-slate-700 mb-4">
+                  You've just been hired as AI policy advisors for the Riverside School District. Your job? Design the AI systems that will educate the next generation. But here's the catch - every decision you make creates ripple effects. Boost AI literacy too fast, and you might strain budgets. Focus too much on safety, and you might slow innovation. You'll need to work together to balance competing priorities.
+                </p>
+                <p className="text-lg text-slate-700 mb-4">
                   <strong>Keep all outcome metrics above 80, except:</strong>
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -507,8 +510,8 @@ const StartScreenModal = ({ isOpen, onClose }) => {
               
               {/* Metrics Visual */}
               <div className="bg-white rounded-xl border border-slate-200 p-6">
-                <h3 className="text-lg font-semibold text-slate-800 mb-4 text-center">Target Metrics Overview</h3>
-                <div className="grid grid-cols-4 gap-4">
+                <h3 className="text-lg font-semibold text-slate-800 mb-4 text-center">5 Key Outcome Metrics</h3>
+                <div className="grid grid-cols-5 gap-4">
                   {/* AI Literacy */}
                   <div className="text-center">
                     <div className="relative w-16 h-16 mx-auto mb-2">
@@ -521,10 +524,10 @@ const StartScreenModal = ({ isOpen, onClose }) => {
                       </div>
                     </div>
                     <div className="text-xs font-medium text-slate-600">AI Literacy</div>
-                    <div className="text-xs text-green-600 font-semibold">Target: &gt;80</div>
+                    <div className="text-xs text-blue-600 font-semibold">Target: &gt;80</div>
                   </div>
                    
-                   {/* Community Trust */}
+                  {/* Teacher Satisfaction */}
                   <div className="text-center">
                     <div className="relative w-16 h-16 mx-auto mb-2">
                       <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
@@ -535,11 +538,11 @@ const StartScreenModal = ({ isOpen, onClose }) => {
                         <span className="text-sm font-bold text-slate-900">80</span>
                       </div>
                     </div>
-                     <div className="text-xs font-medium text-slate-600">Community Trust</div>
-                    <div className="text-xs text-green-600 font-semibold">Target: &gt;80</div>
+                    <div className="text-xs font-medium text-slate-600">Teacher Satisfaction</div>
+                    <div className="text-xs text-amber-600 font-semibold">Target: &gt;80</div>
                   </div>
                    
-                   {/* Innovation Index */}
+                  {/* Digital Equity */}
                   <div className="text-center">
                     <div className="relative w-16 h-16 mx-auto mb-2">
                       <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
@@ -550,38 +553,23 @@ const StartScreenModal = ({ isOpen, onClose }) => {
                         <span className="text-sm font-bold text-slate-900">80</span>
                       </div>
                     </div>
-                     <div className="text-xs font-medium text-slate-600">Innovation Index</div>
-                    <div className="text-xs text-green-600 font-semibold">Target: &gt;80</div>
+                    <div className="text-xs font-medium text-slate-600">Digital Equity</div>
+                    <div className="text-xs text-red-600 font-semibold">Target: &gt;80</div>
                   </div>
                    
-                   {/* Teacher Morale */}
+                  {/* AI Vulnerability */}
                   <div className="text-center">
                     <div className="relative w-16 h-16 mx-auto mb-2">
                       <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
                         <circle cx="32" cy="32" r="24" stroke="#e2e8f0" strokeWidth="4" fill="none" />
-                         <circle cx="32" cy="32" r="24" stroke="#10b981" strokeWidth="4" fill="none" strokeLinecap="round" strokeDasharray="150.8" strokeDashoffset="30.16" />
+                        <circle cx="32" cy="32" r="24" stroke="#10b981" strokeWidth="4" fill="none" strokeLinecap="round" strokeDasharray="150.8" strokeDashoffset="96.8" />
                       </svg>
                       <div className="absolute inset-0 flex items-center justify-center">
-                         <span className="text-sm font-bold text-slate-900">80</span>
+                        <span className="text-sm font-bold text-slate-900">40</span>
                       </div>
                     </div>
-                     <div className="text-xs font-medium text-slate-600">Teacher Morale</div>
-                     <div className="text-xs text-green-600 font-semibold">Target: &gt;80</div>
-                   </div>
-                   
-                   {/* Digital Equity */}
-                   <div className="text-center">
-                     <div className="relative w-16 h-16 mx-auto mb-2">
-                       <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
-                         <circle cx="32" cy="32" r="24" stroke="#e2e8f0" strokeWidth="4" fill="none" />
-                         <circle cx="32" cy="32" r="24" stroke="#10b981" strokeWidth="4" fill="none" strokeLinecap="round" strokeDasharray="150.8" strokeDashoffset="30.16" />
-                       </svg>
-                       <div className="absolute inset-0 flex items-center justify-center">
-                         <span className="text-sm font-bold text-slate-900">80</span>
-                       </div>
-                     </div>
-                     <div className="text-xs font-medium text-slate-600">Digital Equity</div>
-                     <div className="text-xs text-green-600 font-semibold">Target: &gt;80</div>
+                    <div className="text-xs font-medium text-slate-600">AI Vulnerability</div>
+                    <div className="text-xs text-pink-600 font-semibold">Target: &lt;40</div>
                   </div>
                    
                   {/* Budget Strain */}
@@ -589,44 +577,14 @@ const StartScreenModal = ({ isOpen, onClose }) => {
                     <div className="relative w-16 h-16 mx-auto mb-2">
                       <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
                         <circle cx="32" cy="32" r="24" stroke="#e2e8f0" strokeWidth="4" fill="none" />
-                        <circle cx="32" cy="32" r="24" stroke="#ef4444" strokeWidth="4" fill="none" strokeLinecap="round" strokeDasharray="150.8" strokeDashoffset="105.56" />
+                        <circle cx="32" cy="32" r="24" stroke="#10b981" strokeWidth="4" fill="none" strokeLinecap="round" strokeDasharray="150.8" strokeDashoffset="105.56" />
                       </svg>
                       <div className="absolute inset-0 flex items-center justify-center">
                         <span className="text-sm font-bold text-slate-900">70</span>
                       </div>
                     </div>
                     <div className="text-xs font-medium text-slate-600">Budget Strain</div>
-                    <div className="text-xs text-red-600 font-semibold">Target: &lt;70</div>
-                  </div>
-                   
-                   {/* Employment Impact */}
-                   <div className="text-center">
-                     <div className="relative w-16 h-16 mx-auto mb-2">
-                       <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
-                         <circle cx="32" cy="32" r="24" stroke="#e2e8f0" strokeWidth="4" fill="none" />
-                         <circle cx="32" cy="32" r="24" stroke="#10b981" strokeWidth="4" fill="none" strokeLinecap="round" strokeDasharray="150.8" strokeDashoffset="30.16" />
-                       </svg>
-                       <div className="absolute inset-0 flex items-center justify-center">
-                         <span className="text-sm font-bold text-slate-900">80</span>
-                       </div>
-                     </div>
-                     <div className="text-xs font-medium text-slate-600">Employment Impact</div>
-                     <div className="text-xs text-green-600 font-semibold">Target: &gt;80</div>
-                   </div>
-                  
-                  {/* AI Vulnerability */}
-                  <div className="text-center">
-                    <div className="relative w-16 h-16 mx-auto mb-2">
-                      <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
-                        <circle cx="32" cy="32" r="24" stroke="#e2e8f0" strokeWidth="4" fill="none" />
-                        <circle cx="32" cy="32" r="24" stroke="#ef4444" strokeWidth="4" fill="none" strokeLinecap="round" strokeDasharray="150.8" strokeDashoffset="96.8" />
-                      </svg>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-sm font-bold text-slate-900">40</span>
-                      </div>
-                    </div>
-                    <div className="text-xs font-medium text-slate-600">AI Vulnerability</div>
-                    <div className="text-xs text-red-600 font-semibold">Target: &lt;40</div>
+                    <div className="text-xs text-gray-600 font-semibold">Target: &lt;70</div>
                   </div>
                 </div>
               </div>
@@ -635,55 +593,57 @@ const StartScreenModal = ({ isOpen, onClose }) => {
             {/* How to Use Section */}
             <div className="mb-8">
               <h2 className="text-2xl font-bold text-slate-800 mb-4 flex items-center">
-                <span className="mr-3">📚</span>How to Use the Simulator
+                <span className="mr-3">🎯</span>Your Dashboard Objectives
               </h2>
               <div className="bg-slate-50 rounded-xl p-6">
                 <p className="text-slate-700 mb-4">
-                  The simulator allows you to experiment with different AI education policy combinations by adjusting 15 policy levers across 5 stakeholder groups. As you move the sliders, you'll see real-time updates to 8 outcome metrics displayed as circular indicators at the bottom of the screen.
+                  Welcome to the AI Education Policy Simulator! Your mission is to design effective AI education policies that balance multiple stakeholder needs while achieving optimal outcomes across 8 key metrics. Experiment with 15 policy levers across District, School, and Research domains to create the perfect policy combination.
                 </p>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                   <div>
-                    <h3 className="font-semibold text-slate-800 mb-3">Understanding the Interface</h3>
+                    <h3 className="font-semibold text-slate-800 mb-3">🎮 Your Mission</h3>
                     <ul className="text-sm text-slate-600 space-y-2">
-                      <li>• <strong>Top Section:</strong> View time series projections and radar charts showing how your policies affect metrics over time</li>
-                      <li>• <strong>Bottom Section:</strong> Adjust policy levers organized by stakeholder groups</li>
-                      <li>• <strong>Metrics Display:</strong> Monitor 8 key outcome metrics that update instantly as you make policy changes</li>
+                      <li>• <strong>Optimize Metrics:</strong> Achieve target scores for AI Literacy, Teacher Satisfaction, Digital Equity, and more</li>
+                      <li>• <strong>Balance Stakeholders:</strong> Consider impacts on District Administrators, School Leaders, and Research Teams</li>
+                      <li>• <strong>Monitor Progress:</strong> Watch real-time metric updates as you adjust policy levers</li>
+                      <li>• <strong>Plan Long-term:</strong> View 16-year projections to understand future implications</li>
                     </ul>
                   </div>
                   
                   <div>
-                    <h3 className="font-semibold text-slate-800 mb-3">Exploring Policy Impacts</h3>
+                    <h3 className="font-semibold text-slate-800 mb-3">🔍 How to Succeed</h3>
                     <ul className="text-sm text-slate-600 space-y-2">
-                      <li>• Use the "Why these impacts" button to see detailed stories about how your policy choices create real change</li>
-                      <li>• Click the information buttons (i) on policies and metrics to access detailed explanations and research resources</li>
-                      <li>• Experiment with different policy combinations using the Reset button to start fresh</li>
+                      <li>• <strong>Start Conservative:</strong> Begin with moderate policy settings and observe impacts</li>
+                      <li>• <strong>Read the Stories:</strong> Click "Why these impacts" to understand real-world consequences</li>
+                      <li>• <strong>Use Information Buttons:</strong> Click (i) icons for detailed policy explanations and research</li>
+                      <li>• <strong>Experiment Freely:</strong> Use the Reset button to try different combinations</li>
                     </ul>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Key Features Section */}
+            {/* Success Metrics Section */}
             <div className="mb-8">
               <h2 className="text-2xl font-bold text-slate-800 mb-4 flex items-center">
-                <span className="mr-3">🚀</span>Key Features
+                <span className="mr-3">🏆</span>Success Metrics & Tools
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="bg-slate-50 rounded-lg p-4 text-center">
                   <div className="text-2xl mb-2">📊</div>
-                  <h3 className="font-semibold text-slate-800 mb-2">Real-Time Metrics</h3>
-                  <p className="text-sm text-slate-600">See immediate feedback on your policy decisions</p>
+                  <h3 className="font-semibold text-slate-800 mb-2">Target Achievement</h3>
+                  <p className="text-sm text-slate-600">Monitor 8 key metrics with clear targets: AI Literacy &gt;80%, Teacher Satisfaction &gt;80%, Budget Strain &lt;70%</p>
                 </div>
                 <div className="bg-slate-50 rounded-lg p-4 text-center">
                   <div className="text-2xl mb-2">📈</div>
-                  <h3 className="font-semibold text-slate-800 mb-2">Time Series Analysis</h3>
-                  <p className="text-sm text-slate-600">Project impacts over 16 years into the future</p>
+                  <h3 className="font-semibold text-slate-800 mb-2">Future Planning</h3>
+                  <p className="text-sm text-slate-600">View 16-year projections and spider charts to understand long-term policy impacts</p>
                 </div>
                 <div className="bg-slate-50 rounded-lg p-4 text-center">
                   <div className="text-2xl mb-2">🎯</div>
-                  <h3 className="font-semibold text-slate-800 mb-2">Stakeholder Stories</h3>
-                  <p className="text-sm text-slate-600">Understand real-world implications for different groups</p>
+                  <h3 className="font-semibold text-slate-800 mb-2">Impact Stories</h3>
+                  <p className="text-sm text-slate-600">Explore detailed narratives showing how your policies affect real stakeholders</p>
                 </div>
               </div>
             </div>
@@ -974,7 +934,7 @@ function App() {
             <div className="flex items-center space-x-4">
                 <div className="w-12 h-12 bg-gradient-to-br from-blue-500 via-purple-500 to-indigo-500 rounded-2xl flex items-center justify-center shadow-lg">
                   <svg className="w-8 h-8 text-white icon-pulse" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                   </svg>
               </div>
               <div>
@@ -993,7 +953,7 @@ function App() {
                     </svg>
                     Interactive Policy Impact Analysis & System Dynamics
                     <svg className="w-5 h-5 text-green-500 icon-pulse" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                     </svg>
                   </p>
               </div>
@@ -1110,15 +1070,15 @@ function App() {
                                       <span className="text-sm font-semibold flex items-center gap-2">
                                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                                           {metricId === 'AI_LITERACY' ? (
-                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                            <path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/>
                                           ) : metricId === 'TEACHER_SATISFACTION' ? (
-                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                            <path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
                                           ) : metricId === 'DIGITAL_EQUITY' ? (
-                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                                           ) : metricId === 'AI_VULNERABILITY_INDEX' ? (
                                             <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
                                           ) : metricId === 'BUDGET_STRAIN' ? (
-                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                            <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
                                           ) : (
                                             <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/>
                                           )}
@@ -1156,7 +1116,7 @@ function App() {
                   <div className="chart-container h-full">
                     <h3 className="chart-title">
                       <svg className="w-6 h-6 text-purple-600 icon-pulse" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                       </svg>
                       Spider Chart
                     </h3>
@@ -1191,15 +1151,15 @@ function App() {
                           <div className="metric-title">
                             <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                               {metric === 'AI_LITERACY' ? (
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                <path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/>
                               ) : metric === 'TEACHER_SATISFACTION' ? (
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                <path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
                               ) : metric === 'DIGITAL_EQUITY' ? (
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                               ) : metric === 'AI_VULNERABILITY_INDEX' ? (
                                 <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
                               ) : metric === 'BUDGET_STRAIN' ? (
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
                               ) : (
                                 <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/>
                               )}
@@ -1265,30 +1225,7 @@ function App() {
                       ).map((policy) => (
                         <div key={policy.id} className="policy-card-fun district-theme p-1.5 shadow-lg relative interactive-hover">
                           <div className="mb-0.5 flex items-center justify-between">
-                            <div className="text-xs font-bold text-white text-center leading-tight flex-1 flex items-center justify-center gap-1">
-                              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                {policy.id === 'PROTECT_STD' ? (
-                                  <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
-                                ) : policy.id === 'PD_FUNDS' ? (
-                                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                                ) : policy.id === 'INFRA_INVEST' ? (
-                                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                                ) : policy.id === 'EDUC_AUTONOMY' ? (
-                                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                                ) : policy.id === 'DIGITAL_CITIZEN' ? (
-                                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                                ) : policy.id === 'ACCESS_STD' ? (
-                                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                                ) : policy.id === 'INNOV_SANDBOX' ? (
-                                  <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2.5-9H19V1h-2v1H7V1H5v1H4.5C3.67 2 3 2.67 3 3.5v15c0 .83.67 1.5 1.5 1.5h15c.83 0 1.5-.67 1.5-1.5v-15c0-.83-.67-1.5-1.5-1.5zM19 18.5H5V8h14v10.5z"/>
-                                ) : policy.id === 'MODEL_EVAL_STD' ? (
-                                  <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
-                                ) : policy.id === 'INTEROP_STD' ? (
-                                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                                ) : (
-                                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                                )}
-                              </svg>
+                            <div className="text-xs font-bold text-white text-center leading-tight flex-1 flex items-center justify-center">
                               {policy.name}
                             </div>
                             <button
@@ -1320,9 +1257,9 @@ function App() {
                                       const value = policyIntensities[policy.id];
                                       const center = 50;
                                       if (value > center) {
-                                        return `linear-gradient(to right, #e2e8f0 0%, #e2e8f0 ${center}%, #2563eb ${center}%, #2563eb ${value}%, #e2e8f0 ${value}%, #e2e8f0 100%)`;
+                                        return `linear-gradient(to right, #e2e8f0 0%, #e2e8f0 ${center}%, #facc15 ${center}%, #facc15 ${value}%, #e2e8f0 ${value}%, #e2e8f0 100%)`;
                                     } else {
-                                        return `linear-gradient(to right, #e2e8f0 0%, #e2e8f0 ${value}%, #2563eb ${value}%, #2563eb ${center}%, #e2e8f0 ${center}%, #e2e8f0 100%)`;
+                                        return `linear-gradient(to right, #e2e8f0 0%, #e2e8f0 ${value}%, #facc15 ${value}%, #facc15 ${center}%, #e2e8f0 ${center}%, #e2e8f0 100%)`;
                                     }
                                   })()
                                   } : {
@@ -1339,7 +1276,7 @@ function App() {
                               ></div>
                             </div>
                             <div className="relative">
-                              <div className="flex justify-between items-center text-xs text-slate-500">
+                              <div className="flex justify-between items-center text-xs text-white">
                                 <span>{policy.id === 'INNOV_INCENT' ? '$0M' : policy.id === 'PD_FUNDS' ? '0%' : '0%'}</span>
                                 <span className="status-quo-fun">status quo</span>
                                 <span>{policy.id === 'INNOV_INCENT' ? '$50M' : policy.id === 'PD_FUNDS' ? '100%' : '100%'}</span>
@@ -1363,30 +1300,7 @@ function App() {
                       ).map((policy) => (
                         <div key={policy.id} className="policy-card-fun school-theme p-1.5 shadow-lg relative interactive-hover">
                           <div className="mb-0.5 flex items-center justify-between">
-                            <div className="text-xs font-bold text-white text-center leading-tight flex-1 flex items-center justify-center gap-1">
-                              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                {policy.id === 'PROTECT_STD' ? (
-                                  <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
-                                ) : policy.id === 'PD_FUNDS' ? (
-                                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                                ) : policy.id === 'INFRA_INVEST' ? (
-                                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                                ) : policy.id === 'EDUC_AUTONOMY' ? (
-                                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                                ) : policy.id === 'DIGITAL_CITIZEN' ? (
-                                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                                ) : policy.id === 'ACCESS_STD' ? (
-                                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                                ) : policy.id === 'INNOV_SANDBOX' ? (
-                                  <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2.5-9H19V1h-2v1H7V1H5v1H4.5C3.67 2 3 2.67 3 3.5v15c0 .83.67 1.5 1.5 1.5h15c.83 0 1.5-.67 1.5-1.5v-15c0-.83-.67-1.5-1.5-1.5zM19 18.5H5V8h14v10.5z"/>
-                                ) : policy.id === 'MODEL_EVAL_STD' ? (
-                                  <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
-                                ) : policy.id === 'INTEROP_STD' ? (
-                                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                                ) : (
-                                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                                )}
-                              </svg>
+                            <div className="text-xs font-bold text-white text-center leading-tight flex-1 flex items-center justify-center">
                               {policy.name}
                             </div>
                             <button
@@ -1418,9 +1332,9 @@ function App() {
                                       const value = policyIntensities[policy.id];
                                       const center = 50;
                                       if (value > center) {
-                                        return `linear-gradient(to right, #e2e8f0 0%, #e2e8f0 ${center}%, #16a34a ${center}%, #16a34a ${value}%, #e2e8f0 ${value}%, #e2e8f0 100%)`;
+                                        return `linear-gradient(to right, #e2e8f0 0%, #e2e8f0 ${center}%, #facc15 ${center}%, #facc15 ${value}%, #e2e8f0 ${value}%, #e2e8f0 100%)`;
                                     } else {
-                                        return `linear-gradient(to right, #e2e8f0 0%, #e2e8f0 ${value}%, #16a34a ${value}%, #16a34a ${center}%, #e2e8f0 ${center}%, #e2e8f0 100%)`;
+                                        return `linear-gradient(to right, #e2e8f0 0%, #e2e8f0 ${value}%, #facc15 ${value}%, #facc15 ${center}%, #e2e8f0 ${center}%, #e2e8f0 100%)`;
                                     }
                                   })()
                                   } : {
@@ -1437,7 +1351,7 @@ function App() {
                               ></div>
                             </div>
                             <div className="relative">
-                              <div className="flex justify-between items-center text-xs text-slate-500">
+                              <div className="flex justify-between items-center text-xs text-white">
                                 <span>{policy.id === 'EDUC_AUTONOMY' ? '0%' : policy.id === 'AI_CAREER_PATH' ? '0' : '0%'}</span>
                                 <span className="status-quo-fun">status quo</span>
                                 <span>{policy.id === 'EDUC_AUTONOMY' ? '100%' : policy.id === 'AI_CAREER_PATH' ? '10' : '50%'}</span>
@@ -1461,30 +1375,7 @@ function App() {
                       ).map((policy) => (
                         <div key={policy.id} className="policy-card-fun research-theme p-1.5 shadow-lg relative interactive-hover">
                           <div className="mb-0.5 flex items-center justify-between">
-                            <div className="text-xs font-bold text-white text-center leading-tight flex-1 flex items-center justify-center gap-1">
-                              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                {policy.id === 'PROTECT_STD' ? (
-                                  <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
-                                ) : policy.id === 'PD_FUNDS' ? (
-                                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                                ) : policy.id === 'INFRA_INVEST' ? (
-                                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                                ) : policy.id === 'EDUC_AUTONOMY' ? (
-                                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                                ) : policy.id === 'DIGITAL_CITIZEN' ? (
-                                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                                ) : policy.id === 'ACCESS_STD' ? (
-                                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                                ) : policy.id === 'INNOV_SANDBOX' ? (
-                                  <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2.5-9H19V1h-2v1H7V1H5v1H4.5C3.67 2 3 2.67 3 3.5v15c0 .83.67 1.5 1.5 1.5h15c.83 0 1.5-.67 1.5-1.5v-15c0-.83-.67-1.5-1.5-1.5zM19 18.5H5V8h14v10.5z"/>
-                                ) : policy.id === 'MODEL_EVAL_STD' ? (
-                                  <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
-                                ) : policy.id === 'INTEROP_STD' ? (
-                                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                                ) : (
-                                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                                )}
-                              </svg>
+                            <div className="text-xs font-bold text-white text-center leading-tight flex-1 flex items-center justify-center">
                               {policy.name}
                             </div>
                             <button
@@ -1516,9 +1407,9 @@ function App() {
                                       const value = policyIntensities[policy.id];
                                       const center = 50;
                                       if (value > center) {
-                                        return `linear-gradient(to right, #e2e8f0 0%, #e2e8f0 ${center}%, #9333ea ${center}%, #9333ea ${value}%, #e2e8f0 ${value}%, #e2e8f0 100%)`;
+                                        return `linear-gradient(to right, #e2e8f0 0%, #e2e8f0 ${center}%, #facc15 ${center}%, #facc15 ${value}%, #e2e8f0 ${value}%, #e2e8f0 100%)`;
                                     } else {
-                                        return `linear-gradient(to right, #e2e8f0 0%, #e2e8f0 ${value}%, #9333ea ${value}%, #9333ea ${center}%, #e2e8f0 ${center}%, #e2e8f0 100%)`;
+                                        return `linear-gradient(to right, #e2e8f0 0%, #e2e8f0 ${value}%, #facc15 ${value}%, #facc15 ${center}%, #e2e8f0 ${center}%, #e2e8f0 100%)`;
                                     }
                                   })()
                                   } : {
@@ -1535,7 +1426,7 @@ function App() {
                               ></div>
                             </div>
                             <div className="relative">
-                              <div className="flex justify-between items-center text-xs text-slate-500">
+                              <div className="flex justify-between items-center text-xs text-white">
                                 <span>{policy.id === 'COMM_INPUT' ? '0' : policy.id === 'LOCAL_JOB_ALIGN' ? '0' : '0%'}</span>
                                 <span className="status-quo-fun">status quo</span>
                                 <span>{policy.id === 'COMM_INPUT' ? '24' : policy.id === 'LOCAL_JOB_ALIGN' ? '200' : '100%'}</span>

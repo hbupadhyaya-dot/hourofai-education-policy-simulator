@@ -360,8 +360,8 @@
 
 .fun-slider::-webkit-slider-thumb {
   @apply appearance-none w-5 h-5 rounded-full cursor-pointer border-2 border-white;
-  background: linear-gradient(45deg, #6b7280, #4b5563);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(45deg, #1f2937, #111827);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
   transition: all 0.2s ease;
 }
 
@@ -370,19 +370,38 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-/* District slider thumbs - Orange theme */
+/* Firefox slider thumb styles */
+.fun-slider::-moz-range-thumb {
+  @apply appearance-none w-5 h-5 rounded-full cursor-pointer border-2 border-white;
+  background: linear-gradient(45deg, #1f2937, #111827);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
+  transition: all 0.2s ease;
+}
+
+.fun-slider::-moz-range-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* District slider thumbs - Dark contrasting theme */
 .district-slider::-webkit-slider-thumb {
-  background: linear-gradient(45deg, #ea580c, #dc2626);
+  background: linear-gradient(45deg, #1f2937, #111827);
+  border: 2px solid #ffffff;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.5);
 }
 
-/* School slider thumbs - Yellow theme */
+/* School slider thumbs - Dark contrasting theme */
 .school-slider::-webkit-slider-thumb {
-  background: linear-gradient(45deg, #ca8a04, #a16207);
+  background: linear-gradient(45deg, #1f2937, #111827);
+  border: 2px solid #ffffff;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.5);
 }
 
-/* Research slider thumbs - Pink theme */
+/* Research slider thumbs - Dark contrasting theme */
 .research-slider::-webkit-slider-thumb {
-  background: linear-gradient(45deg, #c026d3, #a21caf);
+  background: linear-gradient(45deg, #1f2937, #111827);
+  border: 2px solid #ffffff;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.5);
 }
 
 /* 🎪 Accessible Metric Display */
