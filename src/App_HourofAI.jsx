@@ -488,9 +488,6 @@ const StartScreenModal = ({ isOpen, onClose }) => {
               </h2>
               <div className="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-xl p-6 mb-6">
                 <p className="text-lg text-slate-700 mb-4">
-                  You've just been hired as AI policy advisors for the Riverside School District. Your job? Design the AI systems that will educate the next generation. But here's the catch - every decision you make creates ripple effects. Boost AI literacy too fast, and you might strain budgets. Focus too much on safety, and you might slow innovation. You'll need to work together to balance competing priorities.
-                </p>
-                <p className="text-lg text-slate-700 mb-4">
                   <strong>Keep all outcome metrics above 80, except:</strong>
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -510,8 +507,8 @@ const StartScreenModal = ({ isOpen, onClose }) => {
               
               {/* Metrics Visual */}
               <div className="bg-white rounded-xl border border-slate-200 p-6">
-                <h3 className="text-lg font-semibold text-slate-800 mb-4 text-center">5 Key Outcome Metrics</h3>
-                <div className="grid grid-cols-5 gap-4">
+                <h3 className="text-lg font-semibold text-slate-800 mb-4 text-center">Target Metrics Overview</h3>
+                <div className="grid grid-cols-4 gap-4">
                   {/* AI Literacy */}
                   <div className="text-center">
                     <div className="relative w-16 h-16 mx-auto mb-2">
@@ -524,10 +521,10 @@ const StartScreenModal = ({ isOpen, onClose }) => {
                       </div>
                     </div>
                     <div className="text-xs font-medium text-slate-600">AI Literacy</div>
-                    <div className="text-xs text-blue-600 font-semibold">Target: &gt;80</div>
+                    <div className="text-xs text-green-600 font-semibold">Target: &gt;80</div>
                   </div>
                    
-                  {/* Teacher Satisfaction */}
+                   {/* Community Trust */}
                   <div className="text-center">
                     <div className="relative w-16 h-16 mx-auto mb-2">
                       <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
@@ -538,11 +535,11 @@ const StartScreenModal = ({ isOpen, onClose }) => {
                         <span className="text-sm font-bold text-slate-900">80</span>
                       </div>
                     </div>
-                    <div className="text-xs font-medium text-slate-600">Teacher Satisfaction</div>
-                    <div className="text-xs text-amber-600 font-semibold">Target: &gt;80</div>
+                     <div className="text-xs font-medium text-slate-600">Community Trust</div>
+                    <div className="text-xs text-green-600 font-semibold">Target: &gt;80</div>
                   </div>
                    
-                  {/* Digital Equity */}
+                   {/* Innovation Index */}
                   <div className="text-center">
                     <div className="relative w-16 h-16 mx-auto mb-2">
                       <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
@@ -553,23 +550,38 @@ const StartScreenModal = ({ isOpen, onClose }) => {
                         <span className="text-sm font-bold text-slate-900">80</span>
                       </div>
                     </div>
-                    <div className="text-xs font-medium text-slate-600">Digital Equity</div>
-                    <div className="text-xs text-red-600 font-semibold">Target: &gt;80</div>
+                     <div className="text-xs font-medium text-slate-600">Innovation Index</div>
+                    <div className="text-xs text-green-600 font-semibold">Target: &gt;80</div>
                   </div>
                    
-                  {/* AI Vulnerability */}
+                   {/* Teacher Morale */}
                   <div className="text-center">
                     <div className="relative w-16 h-16 mx-auto mb-2">
                       <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
                         <circle cx="32" cy="32" r="24" stroke="#e2e8f0" strokeWidth="4" fill="none" />
-                        <circle cx="32" cy="32" r="24" stroke="#10b981" strokeWidth="4" fill="none" strokeLinecap="round" strokeDasharray="150.8" strokeDashoffset="96.8" />
+                         <circle cx="32" cy="32" r="24" stroke="#10b981" strokeWidth="4" fill="none" strokeLinecap="round" strokeDasharray="150.8" strokeDashoffset="30.16" />
                       </svg>
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-sm font-bold text-slate-900">40</span>
+                         <span className="text-sm font-bold text-slate-900">80</span>
                       </div>
                     </div>
-                    <div className="text-xs font-medium text-slate-600">AI Vulnerability</div>
-                    <div className="text-xs text-pink-600 font-semibold">Target: &lt;40</div>
+                     <div className="text-xs font-medium text-slate-600">Teacher Morale</div>
+                     <div className="text-xs text-green-600 font-semibold">Target: &gt;80</div>
+                   </div>
+                   
+                   {/* Digital Equity */}
+                   <div className="text-center">
+                     <div className="relative w-16 h-16 mx-auto mb-2">
+                       <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
+                         <circle cx="32" cy="32" r="24" stroke="#e2e8f0" strokeWidth="4" fill="none" />
+                         <circle cx="32" cy="32" r="24" stroke="#10b981" strokeWidth="4" fill="none" strokeLinecap="round" strokeDasharray="150.8" strokeDashoffset="30.16" />
+                       </svg>
+                       <div className="absolute inset-0 flex items-center justify-center">
+                         <span className="text-sm font-bold text-slate-900">80</span>
+                       </div>
+                     </div>
+                     <div className="text-xs font-medium text-slate-600">Digital Equity</div>
+                     <div className="text-xs text-green-600 font-semibold">Target: &gt;80</div>
                   </div>
                    
                   {/* Budget Strain */}
@@ -577,14 +589,44 @@ const StartScreenModal = ({ isOpen, onClose }) => {
                     <div className="relative w-16 h-16 mx-auto mb-2">
                       <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
                         <circle cx="32" cy="32" r="24" stroke="#e2e8f0" strokeWidth="4" fill="none" />
-                        <circle cx="32" cy="32" r="24" stroke="#10b981" strokeWidth="4" fill="none" strokeLinecap="round" strokeDasharray="150.8" strokeDashoffset="105.56" />
+                        <circle cx="32" cy="32" r="24" stroke="#ef4444" strokeWidth="4" fill="none" strokeLinecap="round" strokeDasharray="150.8" strokeDashoffset="105.56" />
                       </svg>
                       <div className="absolute inset-0 flex items-center justify-center">
                         <span className="text-sm font-bold text-slate-900">70</span>
                       </div>
                     </div>
                     <div className="text-xs font-medium text-slate-600">Budget Strain</div>
-                    <div className="text-xs text-gray-600 font-semibold">Target: &lt;70</div>
+                    <div className="text-xs text-red-600 font-semibold">Target: &lt;70</div>
+                  </div>
+                   
+                   {/* Employment Impact */}
+                   <div className="text-center">
+                     <div className="relative w-16 h-16 mx-auto mb-2">
+                       <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
+                         <circle cx="32" cy="32" r="24" stroke="#e2e8f0" strokeWidth="4" fill="none" />
+                         <circle cx="32" cy="32" r="24" stroke="#10b981" strokeWidth="4" fill="none" strokeLinecap="round" strokeDasharray="150.8" strokeDashoffset="30.16" />
+                       </svg>
+                       <div className="absolute inset-0 flex items-center justify-center">
+                         <span className="text-sm font-bold text-slate-900">80</span>
+                       </div>
+                     </div>
+                     <div className="text-xs font-medium text-slate-600">Employment Impact</div>
+                     <div className="text-xs text-green-600 font-semibold">Target: &gt;80</div>
+                   </div>
+                  
+                  {/* AI Vulnerability */}
+                  <div className="text-center">
+                    <div className="relative w-16 h-16 mx-auto mb-2">
+                      <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
+                        <circle cx="32" cy="32" r="24" stroke="#e2e8f0" strokeWidth="4" fill="none" />
+                        <circle cx="32" cy="32" r="24" stroke="#ef4444" strokeWidth="4" fill="none" strokeLinecap="round" strokeDasharray="150.8" strokeDashoffset="96.8" />
+                      </svg>
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <span className="text-sm font-bold text-slate-900">40</span>
+                      </div>
+                    </div>
+                    <div className="text-xs font-medium text-slate-600">AI Vulnerability</div>
+                    <div className="text-xs text-red-600 font-semibold">Target: &lt;40</div>
                   </div>
                 </div>
               </div>
@@ -593,57 +635,55 @@ const StartScreenModal = ({ isOpen, onClose }) => {
             {/* How to Use Section */}
             <div className="mb-8">
               <h2 className="text-2xl font-bold text-slate-800 mb-4 flex items-center">
-                <span className="mr-3">🎯</span>Your Dashboard Objectives
+                <span className="mr-3">📚</span>How to Use the Simulator
               </h2>
               <div className="bg-slate-50 rounded-xl p-6">
                 <p className="text-slate-700 mb-4">
-                  Welcome to the AI Education Policy Simulator! Your mission is to design effective AI education policies that balance multiple stakeholder needs while achieving optimal outcomes across 8 key metrics. Experiment with 15 policy levers across District, School, and Research domains to create the perfect policy combination.
+                  The simulator allows you to experiment with different AI education policy combinations by adjusting 15 policy levers across 5 stakeholder groups. As you move the sliders, you'll see real-time updates to 8 outcome metrics displayed as circular indicators at the bottom of the screen.
                 </p>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                   <div>
-                    <h3 className="font-semibold text-slate-800 mb-3">🎮 Your Mission</h3>
+                    <h3 className="font-semibold text-slate-800 mb-3">Understanding the Interface</h3>
                     <ul className="text-sm text-slate-600 space-y-2">
-                      <li>• <strong>Optimize Metrics:</strong> Achieve target scores for AI Literacy, Teacher Satisfaction, Digital Equity, and more</li>
-                      <li>• <strong>Balance Stakeholders:</strong> Consider impacts on District Administrators, School Leaders, and Research Teams</li>
-                      <li>• <strong>Monitor Progress:</strong> Watch real-time metric updates as you adjust policy levers</li>
-                      <li>• <strong>Plan Long-term:</strong> View 16-year projections to understand future implications</li>
+                      <li>• <strong>Top Section:</strong> View time series projections and radar charts showing how your policies affect metrics over time</li>
+                      <li>• <strong>Bottom Section:</strong> Adjust policy levers organized by stakeholder groups</li>
+                      <li>• <strong>Metrics Display:</strong> Monitor 8 key outcome metrics that update instantly as you make policy changes</li>
                     </ul>
                   </div>
                   
                   <div>
-                    <h3 className="font-semibold text-slate-800 mb-3">🔍 How to Succeed</h3>
+                    <h3 className="font-semibold text-slate-800 mb-3">Exploring Policy Impacts</h3>
                     <ul className="text-sm text-slate-600 space-y-2">
-                      <li>• <strong>Start Conservative:</strong> Begin with moderate policy settings and observe impacts</li>
-                      <li>• <strong>Read the Stories:</strong> Click "Why these impacts" to understand real-world consequences</li>
-                      <li>• <strong>Use Information Buttons:</strong> Click (i) icons for detailed policy explanations and research</li>
-                      <li>• <strong>Experiment Freely:</strong> Use the Reset button to try different combinations</li>
+                      <li>• Use the "Why these impacts" button to see detailed stories about how your policy choices create real change</li>
+                      <li>• Click the information buttons (i) on policies and metrics to access detailed explanations and research resources</li>
+                      <li>• Experiment with different policy combinations using the Reset button to start fresh</li>
                     </ul>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Success Metrics Section */}
+            {/* Key Features Section */}
             <div className="mb-8">
               <h2 className="text-2xl font-bold text-slate-800 mb-4 flex items-center">
-                <span className="mr-3">🏆</span>Success Metrics & Tools
+                <span className="mr-3">🚀</span>Key Features
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="bg-slate-50 rounded-lg p-4 text-center">
                   <div className="text-2xl mb-2">📊</div>
-                  <h3 className="font-semibold text-slate-800 mb-2">Target Achievement</h3>
-                  <p className="text-sm text-slate-600">Monitor 8 key metrics with clear targets: AI Literacy &gt;80%, Teacher Satisfaction &gt;80%, Budget Strain &lt;70%</p>
+                  <h3 className="font-semibold text-slate-800 mb-2">Real-Time Metrics</h3>
+                  <p className="text-sm text-slate-600">See immediate feedback on your policy decisions</p>
                 </div>
                 <div className="bg-slate-50 rounded-lg p-4 text-center">
                   <div className="text-2xl mb-2">📈</div>
-                  <h3 className="font-semibold text-slate-800 mb-2">Future Planning</h3>
-                  <p className="text-sm text-slate-600">View 16-year projections and spider charts to understand long-term policy impacts</p>
+                  <h3 className="font-semibold text-slate-800 mb-2">Time Series Analysis</h3>
+                  <p className="text-sm text-slate-600">Project impacts over 16 years into the future</p>
                 </div>
                 <div className="bg-slate-50 rounded-lg p-4 text-center">
                   <div className="text-2xl mb-2">🎯</div>
-                  <h3 className="font-semibold text-slate-800 mb-2">Impact Stories</h3>
-                  <p className="text-sm text-slate-600">Explore detailed narratives showing how your policies affect real stakeholders</p>
+                  <h3 className="font-semibold text-slate-800 mb-2">Stakeholder Stories</h3>
+                  <p className="text-sm text-slate-600">Understand real-world implications for different groups</p>
                 </div>
               </div>
             </div>
@@ -671,7 +711,6 @@ function App() {
   const [selectedPolicies, setSelectedPolicies] = useState([])
   const [policyIntensities, setPolicyIntensities] = useState({})
   const [selectedTimeSeriesMetrics, setSelectedTimeSeriesMetrics] = useState(['AI_LITERACY'])
-  const [activeTab, setActiveTab] = useState('main')
 
   // State initialization
   const [modalState, setModalState] = useState({
@@ -698,11 +737,6 @@ function App() {
 
   const [currentMetrics, setCurrentMetrics] = useState(defaultMetrics)
 
-  const tabs = [
-    { id: 'main', name: 'Main Dashboard' },
-    { id: 'feedback', name: 'System Feedback' },
-    { id: 'insights', name: 'Strategic Insights' }
-  ]
 
 
 
@@ -926,7 +960,7 @@ function App() {
   }
 
   return (
-      <div className="min-h-screen playful-bg">
+    <div className="min-h-screen playful-bg">
       {/* Header */}
       <div className="bg-white/80 backdrop-blur-sm shadow-lg border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-6 py-4">
@@ -934,7 +968,7 @@ function App() {
             <div className="flex items-center space-x-4">
                 <div className="w-12 h-12 bg-gradient-to-br from-blue-500 via-purple-500 to-indigo-500 rounded-2xl flex items-center justify-center shadow-lg">
                   <svg className="w-8 h-8 text-white icon-pulse" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                   </svg>
               </div>
               <div>
@@ -947,18 +981,15 @@ function App() {
                       <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                     </svg>
                   </h1>
-                  <p className="text-sm text-slate-600 flex items-center gap-1">
-                    <svg className="w-5 h-5 text-orange-500 icon-rotate" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                    </svg>
-                    Interactive Policy Impact Analysis & System Dynamics
-                    <svg className="w-5 h-5 text-green-500 icon-pulse" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                    </svg>
-                  </p>
               </div>
             </div>
             <div className="flex items-center space-x-3">
+              <button
+                onClick={() => setImpactExplanationModal(true)}
+                className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-lg font-semibold text-sm transition-all duration-300 flex items-center space-x-2 shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95"
+              >
+                <span>Explore Impacts</span>
+              </button>
               <button
                 onClick={() => setShowStartScreen(true)}
                 className="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white rounded-full font-bold text-xl transition-all duration-300 flex items-center justify-center shadow-lg hover:shadow-xl glow-effect interactive-hover"
@@ -982,43 +1013,11 @@ function App() {
         </div>
       </div>
 
-      {/* Tab Navigation */}
-      <div className="bg-white/60 backdrop-blur-sm border-b border-slate-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex space-x-1">
-            {tabs.map((tab) => (
-              <button 
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                    className={`px-6 py-3 text-sm font-bold rounded-t-2xl transition-all duration-300 flex items-center gap-2 interactive-hover ${
-                  activeTab === tab.id
-                        ? 'fun-tab text-white shadow-xl'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
-                }`}
-              >
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                      {tab.id === 'dashboard' ? (
-                        <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
-                      ) : tab.id === 'policies' ? (
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                      ) : tab.id === 'feedback' ? (
-                        <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
-                      ) : (
-                        <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2.5-9H19V1h-2v1H7V1H5v1H4.5C3.67 2 3 2.67 3 3.5v15c0 .83.67 1.5 1.5 1.5h15c.83 0 1.5-.67 1.5-1.5v-15c0-.83-.67-1.5-1.5-1.5zM19 18.5H5V8h14v10.5z"/>
-                      )}
-                    </svg>
-                {tab.name}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-3 h-[calc(100vh-120px)]">
         <div className="flex-1 overflow-hidden">
-          {activeTab === 'main' && (
-            <div className="h-full p-2 space-y-1">
+          <div className="h-full p-2 space-y-1">
               {/* Top Section - Charts */}
               <div className="grid grid-cols-12 gap-4 h-[48%]">
                 {/* Time Series Chart */}
@@ -1070,15 +1069,15 @@ function App() {
                                       <span className="text-sm font-semibold flex items-center gap-2">
                                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                                           {metricId === 'AI_LITERACY' ? (
-                                            <path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/>
+                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15V9h2v8h-2zm0-10V5h2v2h-2z"/>
                                           ) : metricId === 'TEACHER_SATISFACTION' ? (
-                                            <path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
+                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.5 6l-7.5 7.5-3-3 1.5-1.5L8 12.5l6-6L15.5 8z"/>
                                           ) : metricId === 'DIGITAL_EQUITY' ? (
-                                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-3 14H7v-2h2v2zm0-4H7v-2h2v2zm0-4H7V6h2v2zm10 8h-8V8h8v8z"/>
                                           ) : metricId === 'AI_VULNERABILITY_INDEX' ? (
                                             <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
                                           ) : metricId === 'BUDGET_STRAIN' ? (
-                                            <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
+                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm0-4h-2V7h2v8z"/>
                                           ) : (
                                             <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/>
                                           )}
@@ -1092,12 +1091,6 @@ function App() {
                             </div>
                           </details>
                         </div>
-                        <button
-                          onClick={() => setImpactExplanationModal(true)}
-                          className="px-2 py-1 border border-slate-200 rounded text-xs cursor-pointer focus:ring-1 focus:ring-slate-400 focus:border-slate-400 bg-white/90 backdrop-blur-sm hover:bg-slate-50 transition-colors"
-                        >
-                          Why these impacts
-                        </button>
                     </div>
                     </div>
                     <div className="h-64 flex items-center justify-center">
@@ -1116,7 +1109,7 @@ function App() {
                   <div className="chart-container h-full">
                     <h3 className="chart-title">
                       <svg className="w-6 h-6 text-purple-600 icon-pulse" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                       </svg>
                       Spider Chart
                     </h3>
@@ -1151,15 +1144,15 @@ function App() {
                           <div className="metric-title">
                             <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                               {metric === 'AI_LITERACY' ? (
-                                <path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/>
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15V9h2v8h-2zm0-10V5h2v2h-2z"/>
                               ) : metric === 'TEACHER_SATISFACTION' ? (
-                                <path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.5 6l-7.5 7.5-3-3 1.5-1.5L8 12.5l6-6L15.5 8z"/>
                               ) : metric === 'DIGITAL_EQUITY' ? (
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-3 14H7v-2h2v2zm0-4H7v-2h2v2zm0-4H7V6h2v2zm10 8h-8V8h8v8z"/>
                               ) : metric === 'AI_VULNERABILITY_INDEX' ? (
                                 <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
                               ) : metric === 'BUDGET_STRAIN' ? (
-                                <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm0-4h-2V7h2v8z"/>
                               ) : (
                                 <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/>
                               )}
@@ -1214,11 +1207,11 @@ function App() {
                   <div className="grid grid-cols-3 gap-3">
                     {/* Column 1 - District Administrator */}
                     <div className="space-y-1">
-                      <h3 className="text-xs font-bold text-white uppercase tracking-wide text-center pb-0.5 border-b-2 border-white/30 flex items-center justify-center gap-1">
-                        <svg className="w-4 h-4 icon-pulse" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                      <h3 className="text-sm font-bold text-black uppercase tracking-wide text-center pb-2 border-b-2 border-gray-300 flex items-center justify-center gap-2 mb-3">
+                        <svg className="w-5 h-5 icon-animated" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/>
                         </svg>
-                        <span>District</span>
+                        <span>District Administrator</span>
                       </h3>
                       {Object.values(policyDefinitions).filter(policy => 
                         ['PROTECT_STD', 'PD_FUNDS', 'INFRA_INVEST'].includes(policy.id)
@@ -1236,51 +1229,39 @@ function App() {
                             </button>
                           </div>
                           
-                          <div className="space-y-0">
-                            {/* Metric number display */}
-                            <div className="flex justify-center mb-1">
-                              <div className="metric-display-fun">
-                                {policyIntensities[policy.id] !== undefined ? policyIntensities[policy.id] : 50}%
-                              </div>
-                            </div>
-                            <div className="relative">
-                              <input
-                                type="range"
-                                min="0"
-                                max="100"
-                                value={policyIntensities[policy.id] !== undefined ? policyIntensities[policy.id] : 50}
-                                onChange={(e) => handlePolicyIntensityChange(policy.id, parseInt(e.target.value))}
-                                className="w-full fun-slider district-slider appearance-none cursor-pointer"
-                                style={
-                                  policyIntensities[policy.id] !== undefined ? {
-                                  background: (() => {
-                                      const value = policyIntensities[policy.id];
-                                      const center = 50;
-                                      if (value > center) {
-                                        return `linear-gradient(to right, #e2e8f0 0%, #e2e8f0 ${center}%, #facc15 ${center}%, #facc15 ${value}%, #e2e8f0 ${value}%, #e2e8f0 100%)`;
-                                    } else {
-                                        return `linear-gradient(to right, #e2e8f0 0%, #e2e8f0 ${value}%, #facc15 ${value}%, #facc15 ${center}%, #e2e8f0 ${center}%, #e2e8f0 100%)`;
-                                    }
-                                  })()
-                                  } : {
-                                    background: '#e2e8f0'
-                                  }
-                                }
-                              />
-                              {/* Center indicator */}
-                              <div 
-                                className="absolute top-1/2 transform -translate-y-1/2 w-0.5 h-4 bg-slate-400 pointer-events-none"
-                                style={{
-                                  left: '50%'
-                                }}
-                              ></div>
-                            </div>
-                            <div className="relative">
-                              <div className="flex justify-between items-center text-xs text-white">
-                                <span>{policy.id === 'INNOV_INCENT' ? '$0M' : policy.id === 'PD_FUNDS' ? '0%' : '0%'}</span>
-                                <span className="status-quo-fun">status quo</span>
-                                <span>{policy.id === 'INNOV_INCENT' ? '$50M' : policy.id === 'PD_FUNDS' ? '100%' : '100%'}</span>
-                              </div>
+                          <div className="space-y-2">
+                            {/* Low/Moderate/High buttons */}
+                            <div className="flex space-x-1">
+                              <button
+                                onClick={() => handlePolicyIntensityChange(policy.id, 25)}
+                                className={`flex-1 px-2 py-1 text-xs rounded font-semibold transition-all duration-200 ${
+                                  (policyIntensities[policy.id] || 50) <= 33
+                                    ? 'bg-green-500 text-white shadow-lg'
+                                    : 'bg-white/20 text-white hover:bg-white/30'
+                                }`}
+                              >
+                                Low
+                              </button>
+                              <button
+                                onClick={() => handlePolicyIntensityChange(policy.id, 50)}
+                                className={`flex-1 px-2 py-1 text-xs rounded font-semibold transition-all duration-200 ${
+                                  (policyIntensities[policy.id] || 50) > 33 && (policyIntensities[policy.id] || 50) <= 66
+                                    ? 'bg-yellow-500 text-white shadow-lg'
+                                    : 'bg-white/20 text-white hover:bg-white/30'
+                                }`}
+                              >
+                                Moderate
+                              </button>
+                              <button
+                                onClick={() => handlePolicyIntensityChange(policy.id, 75)}
+                                className={`flex-1 px-2 py-1 text-xs rounded font-semibold transition-all duration-200 ${
+                                  (policyIntensities[policy.id] || 50) > 66
+                                    ? 'bg-red-500 text-white shadow-lg'
+                                    : 'bg-white/20 text-white hover:bg-white/30'
+                                }`}
+                              >
+                                High
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -1289,14 +1270,14 @@ function App() {
 
                     {/* Column 2 - School */}
                     <div className="space-y-1">
-                      <h3 className="text-xs font-bold text-white uppercase tracking-wide text-center pb-0.5 border-b-2 border-white/30 flex items-center justify-center gap-1">
-                        <svg className="w-4 h-4 icon-animated" fill="currentColor" viewBox="0 0 24 24">
+                      <h3 className="text-sm font-bold text-black uppercase tracking-wide text-center pb-2 border-b-2 border-gray-300 flex items-center justify-center gap-2 mb-3">
+                        <svg className="w-5 h-5 icon-animated" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/>
                         </svg>
-                        <span>School</span>
+                        <span>School Principal</span>
                       </h3>
                       {Object.values(policyDefinitions).filter(policy => 
-                        ['EDUC_AUTONOMY', 'DIGITAL_CITIZEN', 'ACCESS_STD'].includes(policy.id)
+                        ['EDUC_AUTONOMY', 'DIGITAL_CITIZEN', 'AI_INTEGRATION'].includes(policy.id)
                       ).map((policy) => (
                         <div key={policy.id} className="policy-card-fun school-theme p-1.5 shadow-lg relative interactive-hover">
                           <div className="mb-0.5 flex items-center justify-between">
@@ -1311,51 +1292,39 @@ function App() {
                             </button>
                           </div>
                           
-                          <div className="space-y-0">
-                            {/* Metric number display */}
-                            <div className="flex justify-center mb-1">
-                              <div className="metric-display-fun">
-                                {policyIntensities[policy.id] !== undefined ? policyIntensities[policy.id] : 50}%
-                              </div>
-                            </div>
-                            <div className="relative">
-                              <input
-                                type="range"
-                                min="0"
-                                max="100"
-                                value={policyIntensities[policy.id] !== undefined ? policyIntensities[policy.id] : 50}
-                                onChange={(e) => handlePolicyIntensityChange(policy.id, parseInt(e.target.value))}
-                                className="w-full fun-slider appearance-none cursor-pointer"
-                                style={
-                                  policyIntensities[policy.id] !== undefined ? {
-                                  background: (() => {
-                                      const value = policyIntensities[policy.id];
-                                      const center = 50;
-                                      if (value > center) {
-                                        return `linear-gradient(to right, #e2e8f0 0%, #e2e8f0 ${center}%, #facc15 ${center}%, #facc15 ${value}%, #e2e8f0 ${value}%, #e2e8f0 100%)`;
-                                    } else {
-                                        return `linear-gradient(to right, #e2e8f0 0%, #e2e8f0 ${value}%, #facc15 ${value}%, #facc15 ${center}%, #e2e8f0 ${center}%, #e2e8f0 100%)`;
-                                    }
-                                  })()
-                                  } : {
-                                    background: '#e2e8f0'
-                                  }
-                                }
-                              />
-                              {/* Center indicator */}
-                              <div 
-                                className="absolute top-1/2 transform -translate-y-1/2 w-0.5 h-4 bg-slate-400 pointer-events-none"
-                                style={{
-                                  left: '50%'
-                                }}
-                              ></div>
-                            </div>
-                            <div className="relative">
-                              <div className="flex justify-between items-center text-xs text-white">
-                                <span>{policy.id === 'EDUC_AUTONOMY' ? '0%' : policy.id === 'AI_CAREER_PATH' ? '0' : '0%'}</span>
-                                <span className="status-quo-fun">status quo</span>
-                                <span>{policy.id === 'EDUC_AUTONOMY' ? '100%' : policy.id === 'AI_CAREER_PATH' ? '10' : '50%'}</span>
-                              </div>
+                          <div className="space-y-2">
+                            {/* Low/Moderate/High buttons */}
+                            <div className="flex space-x-1">
+                              <button
+                                onClick={() => handlePolicyIntensityChange(policy.id, 25)}
+                                className={`flex-1 px-2 py-1 text-xs rounded font-semibold transition-all duration-200 ${
+                                  (policyIntensities[policy.id] || 50) <= 33
+                                    ? 'bg-green-500 text-white shadow-lg'
+                                    : 'bg-white/20 text-white hover:bg-white/30'
+                                }`}
+                              >
+                                Low
+                              </button>
+                              <button
+                                onClick={() => handlePolicyIntensityChange(policy.id, 50)}
+                                className={`flex-1 px-2 py-1 text-xs rounded font-semibold transition-all duration-200 ${
+                                  (policyIntensities[policy.id] || 50) > 33 && (policyIntensities[policy.id] || 50) <= 66
+                                    ? 'bg-yellow-500 text-white shadow-lg'
+                                    : 'bg-white/20 text-white hover:bg-white/30'
+                                }`}
+                              >
+                                Moderate
+                              </button>
+                              <button
+                                onClick={() => handlePolicyIntensityChange(policy.id, 75)}
+                                className={`flex-1 px-2 py-1 text-xs rounded font-semibold transition-all duration-200 ${
+                                  (policyIntensities[policy.id] || 50) > 66
+                                    ? 'bg-red-500 text-white shadow-lg'
+                                    : 'bg-white/20 text-white hover:bg-white/30'
+                                }`}
+                              >
+                                High
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -1364,14 +1333,14 @@ function App() {
 
                     {/* Column 3 - Research */}
                     <div className="space-y-1">
-                      <h3 className="text-xs font-bold text-white uppercase tracking-wide text-center pb-0.5 border-b-2 border-white/30 flex items-center justify-center gap-1">
-                        <svg className="w-4 h-4 icon-rotate" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2.5-9H19V1h-2v1H7V1H5v1H4.5C3.67 2 3 2.67 3 3.5v15c0 .83.67 1.5 1.5 1.5h15c.83 0 1.5-.67 1.5-1.5v-15c0-.83-.67-1.5-1.5-1.5zM19 18.5H5V8h14v10.5z"/>
+                      <h3 className="text-sm font-bold text-black uppercase tracking-wide text-center pb-2 border-b-2 border-gray-300 flex items-center justify-center gap-2 mb-3">
+                        <svg className="w-5 h-5 icon-animated" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/>
                         </svg>
-                        <span>Research</span>
+                        <span>Research Advisor</span>
                       </h3>
                       {Object.values(policyDefinitions).filter(policy => 
-                        ['INNOV_SANDBOX', 'MODEL_EVAL_STD', 'INTEROP_STD'].includes(policy.id)
+                        ['INNOV_SANDBOX', 'MODEL_EVAL_STD', 'ACCESS_STD'].includes(policy.id)
                       ).map((policy) => (
                         <div key={policy.id} className="policy-card-fun research-theme p-1.5 shadow-lg relative interactive-hover">
                           <div className="mb-0.5 flex items-center justify-between">
@@ -1386,51 +1355,39 @@ function App() {
                             </button>
                           </div>
                           
-                          <div className="space-y-0">
-                            {/* Metric number display */}
-                            <div className="flex justify-center mb-1">
-                              <div className="metric-display-fun">
-                                {policyIntensities[policy.id] !== undefined ? policyIntensities[policy.id] : 50}%
-                              </div>
-                            </div>
-                            <div className="relative">
-                              <input
-                                type="range"
-                                min="0"
-                                max="100"
-                                value={policyIntensities[policy.id] !== undefined ? policyIntensities[policy.id] : 50}
-                                onChange={(e) => handlePolicyIntensityChange(policy.id, parseInt(e.target.value))}
-                                className="w-full fun-slider appearance-none cursor-pointer"
-                                style={
-                                  policyIntensities[policy.id] !== undefined ? {
-                                  background: (() => {
-                                      const value = policyIntensities[policy.id];
-                                      const center = 50;
-                                      if (value > center) {
-                                        return `linear-gradient(to right, #e2e8f0 0%, #e2e8f0 ${center}%, #facc15 ${center}%, #facc15 ${value}%, #e2e8f0 ${value}%, #e2e8f0 100%)`;
-                                    } else {
-                                        return `linear-gradient(to right, #e2e8f0 0%, #e2e8f0 ${value}%, #facc15 ${value}%, #facc15 ${center}%, #e2e8f0 ${center}%, #e2e8f0 100%)`;
-                                    }
-                                  })()
-                                  } : {
-                                    background: '#e2e8f0'
-                                  }
-                                }
-                              />
-                              {/* Center indicator */}
-                              <div 
-                                className="absolute top-1/2 transform -translate-y-1/2 w-0.5 h-4 bg-slate-400 pointer-events-none"
-                                style={{
-                                  left: '50%'
-                                }}
-                              ></div>
-                            </div>
-                            <div className="relative">
-                              <div className="flex justify-between items-center text-xs text-white">
-                                <span>{policy.id === 'COMM_INPUT' ? '0' : policy.id === 'LOCAL_JOB_ALIGN' ? '0' : '0%'}</span>
-                                <span className="status-quo-fun">status quo</span>
-                                <span>{policy.id === 'COMM_INPUT' ? '24' : policy.id === 'LOCAL_JOB_ALIGN' ? '200' : '100%'}</span>
-                              </div>
+                          <div className="space-y-2">
+                            {/* Low/Moderate/High buttons */}
+                            <div className="flex space-x-1">
+                              <button
+                                onClick={() => handlePolicyIntensityChange(policy.id, 25)}
+                                className={`flex-1 px-2 py-1 text-xs rounded font-semibold transition-all duration-200 ${
+                                  (policyIntensities[policy.id] || 50) <= 33
+                                    ? 'bg-green-500 text-white shadow-lg'
+                                    : 'bg-white/20 text-white hover:bg-white/30'
+                                }`}
+                              >
+                                Low
+                              </button>
+                              <button
+                                onClick={() => handlePolicyIntensityChange(policy.id, 50)}
+                                className={`flex-1 px-2 py-1 text-xs rounded font-semibold transition-all duration-200 ${
+                                  (policyIntensities[policy.id] || 50) > 33 && (policyIntensities[policy.id] || 50) <= 66
+                                    ? 'bg-yellow-500 text-white shadow-lg'
+                                    : 'bg-white/20 text-white hover:bg-white/30'
+                                }`}
+                              >
+                                Moderate
+                              </button>
+                              <button
+                                onClick={() => handlePolicyIntensityChange(policy.id, 75)}
+                                className={`flex-1 px-2 py-1 text-xs rounded font-semibold transition-all duration-200 ${
+                                  (policyIntensities[policy.id] || 50) > 66
+                                    ? 'bg-red-500 text-white shadow-lg'
+                                    : 'bg-white/20 text-white hover:bg-white/30'
+                                }`}
+                              >
+                                High
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -1440,21 +1397,6 @@ function App() {
                 </div>
               </div>
             </div>
-          )}
-
-          {activeTab === 'feedback' && (
-            <div className="p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">System Feedback Loops</h2>
-              <p className="text-gray-600">System feedback analysis coming soon...</p>
-            </div>
-          )}
-
-          {activeTab === 'insights' && (
-            <div className="p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Strategic Insights</h2>
-              <p className="text-gray-600">Strategic insights coming soon...</p>
-            </div>
-          )}
         </div>
       </div>
       
@@ -1484,11 +1426,11 @@ function App() {
         policyIntensities={policyIntensities}
       />
       
-             {/* Start Screen Modal */}
-       <StartScreenModal
-         isOpen={showStartScreen}
-         onClose={() => setShowStartScreen(false)}
-       />
+      {/* Start Screen Modal */}
+      <StartScreenModal
+        isOpen={showStartScreen}
+        onClose={() => setShowStartScreen(false)}
+      />
     </div>
   )
 }

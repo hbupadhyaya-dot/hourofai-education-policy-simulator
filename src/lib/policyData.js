@@ -22,19 +22,19 @@ export const policyDefinitions = {
     id: 'EDUC_AUTONOMY',
     name: 'Educator Autonomy',
     description: 'Giving teachers the freedom to choose their own AI adventure. Instead of forcing every teacher to use identical AI tools (boring!), this policy lets them pick what actually works for their teaching style and your learning needs. It\'s like having a playlist where each teacher can choose their own mix of traditional and AI-enhanced methods.',
-    stakeholder: 'Educational Institution Leader'
+    stakeholder: 'School Principal'
   },
   DIGITAL_CITIZEN: {
     id: 'DIGITAL_CITIZEN',
     name: 'Digital Citizenship',
     description: 'Learning to be a savvy, ethical navigator of the AI world. This is basically your survival guide for the AI age! You\'ll learn to spot when AI is being sketchy or biased, understand the difference between getting help and cheating, and develop the superpower of critical thinking in a world where AI can generate anything from essays to art.',
-    stakeholder: 'Educational Institution Leader'
+    stakeholder: 'School Principal'
   },
   ACCESS_STD: {
     id: 'ACCESS_STD',
     name: 'Accessibility Standards',
     description: 'Making sure AI doesn\'t leave anyone behind - like building ramps for the digital world. Whether you\'re dyslexic, speak multiple languages, or learn differently, AI tools should work FOR you, not against you. This policy ensures AI becomes your learning ally, offering features like real-time translation, text-to-speech, or visual aids - whatever helps you succeed.',
-    stakeholder: 'Educational Institution Leader'
+    stakeholder: 'Research & Ethics Advisor'
   },
   INNOV_SANDBOX: {
     id: 'INNOV_SANDBOX',
@@ -48,11 +48,11 @@ export const policyDefinitions = {
     description: 'The quality control checkpoint that keeps sketchy AI out of your classroom. Before any AI tool makes it to your school, it goes through something like a rigorous college admissions process. Is it accurate? Fair? Actually helpful for learning? Does it protect your privacy? Only the AI tools that pass these tough standards get the green light for classroom use.',
     stakeholder: 'Research & Ethics Advisor'
   },
-  INTEROP_STD: {
-    id: 'INTEROP_STD',
-    name: 'Interoperability Standards',
-    description: 'Making all your school\'s digital tools play nice together like a well-coordinated team. You know how annoying it is when apps don\'t sync or when you have to re-enter your info everywhere? This policy fixes that problem for school tech. Your gradebook, learning apps, and AI tutors will work together like a perfectly coordinated team, sharing information seamlessly while keeping everything secure.',
-    stakeholder: 'Research & Ethics Advisor'
+  AI_INTEGRATION: {
+    id: 'AI_INTEGRATION',
+    name: 'AI Integration',
+    description: 'Bringing AI tools directly into your daily learning experience. This policy determines how much AI becomes part of your regular classroom activities - from AI tutors that help with homework to smart writing assistants that improve your essays. It\'s like having a super-smart study buddy available 24/7, but only if your school decides to make it happen.',
+    stakeholder: 'School Principal'
   }
 };
 
@@ -123,16 +123,17 @@ const coefficients = {
     AI_VULNERABILITY_INDEX: -0.5,
     BUDGET_STRAIN: 0.2
   },
-  INTEROP_STD: {
-    AI_LITERACY: 0.1,
-    TEACHER_SATISFACTION: 0.4,
-    DIGITAL_EQUITY: 0.3,
-    AI_VULNERABILITY_INDEX: -0.5,
-    BUDGET_STRAIN: 0.1
+  AI_INTEGRATION: {
+    AI_LITERACY: 0.4,
+    TEACHER_SATISFACTION: 0.3,
+    DIGITAL_EQUITY: 0.4,
+    AI_VULNERABILITY_INDEX: -0.2,
+    BUDGET_STRAIN: 0.3
   }
 };
 
 // Calculate current metrics based on selected policies and their intensities
+// Simplified model: Direct coefficient application with intensity scaling
 export function calculateCurrentMetrics(selectedPolicies, policyIntensities) {
   const metrics = {
     AI_LITERACY: 50,
@@ -142,135 +143,42 @@ export function calculateCurrentMetrics(selectedPolicies, policyIntensities) {
     BUDGET_STRAIN: 50
   };
 
-  // Calculate direct impacts with enhanced responsiveness
+  // Calculate direct impacts with simple intensity scaling
   selectedPolicies.forEach(policyId => {
-    // Use standardized baseline for all policies (50%)
-    const baselineIntensities = {
-      PROTECT_STD: 50,
-      PD_FUNDS: 50,
-      INFRA_INVEST: 50,
-      EDUC_AUTONOMY: 50,
-      DIGITAL_CITIZEN: 50,
-      ACCESS_STD: 50,
-      INNOV_SANDBOX: 50,
-      MODEL_EVAL_STD: 50,
-      INTEROP_STD: 50
-    };
-    
-    const center = baselineIntensities[policyId] || 50;
-    const intensity = (policyIntensities[policyId] !== undefined) ? policyIntensities[policyId] : center;
+    const intensity = policyIntensities[policyId] || 50; // Default to 50% if not set
     const policyCoefficients = coefficients[policyId] || {};
     
-    // Enhanced intensity scaling relative to each policy's baseline
-    // Normalize so baseline -> 0, min/max -> approximately -1 / +1
-    const delta = intensity - center;
-    const denom = 50; // All policies now use standard 50 denominator
-    const normalizedIntensity = delta / denom; // roughly in [-1, 1]
-    
-    // Ensure policies at 0% still have realistic impacts
-    let intensityFactor;
-    if (Math.abs(normalizedIntensity) < 0.01) {
-      // Very close to baseline (50%) - minimal impact
-      intensityFactor = 0;
-    } else {
-      // Apply power scaling with safety bounds
-      const absValue = Math.abs(normalizedIntensity);
-      const powerValue = Math.min(absValue, 1.0); // Cap at 1.0 to prevent extreme values
-      intensityFactor = Math.sign(normalizedIntensity) * Math.pow(powerValue, 0.8);
-    }
+    // Simple intensity scaling: (intensity - 50) / 50
+    // Low (25%): -0.5, Moderate (50%): 0, High (75%): +0.5
+    const intensityFactor = (intensity - 50) / 50;
     
     Object.keys(metrics).forEach(metric => {
       if (policyCoefficients[metric]) {
-        // Apply more modest impact scaling with diminishing returns near caps
-        const baseImpact = policyCoefficients[metric] * intensityFactor * 20;
-        
-        // Calculate diminishing returns factor based on current metric value
-        let diminishingFactor = 1.0;
-        if (metric === 'BUDGET_STRAIN') {
-          // Budget strain can go higher, so apply diminishing returns from 80+
-          if (metrics[metric] > 80) {
-            const excess = metrics[metric] - 80;
-            diminishingFactor = Math.max(0.1, 1.0 - (excess / 20) * 0.9);
-          }
-        } else {
-          // Other metrics: apply diminishing returns from 70+
-          if (metrics[metric] > 70) {
-            const excess = metrics[metric] - 70;
-            diminishingFactor = Math.max(0.1, 1.0 - (excess / 20) * 0.9);
-          }
-        }
-        
-        // Ensure diminishing returns don't completely eliminate impacts at low values
-        // This prevents policies from becoming "invisible" at extreme settings
-        if (Math.abs(intensityFactor) > 0.5) {
-          diminishingFactor = Math.max(diminishingFactor, 0.3); // Minimum 30% impact for strong policies
-        }
-        
-        const impact = baseImpact * diminishingFactor;
+        // Direct application: coefficient * intensity factor * scaling factor
+        const impact = policyCoefficients[metric] * intensityFactor * 30;
         metrics[metric] += impact;
       }
     });
   });
 
-  // Calculate synergies between policies with enhanced effects
+  // Calculate key synergies and tensions - simplified for educational clarity
   selectedPolicies.forEach(policy1 => {
     selectedPolicies.forEach(policy2 => {
       if (policy1 !== policy2) {
-        // Use correct baseline for each policy in synergy calculations
-        const baselineIntensities = {
-      PROTECT_STD: 50,
-      PD_FUNDS: 50,
-      INFRA_INVEST: 50,
-      EDUC_AUTONOMY: 50,
-      DIGITAL_CITIZEN: 50,
-      ACCESS_STD: 50,
-      INNOV_SANDBOX: 50,
-      MODEL_EVAL_STD: 50,
-      INTEROP_STD: 50
-    };
-        
-        const i1 = (policyIntensities[policy1] !== undefined) ? policyIntensities[policy1] : (baselineIntensities[policy1] || 50);
-        const i2 = (policyIntensities[policy2] !== undefined) ? policyIntensities[policy2] : (baselineIntensities[policy2] || 50);
+        const i1 = policyIntensities[policy1] || 50;
+        const i2 = policyIntensities[policy2] || 50;
         const synergy = calculatePolicySynergy(policy1, policy2, i1, i2);
         
-        // Apply more modest synergy effects with diminishing returns
+        // Apply simple synergy effects
         Object.keys(synergy).forEach(metric => {
-          const baseSynergy = synergy[metric] * 1.0; // Reduced synergy multiplier
-          
-          // Calculate diminishing returns factor based on current metric value
-          let diminishingFactor = 1.0;
-          if (metric === 'BUDGET_STRAIN') {
-            // Budget strain can go higher, so apply diminishing returns from 80+
-            if (metrics[metric] > 80) {
-              const excess = metrics[metric] - 80;
-              diminishingFactor = Math.max(0.1, 1.0 - (excess / 20) * 0.9);
-            }
-          } else {
-            // Other metrics: apply diminishing returns from 70+
-            if (metric === 'BUDGET_STRAIN') {
-              if (metrics[metric] > 80) {
-                const excess = metrics[metric] - 80;
-                diminishingFactor = Math.max(0.1, 1.0 - (excess / 20) * 0.9);
-              }
-            } else {
-              if (metrics[metric] > 70) {
-                const excess = metrics[metric] - 70;
-                diminishingFactor = Math.max(0.1, 1.0 - (excess / 20) * 0.9);
-              }
-            }
-          }
-          
-          // Ensure synergies don't become completely invisible at extreme values
-          diminishingFactor = Math.max(diminishingFactor, 0.2); // Minimum 20% impact for synergies
-          
-          const finalSynergy = baseSynergy * diminishingFactor;
-          metrics[metric] += finalSynergy;
+          const impact = synergy[metric] * 15; // Simplified scaling
+          metrics[metric] += impact;
         });
       }
     });
   });
 
-  // Apply realistic bounds with diminishing returns near caps
+  // Apply simple bounds
   Object.keys(metrics).forEach(metric => {
     // Cap most metrics at 90, except budget strain which can go higher
     let maxCap = metric === 'BUDGET_STRAIN' ? 100 : 90;
@@ -288,116 +196,49 @@ export function calculateCurrentMetrics(selectedPolicies, policyIntensities) {
   return metrics;
 }
 
-// Helper function for policy synergies
+// Helper function for policy synergies - focused on key educational interactions
 export function calculatePolicySynergy(policy1, policy2, intensity1, intensity2) {
   const synergies = {
-    // --- Capacity & Training ---
-    'PD_FUNDS+DATA_ANALYTICS': { TEACHER_SATISFACTION: 0.15, DIGITAL_EQUITY: 0.2 },
-    'PD_FUNDS+DIGITAL_CITIZEN': { AI_LITERACY: 0.2 },
-    'PD_FUNDS+AI_INTEGRATION': { AI_LITERACY: 0.25, TEACHER_SATISFACTION: 0.15 },
-    'PD_FUNDS+INNOV_SANDBOX': { AI_LITERACY: 0.15 },
-    'PD_FUNDS+MODEL_EVAL_STD': { TEACHER_SATISFACTION: 0.1 },
-
-    // --- Technology Foundations ---
-    'INFRA_INVEST+ACCESS_STD': { DIGITAL_EQUITY: 0.25, AI_VULNERABILITY_INDEX: -0.1 },
-    'INFRA_INVEST+INTEROP_STD': { TEACHER_SATISFACTION: 0.15 },
-    'INFRA_INVEST+AI_INTEGRATION': { AI_LITERACY: 0.3, TEACHER_SATISFACTION: 0.2 },
-    'INFRA_INVEST+DIGITAL_CITIZEN': { DIGITAL_EQUITY: 0.2, AI_LITERACY: 0.15 },
-    'INFRA_INVEST+INNOV_SANDBOX': { AI_VULNERABILITY_INDEX: -0.1 },
-
-    // --- Trust, Governance & Safety ---
-    'COMM_INPUT+IMPACT_REP_STD': { DIGITAL_EQUITY: 0.1 },
-    'COMM_INPUT+PROTECT_STD': { DIGITAL_EQUITY: 0.1 },
-    'PROTECT_STD+MODEL_EVAL_STD': { AI_VULNERABILITY_INDEX: -0.3 },
-    'PROTECT_STD+ACCESS_STD': { DIGITAL_EQUITY: 0.2 },
-    'ACCESS_STD+DIGITAL_CITIZEN': { DIGITAL_EQUITY: 0.25 },
-    'IMPACT_REP_STD+MODEL_EVAL_STD': { DIGITAL_EQUITY: 0.1 },
-
-    // --- Innovation & Workforce Alignment ---
-    'AI_INTEGRATION+LOCAL_JOB_ALIGN': { AI_LITERACY: 0.25 },
-    'AI_INTEGRATION+INNOV_SANDBOX': { AI_LITERACY: 0.3, TEACHER_SATISFACTION: 0.15 },
-    'LOCAL_JOB_ALIGN+DATA_ANALYTICS': { AI_LITERACY: 0.1 },
-    'INNOV_SANDBOX+INTEROP_STD': { TEACHER_SATISFACTION: 0.1 },
-    'INNOV_SANDBOX+MODEL_EVAL_STD': { AI_VULNERABILITY_INDEX: -0.2 }
+    // Key Synergies - High Impact Educational Combinations
+    'PD_FUNDS+AI_INTEGRATION': { 
+      AI_LITERACY: 0.4, 
+      TEACHER_SATISFACTION: 0.3,
+      description: "High Teacher Training + High AI Integration = Maximum AI literacy gains"
+    },
+    'INFRA_INVEST+AI_INTEGRATION': { 
+      AI_LITERACY: 0.3, 
+      TEACHER_SATISFACTION: 0.2,
+      description: "Strong Infrastructure + AI Integration = Reliable AI learning"
+    },
+    'PROTECT_STD+MODEL_EVAL_STD': { 
+      AI_VULNERABILITY_INDEX: -0.4,
+      description: "High Protection + High Standards = Better security"
+    },
+    'DIGITAL_CITIZEN+AI_INTEGRATION': { 
+      AI_LITERACY: 0.3,
+      DIGITAL_EQUITY: 0.2,
+      description: "Digital Citizenship + AI Integration = Ethical AI use"
+    }
   };
 
-  // Tensions (negative or mixed effects) - Enhanced for realistic trade-offs
+  // Key Tensions - Clear Educational Trade-offs
   const tensions = {
-    // Infrastructure vs. Safety & Governance (Major Tensions)
     'INFRA_INVEST+PROTECT_STD': { 
-      TEACHER_SATISFACTION: -0.2,       // Teachers feel constrained by safety requirements
-      BUDGET_STRAIN: 0.25               // Safety measures add infrastructure costs
+      BUDGET_STRAIN: 0.3,
+      description: "High Infrastructure + High Protection = Budget strain but better security"
     },
-    'INFRA_INVEST+MODEL_EVAL_STD': { 
-      BUDGET_STRAIN: 0.2                // Additional compliance costs
-    },
-    'INFRA_INVEST+ACCESS_STD': { 
-      BUDGET_STRAIN: 0.15               // Accessibility features add costs
-    },
-
-    // Innovation vs. Safety & Governance (Core Tensions)
-    'INNOV_SANDBOX+PROTECT_STD': { 
-      TEACHER_SATISFACTION: -0.15,      // Teachers feel innovation is stifled
-      AI_VULNERABILITY_INDEX: -0.1      // But safety is improved
-    },
-    'INNOV_SANDBOX+MODEL_EVAL_STD': { 
-      TEACHER_SATISFACTION: -0.1        // Teachers feel constrained
-    },
-    'INNOV_SANDBOX+ACCESS_STD': { 
-      BUDGET_STRAIN: 0.1                // Additional compliance costs
-    },
-
-    // Autonomy vs. Safety & Governance (Control Tensions)
     'EDUC_AUTONOMY+PROTECT_STD': { 
-      TEACHER_SATISFACTION: -0.3        // Teachers lose autonomy due to safety requirements
+      TEACHER_SATISFACTION: -0.4,
+      description: "High Teacher Autonomy + High Protection Standards = Teacher satisfaction tension"
     },
-    'EDUC_AUTONOMY+MODEL_EVAL_STD': { 
-      TEACHER_SATISFACTION: -0.25       // Teachers feel micromanaged
-    },
-    'EDUC_AUTONOMY+ACCESS_STD': { 
-      TEACHER_SATISFACTION: -0.2        // Teachers feel constrained by accessibility rules
-    },
-
-    // AI Integration vs. Safety & Governance (AI-Specific Tensions)
-    'AI_INTEGRATION+PROTECT_STD': { 
-      TEACHER_SATISFACTION: -0.15,      // Teachers feel constrained in AI use
-      AI_VULNERABILITY_INDEX: -0.2      // But safety is significantly improved
-    },
-    'AI_INTEGRATION+MODEL_EVAL_STD': { 
-      TEACHER_SATISFACTION: -0.1        // Teachers feel constrained
-    },
-    'AI_INTEGRATION+ACCESS_STD': { 
-      BUDGET_STRAIN: 0.1                // Additional compliance costs
-    },
-
-    // Capacity & Resources (Resource Tensions)
     'PD_FUNDS+INFRA_INVEST': { 
-      BUDGET_STRAIN: 0.35,              // High spending on both creates budget pressure
-      TEACHER_SATISFACTION: -0.1        // Teachers may feel resources are misallocated
+      BUDGET_STRAIN: 0.4,
+      description: "High Teacher Training + High Infrastructure = Budget pressure"
     },
-    'PD_FUNDS+INNOV_SANDBOX': { 
-      BUDGET_STRAIN: 0.25,              // Innovation costs add to PD spending
-      TEACHER_SATISFACTION: -0.05       // Minor teacher dissatisfaction
-    },
-    'PD_FUNDS+COMM_INPUT': { 
-      TEACHER_SATISFACTION: -0.15       // Community input may conflict with PD priorities
-    },
-
-    // Community vs. Innovation (Social Tensions)
-    'COMM_INPUT+INNOV_SANDBOX': { 
-      TEACHER_SATISFACTION: -0.1        // Community concerns slow innovation
-    },
-    'COMM_INPUT+AI_INTEGRATION': { 
-      TEACHER_SATISFACTION: -0.1        // Teachers feel community pressure
-    },
-
-    // Data & Analytics vs. Privacy (Data Tensions)
-    'DATA_ANALYTICS+PROTECT_STD': { 
-      TEACHER_SATISFACTION: -0.1,       // Teachers feel constrained in data use
-      AI_VULNERABILITY_INDEX: -0.15     // But privacy is significantly improved
-    },
-    'DATA_ANALYTICS+MODEL_EVAL_STD': { 
-      TEACHER_SATISFACTION: -0.05       // Minor teacher constraint
+    'AI_INTEGRATION+PROTECT_STD': { 
+      TEACHER_SATISFACTION: -0.2,
+      AI_VULNERABILITY_INDEX: -0.3,
+      description: "AI Integration + Protection = Constrained but safer AI use"
     }
   };
 
@@ -406,17 +247,24 @@ export function calculatePolicySynergy(policy1, policy2, intensity1, intensity2)
   const synergyEffect = synergies[key1] || synergies[key2] || {};
   const tensionEffect = tensions[key1] || tensions[key2] || {};
 
-  // Enhanced scaling based on both policy intensities
+  // Simple scaling based on average intensity
   const avgIntensity = (intensity1 + intensity2) / 2;
-  const normalizedIntensity = (avgIntensity - 50) / 50;
-  const pairStrength = Math.sign(normalizedIntensity) * Math.pow(Math.abs(normalizedIntensity), 0.7);
+  const intensityFactor = (avgIntensity - 50) / 50; // -0.5 to +0.5
 
   const scaledEffect = {};
+  
+  // Apply synergies (positive effects)
   Object.entries(synergyEffect).forEach(([metric, value]) => {
-    scaledEffect[metric] = (scaledEffect[metric] || 0) + value * pairStrength * 10;
+    if (metric !== 'description') {
+      scaledEffect[metric] = (scaledEffect[metric] || 0) + value * intensityFactor;
+    }
   });
+  
+  // Apply tensions (negative effects)
   Object.entries(tensionEffect).forEach(([metric, value]) => {
-    scaledEffect[metric] = (scaledEffect[metric] || 0) + value * pairStrength * 10;
+    if (metric !== 'description') {
+      scaledEffect[metric] = (scaledEffect[metric] || 0) + value * intensityFactor;
+    }
   });
 
   return scaledEffect;
@@ -581,5 +429,83 @@ export function getStakeholderGroups() {
     'Community Representative': ['COMM_INPUT', 'IMPACT_REP_STD', 'LOCAL_JOB_ALIGN'],
     'EdTech Industry Representative': ['INTEROP_STD', 'INFRA_INVEST', 'ACCESS_STD'],
     'Research & Ethics Advisor': ['STATE_FED_PART', 'INNOV_SANDBOX', 'MODEL_EVAL_STD']
+  };
+}
+
+// Generate explanatory text for policy impacts - educational clarity focus
+export function getPolicyImpactExplanations(selectedPolicies, policyIntensities, currentMetrics) {
+  const explanations = [];
+  
+  // Helper function to get intensity level
+  const getIntensityLevel = (intensity) => {
+    if (intensity <= 33) return 'Low';
+    if (intensity <= 66) return 'Moderate';
+    return 'High';
+  };
+  
+  // Analyze each selected policy's impact
+  selectedPolicies.forEach(policyId => {
+    const intensity = policyIntensities[policyId] || 50;
+    const level = getIntensityLevel(intensity);
+    const policy = policyDefinitions[policyId];
+    const policyCoefficients = coefficients[policyId] || {};
+    
+    // Calculate what this policy contributed to each metric
+    // Map intensity to a factor: 25% -> 0.25, 50% -> 0.5, 75% -> 0.75
+    const intensityFactor = intensity / 100;
+    
+    Object.entries(policyCoefficients).forEach(([metric, coefficient]) => {
+      const impact = coefficient * intensityFactor * 30;
+      const metricName = outcomeMetrics[metric]?.name || metric;
+      
+      if (Math.abs(impact) > 0.1) { // Show impacts above 0.1 points
+        const direction = impact > 0 ? 'increased' : 'decreased';
+        const magnitude = Math.abs(impact).toFixed(1);
+        
+        explanations.push({
+          policy: policy.name,
+          intensity: level,
+          metric: metricName,
+          impact: impact,
+          explanation: `${policy.name} at ${level} intensity ${direction} ${metricName} by ${magnitude} points`
+        });
+      }
+    });
+  });
+  
+  // Analyze synergies and tensions
+  const synergyExplanations = [];
+  selectedPolicies.forEach(policy1 => {
+    selectedPolicies.forEach(policy2 => {
+      if (policy1 !== policy2) {
+        const i1 = policyIntensities[policy1] || 50;
+        const i2 = policyIntensities[policy2] || 50;
+        const synergy = calculatePolicySynergy(policy1, policy2, i1, i2);
+        
+        // Check for significant synergy effects
+        Object.entries(synergy).forEach(([metric, value]) => {
+          if (metric !== 'description' && Math.abs(value) > 0.1) {
+            const metricName = outcomeMetrics[metric]?.name || metric;
+            const direction = value > 0 ? 'synergy' : 'tension';
+            const policy1Name = policyDefinitions[policy1]?.name || policy1;
+            const policy2Name = policyDefinitions[policy2]?.name || policy2;
+            
+            synergyExplanations.push({
+              type: direction,
+              policies: `${policy1Name} + ${policy2Name}`,
+              metric: metricName,
+              impact: value,
+              explanation: `${direction === 'synergy' ? 'Working together' : 'Creating tension'}: ${policy1Name} and ${policy2Name} ${direction === 'synergy' ? 'boost' : 'reduce'} ${metricName}`
+            });
+          }
+        });
+      }
+    });
+  });
+  
+  return {
+    policyImpacts: explanations,
+    synergies: synergyExplanations.filter(s => s.type === 'synergy'),
+    tensions: synergyExplanations.filter(s => s.type === 'tension')
   };
 }
