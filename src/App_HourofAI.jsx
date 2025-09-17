@@ -1432,296 +1432,97 @@ const ExploreImpactsModal = ({ isOpen, onClose, selectedPolicies, policyIntensit
               )}
               </div>
 
-             {/* Direct Policy Impacts on Metrics - Organized by Outcome Metrics */}
+             {/* Direct Policy Impacts on Metrics */}
              <div className="space-y-6">
                <div className="text-center mb-6">
                  <h4 className="text-2xl font-bold text-slate-800 mb-2">Direct Policy Impacts on Metrics</h4>
-                 <p className="text-slate-600">How your policy choices affect the 5 key educational outcome metrics</p>
+                 <p className="text-slate-600">How each of your policy choices directly affects specific educational outcomes</p>
                </div>
                
-               {(() => {
-                 // Policy coefficients from the simulator
-                 const policyCoefficients = {
-                   'PROTECT_STD': { AI_LITERACY: 0.2, TEACHER_SATISFACTION: 0.1, DIGITAL_EQUITY: 0.3, AI_VULNERABILITY_INDEX: -0.5, BUDGET_STRAIN: 0.2 },
-                   'PD_FUNDS': { AI_LITERACY: 0.5, TEACHER_SATISFACTION: 0.5, DIGITAL_EQUITY: 0.4, AI_VULNERABILITY_INDEX: -0.3, BUDGET_STRAIN: 0.4 },
-                   'INFRA_INVEST': { AI_LITERACY: 0.3, TEACHER_SATISFACTION: 0.2, DIGITAL_EQUITY: 0.5, AI_VULNERABILITY_INDEX: -0.2, BUDGET_STRAIN: 0.5 },
-                   'EDUC_AUTONOMY': { AI_LITERACY: 0.2, TEACHER_SATISFACTION: 0.5, DIGITAL_EQUITY: 0.2, AI_VULNERABILITY_INDEX: 0.15, BUDGET_STRAIN: 0.1 },
-                   'DIGITAL_CITIZEN': { AI_LITERACY: 0.5, TEACHER_SATISFACTION: 0.1, DIGITAL_EQUITY: 0.5, AI_VULNERABILITY_INDEX: -0.3, BUDGET_STRAIN: 0.1 },
-                   'ACCESS_STD': { AI_LITERACY: 0.2, TEACHER_SATISFACTION: 0.1, DIGITAL_EQUITY: 0.5, AI_VULNERABILITY_INDEX: 0.0, BUDGET_STRAIN: 0.2 },
-                   'INNOV_SANDBOX': { AI_LITERACY: 0.3, TEACHER_SATISFACTION: 0.3, DIGITAL_EQUITY: 0.3, AI_VULNERABILITY_INDEX: -0.4, BUDGET_STRAIN: 0.3 },
-                   'MODEL_EVAL_STD': { AI_LITERACY: 0.1, TEACHER_SATISFACTION: 0.1, DIGITAL_EQUITY: 0.3, AI_VULNERABILITY_INDEX: -0.5, BUDGET_STRAIN: 0.2 },
-                   'AI_INTEGRATION': { AI_LITERACY: 0.4, TEACHER_SATISFACTION: 0.3, DIGITAL_EQUITY: 0.4, AI_VULNERABILITY_INDEX: -0.2, BUDGET_STRAIN: 0.3 }
-                 }
-                 
-                 const metrics = [
-                   { key: 'AI_LITERACY', name: 'AI Literacy', icon: '🎓', color: 'blue', description: 'Student competency in AI tools and concepts' },
-                   { key: 'TEACHER_SATISFACTION', name: 'Teacher Morale', icon: '👩‍🏫', color: 'green', description: 'Educator comfort and engagement with AI tools' },
-                   { key: 'DIGITAL_EQUITY', name: 'Digital Fairness', icon: '⚖️', color: 'purple', description: 'Equal access to AI education across different demographics' },
-                   { key: 'AI_VULNERABILITY_INDEX', name: 'AI Vulnerability', icon: '🛡️', color: 'orange', description: 'Risk assessment and safety in AI usage (lower is better)' },
-                   { key: 'BUDGET_STRAIN', name: 'Budget Strain', icon: '💰', color: 'red', description: 'Financial pressure on district resources' }
-                 ]
-                 
-                 const [openAccordions, setOpenAccordions] = React.useState(new Set(['AI_LITERACY']))
-                 
-                 const toggleAccordion = (metricKey) => {
-                   const newOpen = new Set(openAccordions)
-                   if (newOpen.has(metricKey)) {
-                     newOpen.delete(metricKey)
-                   } else {
-                     newOpen.add(metricKey)
-                   }
-                   setOpenAccordions(newOpen)
-                 }
-                 
-                 return (
-                <div className="space-y-4">
-                     {metrics.map(metric => {
-                       const isOpen = openAccordions.has(metric.key)
-                       
-                       // Find policies that affect this metric
-                       const affectingPolicies = selectedPolicies.filter(policyId => {
-                         const coefficients = policyCoefficients[policyId] || {}
-                         return Math.abs(coefficients[metric.key] || 0) > 0.05
-                       }).map(policyId => {
-                         const policy = policyDefinitions[policyId]
-                         const intensity = policyIntensities[policyId] || 50
-                         const coefficient = policyCoefficients[policyId]?.[metric.key] || 0
-                         const intensityFactor = (intensity - 50) / 50
-                         const impactValue = coefficient * intensityFactor * 30
-                         const displayImpact = impactValue > 0 ? `+${Math.round(Math.abs(impactValue))}%` : `-${Math.round(Math.abs(impactValue))}%`
+               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                 {selectedPolicies.map(policyId => {
+                   const policy = policyDefinitions[policyId]
+                   const intensity = policyIntensities[policyId] || 50
+                   
+                   if (!policy) return null
+                   
+                   // Calculate direct impacts based on policy and intensity
+                   const getDirectImpacts = (policyId, intensity) => {
+                     const impacts = []
+                     
+                     switch(policyId) {
+                       case 'INFRA_INVEST':
+                         impacts.push({
+                           metric: 'Student AI Literacy',
+                           impact: intensity >= 70 ? '+25%' : intensity >= 40 ? '+15%' : '+8%',
+                           color: intensity >= 70 ? 'green' : intensity >= 40 ? 'blue' : 'yellow',
+                           explanation: intensity >= 70 ? 
+                             'High-speed, reliable AI infrastructure enables seamless student interaction with advanced AI tools, dramatically improving their technical fluency and comfort with AI systems.' :
+                             intensity >= 40 ?
+                             'Decent infrastructure supports regular AI tool usage, helping students develop solid foundational AI skills through consistent access.' :
+                             'Basic infrastructure allows limited AI tool access, providing students with introductory exposure to AI technologies.'
+                         })
+                         impacts.push({
+                           metric: 'Teacher Satisfaction',
+                           impact: intensity >= 70 ? '+30%' : intensity >= 40 ? '+18%' : '+5%',
+                           color: intensity >= 70 ? 'green' : intensity >= 40 ? 'blue' : 'yellow',
+                           explanation: intensity >= 70 ?
+                             'Excellent infrastructure means AI tools work flawlessly, eliminating technical frustrations and allowing teachers to focus on pedagogy rather than troubleshooting.' :
+                             intensity >= 40 ?
+                             'Reliable infrastructure reduces technical issues, making teachers more confident about integrating AI tools into their lessons.' :
+                             'Basic infrastructure provides some AI access but occasional technical problems may frustrate teachers trying to use AI tools effectively.'
+                         })
+                         impacts.push({
+                           metric: 'Budget Strain',
+                           impact: intensity >= 70 ? '+40%' : intensity >= 40 ? '+20%' : '+5%',
+                           color: intensity >= 70 ? 'red' : intensity >= 40 ? 'orange' : 'yellow',
+                           explanation: intensity >= 70 ?
+                             'Cutting-edge AI infrastructure requires massive upfront investment in servers, networking, and ongoing cloud computing costs that strain district budgets.' :
+                             intensity >= 40 ?
+                             'Moderate infrastructure investment creates noticeable budget impact through hardware purchases and increased internet bandwidth costs.' :
+                             'Basic infrastructure upgrades have minimal budget impact, using existing systems with minor enhancements for AI tool access.'
+                         })
+                         break
                          
-                         return {
-                           policy,
-                           policyId,
-                           intensity,
-                           coefficient,
-                           impactValue,
-                           displayImpact,
-                           color: impactValue > 15 ? 'green' : 
-                                  impactValue > 5 ? 'blue' :
-                                  impactValue > -5 ? 'yellow' :
-                                  impactValue > -15 ? 'orange' : 'red'
-                         }
-                       })
-                       
-                       if (affectingPolicies.length === 0) return null
-                       
-                       return (
-                         <div key={metric.key} className="bg-white rounded-lg border border-gray-200 shadow-sm">
-                           {/* Accordion Header */}
-                           <button
-                             onClick={() => toggleAccordion(metric.key)}
-                             className={`w-full p-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors ${
-                               metric.color === 'blue' ? 'border-l-4 border-blue-500' :
-                               metric.color === 'green' ? 'border-l-4 border-green-500' :
-                               metric.color === 'purple' ? 'border-l-4 border-purple-500' :
-                               metric.color === 'orange' ? 'border-l-4 border-orange-500' :
-                               'border-l-4 border-red-500'
-                             }`}
-                           >
-                             <div className="flex items-center space-x-3">
-                               <span className="text-2xl">{metric.icon}</span>
-                               <div>
-                                 <h5 className="text-lg font-bold text-slate-800">{metric.name}</h5>
-                                 <p className="text-sm text-slate-600">{metric.description}</p>
-                               </div>
-                             </div>
-                             <div className="flex items-center space-x-2">
-                               <span className="text-sm text-slate-500">{affectingPolicies.length} policies</span>
-                               <svg 
-                                 className={`w-5 h-5 transform transition-transform ${isOpen ? 'rotate-180' : ''}`} 
-                                 fill="none" 
-                                 stroke="currentColor" 
-                                 viewBox="0 0 24 24"
-                               >
-                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                               </svg>
-                             </div>
-                           </button>
-                           
-                           {/* Accordion Content */}
-                           {isOpen && (
-                             <div className="border-t border-gray-200 p-4">
-                               <div className="space-y-4">
-                                 {affectingPolicies.map(({ policy, policyId, intensity, coefficient, impactValue, displayImpact, color }) => (
-                                   <div key={policyId} className={`rounded-lg p-4 border ${
-                                     color === 'green' ? 'bg-green-50 border-green-200' :
-                                     color === 'blue' ? 'bg-blue-50 border-blue-200' :
-                                     color === 'yellow' ? 'bg-yellow-50 border-yellow-200' :
-                                     color === 'orange' ? 'bg-orange-50 border-orange-200' :
-                                     'bg-red-50 border-red-200'
-                                   }`}>
-                                     <div className="flex items-center justify-between mb-2">
-                                       <div className="flex items-center space-x-2">
-                                         <span className={`font-semibold ${
-                                           color === 'green' ? 'text-green-800' :
-                                           color === 'blue' ? 'text-blue-800' :
-                                           color === 'yellow' ? 'text-yellow-800' :
-                                           color === 'orange' ? 'text-orange-800' :
-                                           'text-red-800'
-                                         }`}>
-                                           {policy?.name || policyId}
-                                         </span>
-                                         <span className={`px-2 py-1 rounded-full text-xs font-bold ${
-                                           intensity >= 70 ? 'bg-red-100 text-red-800' :
-                                           intensity >= 40 ? 'bg-yellow-100 text-yellow-800' :
-                        'bg-green-100 text-green-800'
-                      }`}>
-                                           {intensity >= 70 ? 'High' : intensity >= 40 ? 'Moderate' : 'Low'} ({intensity}%)
-                      </span>
-                      </div>
-                                       <span className={`px-2 py-1 rounded-full text-sm font-bold ${
-                                         color === 'green' ? 'bg-green-200 text-green-800' :
-                                         color === 'blue' ? 'bg-blue-200 text-blue-800' :
-                                         color === 'yellow' ? 'bg-yellow-200 text-yellow-800' :
-                                         color === 'orange' ? 'bg-orange-200 text-orange-800' :
-                                         'bg-red-200 text-red-800'
-                                       }`}>
-                                         {displayImpact}
-                            </span>
-                                     </div>
-                                     <p className={`text-sm leading-relaxed ${
-                                       color === 'green' ? 'text-green-700' :
-                                       color === 'blue' ? 'text-blue-700' :
-                                       color === 'yellow' ? 'text-yellow-700' :
-                                       color === 'orange' ? 'text-orange-700' :
-                                       'text-red-700'
-                                     }`}>
-                                       {(() => {
-                                         const policyName = policy?.name || policyId
-                                         if (metric.key === 'AI_LITERACY') {
-                                           return intensity >= 70 ? 
-                                             `High-intensity ${policyName} dramatically improves student AI skills through comprehensive exposure to advanced AI tools and expert guidance.` :
-                                             intensity >= 40 ? 
-                                             `Moderate ${policyName} helps students develop solid foundational AI skills through regular access and adequate support.` :
-                                             `Basic ${policyName} provides students with introductory exposure to AI technologies and concepts.`
-                                         } else if (metric.key === 'TEACHER_SATISFACTION') {
-                                           return intensity >= 70 ?
-                                             `High-intensity ${policyName} significantly boosts teacher morale by providing excellent resources and support that makes their work more effective.` :
-                                             intensity >= 40 ?
-                                             `Moderate ${policyName} improves teacher satisfaction by addressing key concerns and providing meaningful support.` :
-                                             `Basic ${policyName} provides some teacher support that modestly improves satisfaction with AI education.`
-                                         } else if (metric.key === 'DIGITAL_EQUITY') {
-                                           return intensity >= 70 ?
-                                             `High-intensity ${policyName} dramatically improves educational equity by ensuring all students have equal access to AI opportunities.` :
-                                             intensity >= 40 ?
-                                             `Moderate ${policyName} makes meaningful progress toward digital equity by addressing key access barriers.` :
-                                             `Basic ${policyName} provides some equity improvements by reducing disparities in AI education access.`
-                                         } else if (metric.key === 'AI_VULNERABILITY_INDEX') {
-                                           if (coefficient < 0) {
-                                             return intensity >= 70 ?
-                                               `High-intensity ${policyName} significantly reduces AI risks through comprehensive protection and safety measures.` :
-                                               intensity >= 40 ?
-                                               `Moderate ${policyName} meaningfully reduces AI vulnerability through solid safety measures and risk mitigation.` :
-                                               `Basic ${policyName} provides some protection against AI risks and vulnerabilities.`
-                                           } else {
-                                             return intensity >= 70 ?
-                                               `High-intensity ${policyName} may increase some AI risks by prioritizing innovation over safety, requiring careful risk management.` :
-                                               intensity >= 40 ?
-                                               `Moderate ${policyName} introduces some AI vulnerability that must be balanced against benefits through complementary safety measures.` :
-                                               `Basic ${policyName} slightly increases AI vulnerability but the risk is minimal at this intensity level.`
-                                           }
-                                         } else if (metric.key === 'BUDGET_STRAIN') {
-                                           return intensity >= 70 ?
-                                             `High-intensity ${policyName} creates significant budget pressure through major investments that strain district finances.` :
-                                             intensity >= 40 ?
-                                             `Moderate ${policyName} requires noticeable budget allocation that impacts other priorities and requires careful planning.` :
-                                             `Basic ${policyName} has manageable budget impact that can be absorbed within normal district planning.`
-                                         }
-                                         return `${policyName} affects this metric based on implementation intensity and district context.`
-                                       })()}
-                                     </p>
-                                   </div>
-                                 ))}
-                               </div>
-                             </div>
-                           )}
-                         </div>
-                       )
-                     })}
-                   </div>
-                 )
-               })()}
-               </div>
-             </div>
-           </div>
-         </div>
-       </div>
-     </div>
-   )
- }
-
-// Simple Explore Impacts Modal Component
-const ExploreImpactsModal = ({ isOpen, onClose, selectedPolicies, policyIntensities }) => {
-  if (!isOpen) return null
-
-  // Helper functions to check policy intensities (shared by all analysis functions)
-  const isHigh = (policyId) => {
-    try {
-      return selectedPolicies && selectedPolicies.some(id => id === policyId && (policyIntensities[id] || 50) >= 70)
-    } catch (error) {
-      console.warn('Error in isHigh:', error)
-      return false
-    }
-  }
-  const isModerate = (policyId) => {
-    try {
-      return selectedPolicies && selectedPolicies.some(id => id === policyId && (policyIntensities[id] || 50) >= 40 && (policyIntensities[id] || 50) < 70)
-    } catch (error) {
-      console.warn('Error in isModerate:', error)
-      return false
-    }
-  }
-  const isLow = (policyId) => {
-    try {
-      return selectedPolicies && selectedPolicies.some(id => id === policyId && (policyIntensities[id] || 50) < 40)
-    } catch (error) {
-      console.warn('Error in isLow:', error)
-      return false
-    }
-  }
-  const isSelected = (policyId) => {
-    try {
-      return selectedPolicies && selectedPolicies.includes(policyId)
-    } catch (error) {
-      console.warn('Error in isSelected:', error)
-      return false
-    }
-  }
-
-  // Enhanced strategy classification
-  const getStrategy = () => {
-    const highPolicies = selectedPolicies.filter(policyId => (policyIntensities[policyId] || 50) >= 70)
-    const moderatePolicies = selectedPolicies.filter(policyId => (policyIntensities[policyId] || 50) >= 40 && (policyIntensities[policyId] || 50) < 70)
-    const lowPolicies = selectedPolicies.filter(policyId => (policyIntensities[policyId] || 50) < 40)
-    
-    // Check for specific policy combinations
-    const hasHighProtection = selectedPolicies.some(id => id === 'PROTECT_STD' && (policyIntensities[id] || 50) >= 70)
-    const hasHighEvaluation = selectedPolicies.some(id => id === 'MODEL_EVAL_STD' && (policyIntensities[id] || 50) >= 70)
-    const hasHighAccessibility = selectedPolicies.some(id => id === 'ACCESS_STD' && (policyIntensities[id] || 50) >= 70)
-    const hasHighInnovation = selectedPolicies.some(id => id === 'INNOV_SANDBOX' && (policyIntensities[id] || 50) >= 70)
-    const hasHighIntegration = selectedPolicies.some(id => id === 'AI_INTEGRATION' && (policyIntensities[id] || 50) >= 70)
-    const hasHighAutonomy = selectedPolicies.some(id => id === 'EDUC_AUTONOMY' && (policyIntensities[id] || 50) >= 70)
-    const hasHighInfrastructure = selectedPolicies.some(id => id === 'INFRA_INVEST' && (policyIntensities[id] || 50) >= 70)
-    const hasHighTraining = selectedPolicies.some(id => id === 'PD_FUNDS' && (policyIntensities[id] || 50) >= 70)
-
-    // Strategy classification logic
-    if (hasHighProtection && hasHighEvaluation && hasHighAccessibility) {
-      return { name: "Safety-First Approach", description: "You're prioritizing comprehensive protection and rigorous evaluation to build bulletproof AI systems.", icon: "🛡️", color: "blue" }
-    } else if (hasHighInnovation && hasHighIntegration && hasHighAutonomy) {
-      return { name: "Innovation Leader", description: "You're pushing the boundaries with cutting-edge AI tools and teacher freedom to experiment.", icon: "🚀", color: "purple" }
-    } else if (moderatePolicies.length >= selectedPolicies.length * 0.6) {
-      return { name: "Balanced Implementation", description: "You're taking a measured approach that balances innovation with practical constraints.", icon: "⚖️", color: "green" }
-    } else if (lowPolicies.length >= 3 || (!hasHighInfrastructure && !hasHighTraining)) {
-      return { name: "Budget-Conscious", description: "You're focusing on low-cost, high-impact strategies that maximize value with limited resources.", icon: "💰", color: "yellow" }
-    } else if (hasHighTraining && hasHighAutonomy) {
-      return { name: "Teacher-Centered", description: "You're empowering educators with training and freedom to drive AI integration from the classroom.", icon: "👩‍🏫", color: "orange" }
-    } else if (hasHighAccessibility && hasHighInfrastructure) {
-      return { name: "Equity-Focused", description: "You're ensuring every student has access to high-quality AI tools regardless of their background.", icon: "🌟", color: "teal" }
-    } else {
-      return { name: "Exploratory Approach", description: "You're experimenting with different policy combinations to find what works best.", icon: "🔍", color: "gray" }
-    }
-  }
+                       case 'PD_FUNDS':
+                         impacts.push({
+                           metric: 'Teacher AI Competence',
+                           impact: intensity >= 70 ? '+35%' : intensity >= 40 ? '+20%' : '+8%',
+                           color: intensity >= 70 ? 'green' : intensity >= 40 ? 'blue' : 'yellow',
+                           explanation: intensity >= 70 ?
+                             'Comprehensive AI training programs create teacher experts who can seamlessly integrate AI tools, troubleshoot issues, and guide students in advanced AI applications.' :
+                             intensity >= 40 ?
+                             'Solid professional development gives teachers practical AI skills and confidence to use AI tools effectively in their classrooms.' :
+                             'Basic training provides teachers with introductory AI knowledge but may leave them uncertain about practical implementation.'
+                         })
+                         impacts.push({
+                           metric: 'Student AI Literacy',
+                           impact: intensity >= 70 ? '+28%' : intensity >= 40 ? '+15%' : '+6%',
+                           color: intensity >= 70 ? 'green' : intensity >= 40 ? 'blue' : 'yellow',
+                           explanation: intensity >= 70 ?
+                             'Expert teachers create rich AI learning experiences, teaching students not just how to use AI tools but how to think critically about AI capabilities and limitations.' :
+                             intensity >= 40 ?
+                             'Well-trained teachers can guide students through meaningful AI experiences, helping them develop practical AI skills and understanding.' :
+                             'Teachers with basic AI training can introduce students to AI concepts but may struggle with deeper AI literacy development.'
+                         })
+                         impacts.push({
+                           metric: 'Implementation Speed',
+                           impact: intensity >= 70 ? '+25%' : intensity >= 40 ? '+12%' : '+3%',
+                           color: intensity >= 70 ? 'green' : intensity >= 40 ? 'blue' : 'yellow',
+                           explanation: intensity >= 70 ?
+                             'Extensively trained teachers can rapidly adopt and implement new AI tools, accelerating district-wide AI integration timelines.' :
+                             intensity >= 40 ?
+                             'Trained teachers feel confident implementing AI tools at a steady pace, supporting consistent progress in AI adoption.' :
+                             'Minimally trained teachers may hesitate to implement AI tools quickly, slowing overall district AI progress.'
+                         })
+                         break
+                         
+                       case 'AI_INTEGRATION':
+                         impacts.push({
+                           metric: 'Student AI Literacy',
+                           impact: intensity >= 70 ? '+30%' : intensity >= 40 ? '+18%' : '+7%',
+                           color: intensity >= 70 ? 'green' : intensity >= 40 ? 'blue' : 'yellow',
+                           explanation: intensity >= 70 ?
                              'Comprehensive AI integration across all subjects gives students daily experience with AI tools, developing sophisticated understanding of AI applications in different contexts.' :
                              intensity >= 40 ?
                              'Regular AI integration in multiple classes helps students build practical AI skills and see AI applications across different learning areas.' :
@@ -1967,11 +1768,11 @@ const ExploreImpactsModal = ({ isOpen, onClose, selectedPolicies, policyIntensit
                                <span className={`px-2 py-1 rounded-full text-xs font-bold ${
                                  intensity >= 70 ? 'bg-red-100 text-red-800' :
                                  intensity >= 40 ? 'bg-yellow-100 text-yellow-800' :
-                              'bg-green-100 text-green-800'
-                            }`}>
+                        'bg-green-100 text-green-800'
+                      }`}>
                                  {intensity >= 70 ? 'High' : intensity >= 40 ? 'Moderate' : 'Low'} ({intensity}%)
-                            </span>
-                              </div>
+                      </span>
+                             </div>
                            </div>
                            <div className="text-3xl opacity-60">
                              {policy.icon || '⚙️'}
