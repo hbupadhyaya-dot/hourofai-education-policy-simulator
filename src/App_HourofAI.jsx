@@ -88,6 +88,94 @@ function SpiderChart({ selectedPolicies, policyIntensities }) {
   )
 }
 
+// FAQ Modal component for dashboard guidance
+const FAQModal = ({ isOpen, onClose }) => {
+  if (!isOpen) return null
+
+  const faqItems = [
+    {
+      question: "How do I get started with the dashboard?",
+      answer: "Start by selecting policies from the three categories (District, School, Research). Click on any policy card to learn more about it, then adjust the intensity using the Low/Moderate/High buttons. Watch how your choices affect the outcome metrics in real-time."
+    },
+    {
+      question: "What do the charts show me?",
+      answer: "The Time Series Chart (left) shows how your selected policies will impact key metrics over 16 years (2025-2040). The Spider Chart (right) displays current impact levels across all five outcome metrics. Both update instantly as you adjust policy intensities."
+    },
+    {
+      question: "What are the five outcome metrics?",
+      answer: "• AI Literacy: How well students understand and work with AI\n• Teacher Satisfaction: How supported teachers feel with AI tools\n• Digital Equity: Fairness of AI tools across all student groups\n• AI Vulnerability Index: Security and safety of AI systems\n• Budget Strain: Financial costs vs. benefits of AI implementation"
+    },
+    {
+      question: "How do I adjust policy intensity?",
+      answer: "After selecting a policy, use the Low (25%), Moderate (50%), or High (75%) buttons. Low = conservative implementation, Moderate = balanced approach, High = aggressive implementation. Each level has different costs, benefits, and risks."
+    },
+    {
+      question: "What does 'Explore Impacts' do?",
+      answer: "This feature analyzes your policy combination and provides detailed insights about your strategy type (Safety-First, Innovation Leader, Balanced, etc.), strengths, weaknesses, and stakeholder perspectives. You need at least 3 selected policies to use this feature."
+    },
+    {
+      question: "How do I understand policy interactions?",
+      answer: "Some policies work better together (synergies) while others may conflict. The dashboard shows these relationships through the outcome metrics. For example, high Teacher Training often improves AI Literacy, while high Infrastructure Investment reduces Budget Strain over time."
+    },
+    {
+      question: "What if I want to start over?",
+      answer: "Click the 'Reset' button in the header to clear all your selections and return to the default state. This sets all policies back to 50% intensity and clears your selections."
+    },
+    {
+      question: "How accurate are these predictions?",
+      answer: "The simulator is based on current research and policy analysis, but real-world outcomes depend on many factors including implementation quality, local context, and unforeseen events. Use this as a planning tool, not a guarantee of specific results."
+    }
+  ]
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="p-6">
+          <div className="flex justify-between items-start mb-6">
+            <div>
+              <h2 className="text-2xl font-bold text-slate-800">Dashboard Guide & FAQ</h2>
+              <p className="text-slate-600 mt-1">Everything you need to know to use the AI Education Policy Simulator</p>
+            </div>
+            <button
+              onClick={onClose}
+              className="text-slate-400 hover:text-slate-600 text-2xl font-bold"
+            >
+              ×
+            </button>
+          </div>
+          
+          <div className="space-y-6">
+            {faqItems.map((item, index) => (
+              <div key={index} className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-6 border border-blue-200">
+                <h3 className="font-bold text-slate-800 text-lg mb-3 flex items-center">
+                  <span className="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">
+                    {index + 1}
+                  </span>
+                  {item.question}
+                </h3>
+                <p className="text-slate-700 leading-relaxed whitespace-pre-line">
+                  {item.answer}
+                </p>
+              </div>
+            ))}
+          </div>
+          
+          <div className="mt-8 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border border-green-200">
+            <h3 className="font-bold text-green-800 mb-2">💡 Pro Tips</h3>
+            <ul className="text-green-700 space-y-1 text-sm">
+              <li>• Start with 2-3 policies to see clear patterns before adding more</li>
+              <li>• Pay attention to how policies affect multiple metrics simultaneously</li>
+              <li>• Use the "Explore Impacts" feature to understand your strategy type</li>
+              <li>• Consider the trade-offs between different intensity levels</li>
+              <li>• Remember that real implementation takes time - the charts show long-term trends</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 // Enhanced Impact Explanation Modal component - combining stakeholder journey stories and multi-perspective analysis
 const ImpactExplanationModal = ({ isOpen, onClose, selectedPolicies, policyIntensities }) => {
   if (!isOpen) return null
@@ -2340,6 +2428,7 @@ function App() {
   const [impactExplanationModal, setImpactExplanationModal] = useState(false)
   const [showStartScreen, setShowStartScreen] = useState(false)
   const [showExploreImpacts, setShowExploreImpacts] = useState(false)
+  const [showFAQ, setShowFAQ] = useState(false)
   const defaultMetrics = {
     AI_LITERACY: 50,
     TEACHER_SATISFACTION: 50,
@@ -2612,6 +2701,16 @@ function App() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
                 <span>Explore Impacts</span>
+              </button>
+              <button
+                onClick={() => setShowFAQ(true)}
+                className="px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-lg font-semibold text-sm transition-all duration-300 flex items-center space-x-2 shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95"
+                title="Dashboard Guide & FAQ"
+              >
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-6h2v6zm0-8h-2V7h2v4z"/>
+                </svg>
+                <span>FAQ</span>
               </button>
               <button
                 onClick={() => setShowStartScreen(true)}
@@ -3053,6 +3152,12 @@ function App() {
       <StartScreenModal
         isOpen={showStartScreen}
         onClose={() => setShowStartScreen(false)}
+      />
+      
+      {/* FAQ Modal */}
+      <FAQModal
+        isOpen={showFAQ}
+        onClose={() => setShowFAQ(false)}
       />
     </div>
   )
