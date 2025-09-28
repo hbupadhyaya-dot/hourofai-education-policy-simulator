@@ -123,7 +123,7 @@ const FAQModal = ({ isOpen, onClose }) => {
     },
     {
       question: "How accurate are these predictions?",
-      answer: "The simulator is based on current research and policy analysis, but real-world outcomes depend on many factors including implementation quality, local context, and unforeseen events. Use this as a planning tool, not a guarantee of specific results."
+      answer: "This simulator is exploratory, not predictive. It uses simplified models to help you think through \"what if\" scenarios and understand how policies might work together or against each other. The numbers show directions and relationships, not future outcomes."
     }
   ]
 
@@ -1917,102 +1917,97 @@ const ExploreImpactsModal = ({ isOpen, onClose, selectedPolicies, policyIntensit
                {/* Policy Impact Summary */}
                <div className="bg-gradient-to-r from-slate-50 to-slate-100 rounded-lg p-6 border border-slate-200">
                  <h5 className="text-xl font-bold text-slate-800 mb-4 flex items-center">
-                   <span className="mr-2">📊</span>Overall Impact Summary
+                   <span className="mr-2">📊</span>Policy Impact Changes
                  </h5>
-                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                   {/* Calculate aggregate impacts */}
+                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                   {/* Use actual calculated metrics and show changes from baseline */}
                    {(() => {
-                     const aggregateImpacts = {
-                       'Student AI Literacy': 0,
-                       'Teacher Satisfaction': 0,
-                       'Community Trust': 0,
-                       'Budget Impact': 0
-                     }
-                     
-                     let studentLiteracyCount = 0
-                     let teacherSatisfactionCount = 0
-                     let communityTrustCount = 0
-                     let budgetCount = 0
-                     
-                     selectedPolicies.forEach(policyId => {
-                       const intensity = policyIntensities[policyId] || 50
-                       
-                       // Student AI Literacy contributors
-                       if (['INFRA_INVEST', 'PD_FUNDS', 'AI_INTEGRATION'].includes(policyId)) {
-                         aggregateImpacts['Student AI Literacy'] += intensity >= 70 ? 25 : intensity >= 40 ? 15 : 8
-                         studentLiteracyCount++
-                       }
-                       
-                       // Teacher Satisfaction contributors
-                       if (['INFRA_INVEST', 'EDUC_AUTONOMY'].includes(policyId)) {
-                         aggregateImpacts['Teacher Satisfaction'] += intensity >= 70 ? 30 : intensity >= 40 ? 18 : 6
-                         teacherSatisfactionCount++
-                       }
-                       
-                       // Community Trust contributors
-                       if (['PROTECT_STD'].includes(policyId)) {
-                         aggregateImpacts['Community Trust'] += intensity >= 70 ? 35 : intensity >= 40 ? 20 : 8
-                         communityTrustCount++
-                       }
-                       
-                       // Budget Impact (negative = strain)
-                       if (['INFRA_INVEST', 'PD_FUNDS', 'ACCESS_STD', 'INNOV_SANDBOX'].includes(policyId)) {
-                         aggregateImpacts['Budget Impact'] += intensity >= 70 ? 25 : intensity >= 40 ? 15 : 5
-                         budgetCount++
-                       }
-                     })
+                     const currentMetrics = calculateCurrentMetrics(selectedPolicies, policyIntensities)
+                     const baseline = 50 // All metrics start at 50
                      
                      return [
                        {
-                         metric: 'Student AI Literacy',
-                         value: studentLiteracyCount > 0 ? Math.round(aggregateImpacts['Student AI Literacy'] / studentLiteracyCount) : 0,
-                         color: 'green',
-                         icon: '🎓'
+                         metric: 'AI Literacy',
+                         value: Math.round(currentMetrics.AI_LITERACY - baseline),
+                         color: 'blue'
                        },
                        {
-                         metric: 'Teacher Satisfaction',
-                         value: teacherSatisfactionCount > 0 ? Math.round(aggregateImpacts['Teacher Satisfaction'] / teacherSatisfactionCount) : 0,
-                         color: 'blue',
-                         icon: '👩‍🏫'
+                         metric: 'Teacher Morale',
+                         value: Math.round(currentMetrics.TEACHER_SATISFACTION - baseline),
+                         color: 'amber'
                        },
                        {
-                         metric: 'Community Trust',
-                         value: communityTrustCount > 0 ? Math.round(aggregateImpacts['Community Trust']) : 0,
-                         color: 'purple',
-                         icon: '🤝'
+                         metric: 'Digital Fairness',
+                         value: Math.round(currentMetrics.DIGITAL_EQUITY - baseline),
+                         color: 'red'
+                       },
+                       {
+                         metric: 'AI Vulnerability',
+                         value: Math.round(currentMetrics.AI_VULNERABILITY_INDEX - baseline),
+                         color: 'pink'
                        },
                        {
                          metric: 'Budget Strain',
-                         value: budgetCount > 0 ? Math.round(aggregateImpacts['Budget Impact'] / budgetCount) : 0,
-                         color: 'orange',
-                         icon: '💰'
+                         value: Math.round(currentMetrics.BUDGET_STRAIN - baseline),
+                         color: 'gray'
                        }
                      ]
                    })().map((summary, index) => (
                      <div key={index} className={`rounded-lg p-4 border ${
-                       summary.color === 'green' ? 'bg-green-100 border-green-300' :
                        summary.color === 'blue' ? 'bg-blue-100 border-blue-300' :
-                       summary.color === 'purple' ? 'bg-purple-100 border-purple-300' :
-                       'bg-orange-100 border-orange-300'
+                       summary.color === 'amber' ? 'bg-amber-100 border-amber-300' :
+                       summary.color === 'red' ? 'bg-red-100 border-red-300' :
+                       summary.color === 'pink' ? 'bg-pink-100 border-pink-300' :
+                       'bg-gray-100 border-gray-300'
                      }`}>
                        <div className="flex items-center space-x-2 mb-2">
-                         <span className="text-2xl">{summary.icon}</span>
+                         <div className="w-8 h-8 flex items-center justify-center">
+                           <svg className={`w-6 h-6 ${
+                             summary.color === 'blue' ? 'text-blue-600' :
+                             summary.color === 'amber' ? 'text-amber-600' :
+                             summary.color === 'red' ? 'text-red-600' :
+                             summary.color === 'pink' ? 'text-pink-600' :
+                             'text-gray-600'
+                           }`} fill="currentColor" viewBox="0 0 24 24">
+                             {summary.metric === 'AI Literacy' ? (
+                               // Graduation cap/education icon
+                               <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/>
+                             ) : summary.metric === 'Teacher Morale' ? (
+                               // Smiley face icon
+                               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/>
+                             ) : summary.metric === 'Digital Fairness' ? (
+                               // Balanced scales icon
+                               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                             ) : summary.metric === 'AI Vulnerability' ? (
+                               // Shield with exclamation mark
+                               <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M11,7H13V13H11V7M11,15H13V17H11V15Z"/>
+                             ) : summary.metric === 'Budget Strain' ? (
+                               // Dollar sign/money icon
+                               <path d="M7,15H9C9,16.08 10.37,17 12,17C13.63,17 15,16.08 15,15C15,13.9 13.96,13.5 11.76,12.97C9.64,12.44 7,11.78 7,9C7,7.21 8.47,5.69 10.5,5.18V3H13.5V5.18C15.53,5.69 17,7.21 17,9H15C15,7.92 13.63,7 12,7C10.37,7 9,7.92 9,9C9,10.1 10.04,10.5 12.24,11.03C14.36,11.56 17,12.22 17,15C17,16.79 15.53,18.31 13.5,18.82V21H10.5V18.82C8.47,18.31 7,16.79 7,15Z"/>
+                             ) : (
+                               // Default chart icon
+                               <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/>
+                             )}
+                           </svg>
+                         </div>
                          <span className={`font-semibold text-sm ${
-                           summary.color === 'green' ? 'text-green-800' :
                            summary.color === 'blue' ? 'text-blue-800' :
-                           summary.color === 'purple' ? 'text-purple-800' :
-                           'text-orange-800'
+                           summary.color === 'amber' ? 'text-amber-800' :
+                           summary.color === 'red' ? 'text-red-800' :
+                           summary.color === 'pink' ? 'text-pink-800' :
+                           'text-gray-800'
                          }`}>
                            {summary.metric}
                          </span>
                        </div>
                        <div className={`text-2xl font-bold ${
-                         summary.color === 'green' ? 'text-green-800' :
                          summary.color === 'blue' ? 'text-blue-800' :
-                         summary.color === 'purple' ? 'text-purple-800' :
-                         'text-orange-800'
+                         summary.color === 'amber' ? 'text-amber-800' :
+                         summary.color === 'red' ? 'text-red-800' :
+                         summary.color === 'pink' ? 'text-pink-800' :
+                         'text-gray-800'
                        }`}>
-                         {summary.value > 0 ? `+${summary.value}%` : summary.value < 0 ? `${summary.value}%` : 'No Impact'}
+                         {summary.value > 0 ? `+${summary.value}%` : summary.value < 0 ? `${summary.value}%` : '0%'}
                       </div>
                     </div>
                   ))}
@@ -2148,7 +2143,7 @@ const PolicyModal = ({ isOpen, onClose, policyName, description, resources }) =>
 }
 
 // Start Screen Modal Component
-const StartScreenModal = ({ isOpen, onClose }) => {
+const StartScreenModal = ({ isOpen, onClose, activeObjectiveTab, setActiveObjectiveTab, expandedPhases, togglePhase }) => {
   if (!isOpen) return null
 
   return (
@@ -2183,153 +2178,480 @@ const StartScreenModal = ({ isOpen, onClose }) => {
           <div className="p-8">
             {/* Goal Section with Metrics Visual */}
             <div className="mb-8">
-              <h2 className="text-2xl font-bold text-slate-800 mb-4 flex items-center">
-                <span className="mr-3">🎯</span>Your Objective
-              </h2>
-              <div className="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-xl p-6 mb-6">
-                <p className="text-lg text-slate-700 mb-4">
-                  <strong>Keep all outcome metrics above 80, except:</strong>
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                    <span className="text-slate-700"><strong>Budget Strain:</strong> Keep under 70</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                    <span className="text-slate-700"><strong>AI Vulnerability:</strong> Keep under 40</span>
-                  </div>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-2xl font-bold text-slate-800 flex items-center">
+                  <span className="mr-3">🎯</span>Objectives
+                </h2>
+                
+                {/* Tab Navigation */}
+                <div className="flex bg-slate-100 rounded-lg p-1">
+                  <button
+                    onClick={() => setActiveObjectiveTab('objectives')}
+                    className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                      activeObjectiveTab === 'objectives'
+                        ? 'bg-white text-slate-800 shadow-sm'
+                        : 'text-slate-600 hover:text-slate-800'
+                    }`}
+                  >
+                    General Objectives
+                  </button>
+                  <button
+                    onClick={() => setActiveObjectiveTab('educator')}
+                    className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                      activeObjectiveTab === 'educator'
+                        ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg font-semibold'
+                        : activeObjectiveTab === 'objectives'
+                        ? 'bg-gradient-to-r from-orange-400 to-red-500 text-white shadow-md font-semibold hover:from-orange-500 hover:to-red-600 animate-pulse'
+                        : 'text-slate-600 hover:text-blue-600 hover:bg-blue-50'
+                    }`}
+                  >
+                    Educator Instructions
+                  </button>
                 </div>
-                <p className="text-sm text-slate-600">
-                  💡 <strong>Tip:</strong> Lower values for Budget Strain and AI Vulnerability are better!
-                </p>
               </div>
               
-              {/* Metrics Visual */}
-              <div className="bg-white rounded-xl border border-slate-200 p-6">
-                <h3 className="text-lg font-semibold text-slate-800 mb-4 text-center">Target Metrics Overview</h3>
-                <div className="grid grid-cols-4 gap-4">
-                  {/* AI Literacy */}
-                  <div className="text-center">
-                    <div className="relative w-16 h-16 mx-auto mb-2">
-                      <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
-                        <circle cx="32" cy="32" r="24" stroke="#e2e8f0" strokeWidth="4" fill="none" />
-                        <circle cx="32" cy="32" r="24" stroke="#10b981" strokeWidth="4" fill="none" strokeLinecap="round" strokeDasharray="150.8" strokeDashoffset="30.16" />
-                      </svg>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-sm font-bold text-slate-900">80</span>
+              {/* Tab Content */}
+              {activeObjectiveTab === 'objectives' && (
+                <div>
+                  <div className="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-xl p-6 mb-6">
+                    <p className="text-lg text-slate-700 mb-4">
+                      <strong>Keep all outcome metrics above 80, except:</strong>
+                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                        <span className="text-slate-700"><strong>Budget Strain:</strong> Keep under 70</span>
+                      </div>
+                      <div className="flex items-center space-x-3">
+                        <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                        <span className="text-slate-700"><strong>AI Vulnerability:</strong> Keep under 40</span>
                       </div>
                     </div>
-                    <div className="text-xs font-medium text-slate-600">AI Literacy</div>
-                    <div className="text-xs text-green-600 font-semibold">Target: &gt;80</div>
+                    <p className="text-sm text-slate-600">
+                      💡 <strong>Tip:</strong> Lower values for Budget Strain and AI Vulnerability are better!
+                    </p>
                   </div>
-                   
-                   {/* Community Trust */}
-                  <div className="text-center">
-                    <div className="relative w-16 h-16 mx-auto mb-2">
-                      <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
-                        <circle cx="32" cy="32" r="24" stroke="#e2e8f0" strokeWidth="4" fill="none" />
-                        <circle cx="32" cy="32" r="24" stroke="#10b981" strokeWidth="4" fill="none" strokeLinecap="round" strokeDasharray="150.8" strokeDashoffset="30.16" />
-                      </svg>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-sm font-bold text-slate-900">80</span>
-                      </div>
-                    </div>
-                     <div className="text-xs font-medium text-slate-600">Community Trust</div>
-                    <div className="text-xs text-green-600 font-semibold">Target: &gt;80</div>
-                  </div>
-                   
-                   {/* Innovation Index */}
-                  <div className="text-center">
-                    <div className="relative w-16 h-16 mx-auto mb-2">
-                      <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
-                        <circle cx="32" cy="32" r="24" stroke="#e2e8f0" strokeWidth="4" fill="none" />
-                        <circle cx="32" cy="32" r="24" stroke="#10b981" strokeWidth="4" fill="none" strokeLinecap="round" strokeDasharray="150.8" strokeDashoffset="30.16" />
-                      </svg>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-sm font-bold text-slate-900">80</span>
-                      </div>
-                    </div>
-                     <div className="text-xs font-medium text-slate-600">Innovation Index</div>
-                    <div className="text-xs text-green-600 font-semibold">Target: &gt;80</div>
-                  </div>
-                   
-                   {/* Teacher Morale */}
-                  <div className="text-center">
-                    <div className="relative w-16 h-16 mx-auto mb-2">
-                      <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
-                        <circle cx="32" cy="32" r="24" stroke="#e2e8f0" strokeWidth="4" fill="none" />
-                         <circle cx="32" cy="32" r="24" stroke="#10b981" strokeWidth="4" fill="none" strokeLinecap="round" strokeDasharray="150.8" strokeDashoffset="30.16" />
-                      </svg>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                         <span className="text-sm font-bold text-slate-900">80</span>
-                      </div>
-                    </div>
-                     <div className="text-xs font-medium text-slate-600">Teacher Morale</div>
-                     <div className="text-xs text-green-600 font-semibold">Target: &gt;80</div>
-                   </div>
-                   
-                   {/* Digital Equity */}
-                   <div className="text-center">
-                     <div className="relative w-16 h-16 mx-auto mb-2">
-                       <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
-                         <circle cx="32" cy="32" r="24" stroke="#e2e8f0" strokeWidth="4" fill="none" />
-                         <circle cx="32" cy="32" r="24" stroke="#10b981" strokeWidth="4" fill="none" strokeLinecap="round" strokeDasharray="150.8" strokeDashoffset="30.16" />
-                       </svg>
-                       <div className="absolute inset-0 flex items-center justify-center">
-                         <span className="text-sm font-bold text-slate-900">80</span>
-                       </div>
-                     </div>
-                     <div className="text-xs font-medium text-slate-600">Digital Equity</div>
-                     <div className="text-xs text-green-600 font-semibold">Target: &gt;80</div>
-                  </div>
-                   
-                  {/* Budget Strain */}
-                  <div className="text-center">
-                    <div className="relative w-16 h-16 mx-auto mb-2">
-                      <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
-                        <circle cx="32" cy="32" r="24" stroke="#e2e8f0" strokeWidth="4" fill="none" />
-                        <circle cx="32" cy="32" r="24" stroke="#ef4444" strokeWidth="4" fill="none" strokeLinecap="round" strokeDasharray="150.8" strokeDashoffset="105.56" />
-                      </svg>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-sm font-bold text-slate-900">70</span>
-                      </div>
-                    </div>
-                    <div className="text-xs font-medium text-slate-600">Budget Strain</div>
-                    <div className="text-xs text-red-600 font-semibold">Target: &lt;70</div>
-                  </div>
-                   
-                   {/* Employment Impact */}
-                   <div className="text-center">
-                     <div className="relative w-16 h-16 mx-auto mb-2">
-                       <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
-                         <circle cx="32" cy="32" r="24" stroke="#e2e8f0" strokeWidth="4" fill="none" />
-                         <circle cx="32" cy="32" r="24" stroke="#10b981" strokeWidth="4" fill="none" strokeLinecap="round" strokeDasharray="150.8" strokeDashoffset="30.16" />
-                       </svg>
-                       <div className="absolute inset-0 flex items-center justify-center">
-                         <span className="text-sm font-bold text-slate-900">80</span>
-                       </div>
-                     </div>
-                     <div className="text-xs font-medium text-slate-600">Employment Impact</div>
-                     <div className="text-xs text-green-600 font-semibold">Target: &gt;80</div>
-                   </div>
                   
-                  {/* AI Vulnerability */}
-                  <div className="text-center">
-                    <div className="relative w-16 h-16 mx-auto mb-2">
-                      <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
-                        <circle cx="32" cy="32" r="24" stroke="#e2e8f0" strokeWidth="4" fill="none" />
-                        <circle cx="32" cy="32" r="24" stroke="#ef4444" strokeWidth="4" fill="none" strokeLinecap="round" strokeDasharray="150.8" strokeDashoffset="96.8" />
-                      </svg>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-sm font-bold text-slate-900">40</span>
+                  {/* Metrics Visual */}
+                  <div className="bg-white rounded-xl border border-slate-200 p-6">
+                    <h3 className="text-lg font-semibold text-slate-800 mb-4 text-center">Target Metrics Overview</h3>
+                    <div className="grid grid-cols-5 gap-4">
+                      {/* AI Literacy */}
+                      <div className="text-center">
+                        <div className="relative w-16 h-16 mx-auto mb-2">
+                          <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
+                            <circle cx="32" cy="32" r="24" stroke="#e2e8f0" strokeWidth="4" fill="none" />
+                            <circle cx="32" cy="32" r="24" stroke="#10b981" strokeWidth="4" fill="none" strokeLinecap="round" strokeDasharray="150.8" strokeDashoffset="30.16" />
+                          </svg>
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <span className="text-sm font-bold text-slate-900">80</span>
+                          </div>
+                        </div>
+                        <div className="text-xs font-medium text-slate-600">AI Literacy</div>
+                        <div className="text-xs text-green-600 font-semibold">Target: &gt;80</div>
+                      </div>
+                       
+                      {/* Teacher Satisfaction */}
+                      <div className="text-center">
+                        <div className="relative w-16 h-16 mx-auto mb-2">
+                          <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
+                            <circle cx="32" cy="32" r="24" stroke="#e2e8f0" strokeWidth="4" fill="none" />
+                            <circle cx="32" cy="32" r="24" stroke="#10b981" strokeWidth="4" fill="none" strokeLinecap="round" strokeDasharray="150.8" strokeDashoffset="30.16" />
+                          </svg>
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <span className="text-sm font-bold text-slate-900">80</span>
+                          </div>
+                        </div>
+                        <div className="text-xs font-medium text-slate-600">Teacher Satisfaction</div>
+                        <div className="text-xs text-green-600 font-semibold">Target: &gt;80</div>
+                      </div>
+                       
+                      {/* Digital Equity */}
+                      <div className="text-center">
+                        <div className="relative w-16 h-16 mx-auto mb-2">
+                          <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
+                            <circle cx="32" cy="32" r="24" stroke="#e2e8f0" strokeWidth="4" fill="none" />
+                            <circle cx="32" cy="32" r="24" stroke="#10b981" strokeWidth="4" fill="none" strokeLinecap="round" strokeDasharray="150.8" strokeDashoffset="30.16" />
+                          </svg>
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <span className="text-sm font-bold text-slate-900">80</span>
+                          </div>
+                        </div>
+                        <div className="text-xs font-medium text-slate-600">Digital Equity</div>
+                        <div className="text-xs text-green-600 font-semibold">Target: &gt;80</div>
+                      </div>
+                       
+                      {/* Budget Strain */}
+                      <div className="text-center">
+                        <div className="relative w-16 h-16 mx-auto mb-2">
+                          <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
+                            <circle cx="32" cy="32" r="24" stroke="#e2e8f0" strokeWidth="4" fill="none" />
+                            <circle cx="32" cy="32" r="24" stroke="#10b981" strokeWidth="4" fill="none" strokeLinecap="round" strokeDasharray="150.8" strokeDashoffset="105.56" />
+                          </svg>
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <span className="text-sm font-bold text-slate-900">70</span>
+                          </div>
+                        </div>
+                        <div className="text-xs font-medium text-slate-600">Budget Strain</div>
+                        <div className="text-xs text-green-600 font-semibold">Target: &lt;70</div>
+                      </div>
+                       
+                      {/* AI Vulnerability */}
+                      <div className="text-center">
+                        <div className="relative w-16 h-16 mx-auto mb-2">
+                          <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 64 64">
+                            <circle cx="32" cy="32" r="24" stroke="#e2e8f0" strokeWidth="4" fill="none" />
+                            <circle cx="32" cy="32" r="24" stroke="#10b981" strokeWidth="4" fill="none" strokeLinecap="round" strokeDasharray="150.8" strokeDashoffset="96.8" />
+                          </svg>
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <span className="text-sm font-bold text-slate-900">40</span>
+                          </div>
+                        </div>
+                        <div className="text-xs font-medium text-slate-600">AI Vulnerability</div>
+                        <div className="text-xs text-green-600 font-semibold">Target: &lt;40</div>
                       </div>
                     </div>
-                    <div className="text-xs font-medium text-slate-600">AI Vulnerability</div>
-                    <div className="text-xs text-red-600 font-semibold">Target: &lt;40</div>
                   </div>
                 </div>
-              </div>
+              )}
+              
+              {/* Educator Instructions Tab */}
+              {activeObjectiveTab === 'educator' && (
+                <div className="bg-white rounded-xl border border-slate-200 shadow-sm">
+                  {/* Lesson Plan Header */}
+                  <div className="bg-gradient-to-r from-slate-700 to-slate-800 text-white p-6 rounded-t-xl">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="text-2xl font-bold mb-2">AI Policy Leaders</h3>
+                        <p className="text-slate-300 text-lg">Interactive Policy Design Lesson</p>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-sm text-slate-300">Grade Level: 8-12</div>
+                        <div className="text-sm text-slate-300">Duration: 60 minutes</div>
+                        <div className="text-sm text-slate-300">Subject: AP® U.S. Government and Politics / Social Studies</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Lesson Plan Content */}
+                  <div className="p-6">
+                    {/* Lesson Overview */}
+                    <div className="mb-8">
+                      <h4 className="text-xl font-bold text-slate-800 mb-4 border-b-2 border-blue-500 pb-2">Lesson Overview</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                          <h5 className="font-semibold text-blue-800 mb-2">Learning Objective</h5>
+                          <div className="text-slate-700 text-sm">
+                            <p className="mb-2">Students will be able to:</p>
+                            <ul className="list-disc list-inside space-y-1 ml-2">
+                              <li>Explain how various political actors influence AI education policy outcomes.</li>
+                              <li>Engage in participatory policy making processes.</li>
+                              <li>Evaluate AI education policies in terms of intended and unintended outcomes.</li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div className="space-y-4">
+                          <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                            <h5 className="font-semibold text-green-800 mb-2">Essential Question</h5>
+                            <p className="text-slate-700 text-sm">How can school districts balance innovation, safety, and fairness when implementing AI technologies?</p>
+                          </div>
+                          <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
+                            <h5 className="font-semibold text-purple-800 mb-2">21st Century Skills</h5>
+                            <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+                              <div className="text-slate-700 text-sm">• Critical Thinking</div>
+                              <div className="text-slate-700 text-sm">• Collaboration</div>
+                              <div className="text-slate-700 text-sm">• Systems Thinking</div>
+                              <div className="text-slate-700 text-sm">• Digital Literacy</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Standards & Goals */}
+                    <div className="mb-8">
+                      <h4 className="text-xl font-bold text-slate-800 mb-4 border-b-2 border-green-500 pb-2">Standards Alignment</h4>
+                      <div className="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                        <div className="text-sm text-slate-600 space-y-2">
+                          <div>
+                            <p className="font-medium text-slate-700">
+                              <a 
+                                href="https://apcentral.collegeboard.org/media/pdf/ap-us-government-and-politics-course-and-exam-description.pdf" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="text-blue-600 hover:text-blue-800 underline"
+                              >
+                                AP® U.S. Government and Politics
+                              </a>:
+                            </p>
+                            <ul className="ml-4 space-y-1">
+                              <li>• LO 5.7.A: Explain how various political actors influence public policy outcomes.</li>
+                              <li>• BIG IDEA 4: COMPETING POLICYMAKING INTERESTS --Multiple actors and institutions interact to produce and implement possible policies.</li>
+                            </ul>
+                          </div>
+                          <div>
+                            <p className="font-medium text-slate-700">
+                              <a 
+                                href="https://www.socialstudies.org/system/files/2022/c3-framework-for-social-studies-rev0617.2.pdf" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="text-blue-600 hover:text-blue-800 underline"
+                              >
+                                Social Studies
+                              </a>:
+                            </p>
+                            <ul className="ml-4 space-y-1">
+                              <li>• D2.Civ.13.9-12: Evaluate public policies in terms of intended and unintended outcomes, and related consequences.</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Materials & Setup */}
+                    <div className="mb-8">
+                      <h4 className="text-xl font-bold text-slate-800 mb-4 border-b-2 border-amber-500 pb-2">Materials & Setup</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                          <h5 className="font-semibold text-slate-800 mb-3">Required Materials</h5>
+                          <ul className="space-y-2 text-sm text-slate-600">
+                            <li className="flex items-start">
+                              <span className="text-blue-600 mr-2">•</span>
+                              <span>One device per team (laptop/tablet) with internet access</span>
+                            </li>
+                            <li className="flex items-start">
+                              <span className="text-blue-600 mr-2">•</span>
+                              <span>
+                                Printed <a 
+                                  href="https://drive.google.com/drive/folders/1pvDnESHIt1Yd_kJMsx-yf34rgg9ozMZU?usp=sharing" 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="text-blue-600 hover:text-blue-800 underline"
+                                >
+                                  role cards
+                                </a> (3 different roles per team)
+                              </span>
+                            </li>
+                            <li className="flex items-start">
+                              <span className="text-blue-600 mr-2">•</span>
+                              <span>Timer or stopwatch for phase management</span>
+                            </li>
+                          </ul>
+                        </div>
+                        <div>
+                            <h5 className="font-semibold text-slate-800 mb-3">Pre-Lesson Setup</h5>
+                            <ol className="space-y-2 text-sm text-slate-600">
+                              <li className="flex items-start">
+                                <span className="font-semibold text-blue-600 mr-2">1.</span>
+                                <span>Test the AI Education Policy Simulator</span>
+                              </li>
+                              <li className="flex items-start">
+                                <span className="font-semibold text-blue-600 mr-2">2.</span>
+                                <span>Watch the dashboard overview video</span>
+                              </li>
+                              <li className="flex items-start">
+                                <span className="font-semibold text-blue-600 mr-2">3.</span>
+                                <span>View example lesson plan</span>
+                              </li>
+                            </ol>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Lesson Timeline */}
+                    <div className="mb-8">
+                      <h4 className="text-xl font-bold text-slate-800 mb-4 border-b-2 border-purple-500 pb-2">Lesson Timeline</h4>
+                      <div className="space-y-4">
+                        {/* Phase 1 */}
+                        <div className="border border-slate-200 rounded-lg overflow-hidden">
+                          <div 
+                            className="bg-blue-100 p-4 border-b border-slate-200 cursor-pointer hover:bg-blue-200 transition-colors"
+                            onClick={() => togglePhase('phase1')}
+                          >
+                            <div className="flex items-center justify-between">
+                              <h5 className="font-bold text-blue-800 text-lg">Phase 1: Introduction</h5>
+                              <div className="flex items-center space-x-3">
+                                <span className="text-blue-600 text-lg font-bold">
+                                  {expandedPhases.phase1 ? '−' : '+'}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          {expandedPhases.phase1 && (
+                            <div className="p-4 bg-white">
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                  <h6 className="font-semibold text-slate-800 mb-2">Teacher Script</h6>
+                                  <div className="bg-blue-50 p-3 rounded border-l-4 border-blue-400">
+                                    <p className="italic text-slate-700 text-sm">"Today you're AI policy advisors designing future school systems. You'll use this dashboard to make real policy decisions and see their impact."</p>
+                                  </div>
+                                </div>
+                                <div>
+                                  <h6 className="font-semibold text-slate-800 mb-2">Student Activities</h6>
+                                  <ol className="space-y-1 text-sm text-slate-600">
+                                    <li>1. Demonstrate Dashboard and Policy Tradeoffs</li>
+                                    <li>2. Form District Teams & Distribute Role Cards</li>
+                                    <li>3. Review Team Goals</li>
+                                  </ol>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Phase 2 */}
+                        <div className="border border-slate-200 rounded-lg overflow-hidden">
+                          <div 
+                            className="bg-green-100 p-4 border-b border-slate-200 cursor-pointer hover:bg-green-200 transition-colors"
+                            onClick={() => togglePhase('phase2')}
+                          >
+                            <div className="flex items-center justify-between">
+                              <h5 className="font-bold text-green-800 text-lg">Phase 2: Policy Design</h5>
+                              <div className="flex items-center space-x-3">
+                                <span className="text-green-600 text-lg font-bold">
+                                  {expandedPhases.phase2 ? '−' : '+'}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          {expandedPhases.phase2 && (
+                            <div className="p-4 bg-white">
+                              <div className="space-y-3">
+                                <div className="flex items-start space-x-3">
+                                  <span className="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">1</span>
+                                  <div>
+                                    <h6 className="font-semibold text-slate-800 mb-1">Role Reading</h6>
+                                    <p className="text-sm text-slate-600">Teams read role cards and understand their priorities</p>
+                                  </div>
+                                </div>
+                                <div className="flex items-start space-x-3">
+                                  <span className="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">2</span>
+                                  <div>
+                                    <h6 className="font-semibold text-slate-800 mb-1">Policy Negotiation</h6>
+                                    <p className="text-sm text-slate-600">Teams negotiate policy choices using Low/Moderate/High options</p>
+                                  </div>
+                                </div>
+                                <div className="flex items-start space-x-3">
+                                  <span className="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">3</span>
+                                  <div>
+                                    <h6 className="font-semibold text-slate-800 mb-1">Dashboard Input</h6>
+                                    <p className="text-sm text-slate-600">Input decisions and review results against goals</p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="mt-3 bg-amber-50 p-3 rounded border-l-4 border-amber-400">
+                                <p className="text-sm text-amber-800"><strong>Teacher Note:</strong> Circulate and ask about trade-offs and goal achievement</p>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Phase 3 */}
+                        <div className="border border-slate-200 rounded-lg overflow-hidden">
+                          <div 
+                            className="bg-purple-100 p-4 border-b border-slate-200 cursor-pointer hover:bg-purple-200 transition-colors"
+                            onClick={() => togglePhase('phase3')}
+                          >
+                            <div className="flex items-center justify-between">
+                              <h5 className="font-bold text-purple-800 text-lg">Phase 3: Vision Statement</h5>
+                              <div className="flex items-center space-x-3">
+                                <span className="text-purple-600 text-lg font-bold">
+                                  {expandedPhases.phase3 ? '−' : '+'}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          {expandedPhases.phase3 && (
+                            <div className="p-4 bg-white">
+                              <div className="mb-4">
+                                <p className="text-slate-700 text-sm mb-4">
+                                  Ask students to articulate their thoughts in a vision statement, which they will later present. They may use the template below:
+                                </p>
+                              </div>
+                              <div className="bg-green-50 p-4 rounded border border-green-200">
+                                <h6 className="font-semibold text-green-800 mb-3">Vision Statement Template</h6>
+                                <div className="space-y-2 text-sm text-slate-700">
+                                  <p>"By 2035, our district's AI systems will <span className="bg-yellow-100 px-2 py-1 rounded font-medium">[core principle]</span>.</p>
+                                  <p>Our three most important commitments are:</p>
+                                  <p>1. <span className="bg-yellow-100 px-2 py-1 rounded font-medium">[Policy]</span> because <span className="bg-yellow-100 px-2 py-1 rounded font-medium">[reason]</span></p>
+                                  <p>2. <span className="bg-yellow-100 px-2 py-1 rounded font-medium">[Policy]</span> because <span className="bg-yellow-100 px-2 py-1 rounded font-medium">[reason]</span></p>
+                                  <p>3. <span className="bg-yellow-100 px-2 py-1 rounded font-medium">[Policy]</span> because <span className="bg-yellow-100 px-2 py-1 rounded font-medium">[reason]</span></p>
+                                  <p>Students can expect <span className="bg-yellow-100 px-2 py-1 rounded font-medium">[specific promises]</span>."</p>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Phase 4 */}
+                        <div className="border border-slate-200 rounded-lg overflow-hidden">
+                          <div 
+                            className="bg-orange-100 p-4 border-b border-slate-200 cursor-pointer hover:bg-orange-200 transition-colors"
+                            onClick={() => togglePhase('phase4')}
+                          >
+                            <div className="flex items-center justify-between">
+                              <h5 className="font-bold text-orange-800 text-lg">Phase 4: Presentations</h5>
+                              <div className="flex items-center space-x-3">
+                                <span className="text-orange-600 text-lg font-bold">
+                                  {expandedPhases.phase4 ? '−' : '+'}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          {expandedPhases.phase4 && (
+                            <div className="p-4 bg-white">
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                  <h6 className="font-semibold text-slate-800 mb-2">Presentation Format</h6>
+                                  <ul className="space-y-1 text-sm text-slate-600">
+                                    <li>• Teams present vision statements (2 minutes each)</li>
+                                    <li>• Show dashboard results and explain choices</li>
+                                    <li>• Audience asks one question per team</li>
+                                  </ul>
+                                </div>
+                                <div>
+                                  <h6 className="font-semibold text-slate-800 mb-2">Closing Reflection</h6>
+                                  <div className="bg-blue-50 p-3 rounded border-l-4 border-blue-400">
+                                    <p className="italic text-slate-700 text-sm">"How did this change your thinking about AI in schools?"</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Assessment & Extensions */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <h4 className="text-xl font-bold text-slate-800 mb-4 border-b-2 border-red-500 pb-2">Assessment</h4>
+                        <div className="bg-red-50 p-4 rounded-lg border border-red-200">
+                          <h5 className="font-semibold text-red-800 mb-2">Formative Assessment</h5>
+                          <ul className="space-y-1 text-sm text-slate-600">
+                            <li>• Observe team negotiations and decision-making</li>
+                            <li>• Review vision statements for understanding of trade-offs</li>
+                            <li>• Listen to presentations for policy reasoning</li>
+                            <li>• Note student questions and reflections</li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div>
+                        <h4 className="text-xl font-bold text-slate-800 mb-4 border-b-2 border-indigo-500 pb-2">Extensions</h4>
+                        <div className="bg-indigo-50 p-4 rounded-lg border border-indigo-200">
+                          <h5 className="font-semibold text-indigo-800 mb-2">Follow-up Activities</h5>
+                          <ul className="space-y-1 text-sm text-slate-600">
+                            <li>• Research actual school AI policies</li>
+                            <li>• Interview teachers about technology decisions</li>
+                            <li>• Compare policies across different districts</li>
+                            <li>• Create implementation timelines for chosen policies</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* How to Use Section */}
@@ -2410,7 +2732,7 @@ const StartScreenModal = ({ isOpen, onClose }) => {
 function App() {
   const [selectedPolicies, setSelectedPolicies] = useState([])
   const [policyIntensities, setPolicyIntensities] = useState({})
-  const [selectedTimeSeriesMetrics, setSelectedTimeSeriesMetrics] = useState(['AI_LITERACY'])
+  const [selectedTimeSeriesMetrics, setSelectedTimeSeriesMetrics] = useState(['AI_LITERACY', 'TEACHER_SATISFACTION', 'DIGITAL_EQUITY', 'AI_VULNERABILITY_INDEX', 'BUDGET_STRAIN'])
 
   // State initialization
   const [modalState, setModalState] = useState({
@@ -2426,9 +2748,23 @@ function App() {
     resources: ''
   })
   const [impactExplanationModal, setImpactExplanationModal] = useState(false)
-  const [showStartScreen, setShowStartScreen] = useState(false)
+  const [showStartScreen, setShowStartScreen] = useState(true)
   const [showExploreImpacts, setShowExploreImpacts] = useState(false)
   const [showFAQ, setShowFAQ] = useState(false)
+  const [activeObjectiveTab, setActiveObjectiveTab] = useState('objectives')
+  const [expandedPhases, setExpandedPhases] = useState({
+    phase1: false,
+    phase2: false,
+    phase3: false,
+    phase4: false
+  })
+
+  const togglePhase = (phase) => {
+    setExpandedPhases(prev => ({
+      ...prev,
+      [phase]: !prev[phase]
+    }))
+  }
   const defaultMetrics = {
     AI_LITERACY: 50,
     TEACHER_SATISFACTION: 50,
@@ -2582,7 +2918,7 @@ function App() {
       INTEROP_STD: 50
     })
     setSelectedPolicies([])
-    setSelectedTimeSeriesMetrics(['AI_LITERACY'])
+    setSelectedTimeSeriesMetrics(['AI_LITERACY', 'TEACHER_SATISFACTION', 'DIGITAL_EQUITY', 'AI_VULNERABILITY_INDEX', 'BUDGET_STRAIN'])
     setCurrentMetrics({
         AI_LITERACY: 50,
         TEACHER_SATISFACTION: 50,
@@ -2789,18 +3125,24 @@ function App() {
                                         className="w-4 h-4 rounded border-2 border-blue-300 text-blue-600 focus:ring-blue-500 focus:ring-2"
                                       />
                                       <span className="text-sm font-semibold flex items-center gap-2">
-                                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <svg className={`w-5 h-5 ${colors[metricId] || 'text-slate-700'}`} fill="currentColor" viewBox="0 0 24 24">
                                           {metricId === 'AI_LITERACY' ? (
-                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15V9h2v8h-2zm0-10V5h2v2h-2z"/>
+                                            // Graduation cap/education icon
+                                            <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/>
                                           ) : metricId === 'TEACHER_SATISFACTION' ? (
-                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.5 6l-7.5 7.5-3-3 1.5-1.5L8 12.5l6-6L15.5 8z"/>
+                                            // Smiley face icon
+                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/>
                                           ) : metricId === 'DIGITAL_EQUITY' ? (
-                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-3 14H7v-2h2v2zm0-4H7v-2h2v2zm0-4H7V6h2v2zm10 8h-8V8h8v8z"/>
+                                            // Balanced scales icon
+                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
                                           ) : metricId === 'AI_VULNERABILITY_INDEX' ? (
-                                            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+                                            // Shield with exclamation mark
+                                            <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M11,7H13V13H11V7M11,15H13V17H11V15Z"/>
                                           ) : metricId === 'BUDGET_STRAIN' ? (
-                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm0-4h-2V7h2v8z"/>
+                                            // Dollar sign/money icon
+                                            <path d="M7,15H9C9,16.08 10.37,17 12,17C13.63,17 15,16.08 15,15C15,13.9 13.96,13.5 11.76,12.97C9.64,12.44 7,11.78 7,9C7,7.21 8.47,5.69 10.5,5.18V3H13.5V5.18C15.53,5.69 17,7.21 17,9H15C15,7.92 13.63,7 12,7C10.37,7 9,7.92 9,9C9,10.1 10.04,10.5 12.24,11.03C14.36,11.56 17,12.22 17,15C17,16.79 15.53,18.31 13.5,18.82V21H10.5V18.82C8.47,18.31 7,16.79 7,15Z"/>
                                           ) : (
+                                            // Default chart icon
                                             <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/>
                                           )}
                                         </svg>
@@ -2864,18 +3206,31 @@ function App() {
                             <span className="text-xs font-bold">i</span>
                           </button>
                           <div className="metric-title">
-                            <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <svg className={`w-5 h-5 mr-2 ${
+                              metric === 'AI_LITERACY' ? 'text-blue-600' :
+                              metric === 'TEACHER_SATISFACTION' ? 'text-amber-600' :
+                              metric === 'DIGITAL_EQUITY' ? 'text-red-600' :
+                              metric === 'AI_VULNERABILITY_INDEX' ? 'text-pink-600' :
+                              metric === 'BUDGET_STRAIN' ? 'text-gray-600' :
+                              'text-slate-700'
+                            }`} fill="currentColor" viewBox="0 0 24 24">
                               {metric === 'AI_LITERACY' ? (
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15V9h2v8h-2zm0-10V5h2v2h-2z"/>
+                                // Graduation cap/education icon
+                                <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/>
                               ) : metric === 'TEACHER_SATISFACTION' ? (
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.5 6l-7.5 7.5-3-3 1.5-1.5L8 12.5l6-6L15.5 8z"/>
+                                // Smiley face icon
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/>
                               ) : metric === 'DIGITAL_EQUITY' ? (
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-3 14H7v-2h2v2zm0-4H7v-2h2v2zm0-4H7V6h2v2zm10 8h-8V8h8v8z"/>
+                                // Balanced scales icon
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
                               ) : metric === 'AI_VULNERABILITY_INDEX' ? (
-                                <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+                                // Shield with exclamation mark
+                                <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M11,7H13V13H11V7M11,15H13V17H11V15Z"/>
                               ) : metric === 'BUDGET_STRAIN' ? (
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm0-4h-2V7h2v8z"/>
+                                // Dollar sign/money icon
+                                <path d="M7,15H9C9,16.08 10.37,17 12,17C13.63,17 15,16.08 15,15C15,13.9 13.96,13.5 11.76,12.97C9.64,12.44 7,11.78 7,9C7,7.21 8.47,5.69 10.5,5.18V3H13.5V5.18C15.53,5.69 17,7.21 17,9H15C15,7.92 13.63,7 12,7C10.37,7 9,7.92 9,9C9,10.1 10.04,10.5 12.24,11.03C14.36,11.56 17,12.22 17,15C17,16.79 15.53,18.31 13.5,18.82V21H10.5V18.82C8.47,18.31 7,16.79 7,15Z"/>
                               ) : (
+                                // Default chart icon
                                 <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/>
                               )}
                             </svg>
@@ -3152,6 +3507,10 @@ function App() {
       <StartScreenModal
         isOpen={showStartScreen}
         onClose={() => setShowStartScreen(false)}
+        activeObjectiveTab={activeObjectiveTab}
+        setActiveObjectiveTab={setActiveObjectiveTab}
+        expandedPhases={expandedPhases}
+        togglePhase={togglePhase}
       />
       
       {/* FAQ Modal */}
