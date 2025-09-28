@@ -35,7 +35,7 @@ function TimeSeriesChart({ metricIds, selectedPolicies, policyIntensities }) {
     <div style={{ width: '100%', height: '100%' }}>
       <ResponsiveContainer>
         <LineChart data={data} margin={{ top: 10, right: 25, left: 10, bottom: 15 }}>
-          <XAxis dataKey="year" type="number" domain={['dataMin', 'dataMax']} ticks={[2025, 2028, 2031, 2034, 2037, 2040]} tick={{ fontSize: 11 }} />
+          <XAxis dataKey="year" type="number" domain={['dataMin', 'dataMax']} ticks={[2025, 2028, 2031, 2034, 2037, 2039]} tick={{ fontSize: 11 }} />
           <YAxis domain={[0, 100]} interval={0} ticks={[0, 20, 40, 60, 80, 100]} tick={{ fontSize: 11 }} />
           <Tooltip 
             formatter={(value, name) => [
@@ -99,7 +99,7 @@ const FAQModal = ({ isOpen, onClose }) => {
     },
     {
       question: "What do the charts show me?",
-      answer: "The Time Series Chart (left) shows how your selected policies will impact key metrics over 16 years (2025-2040). The Spider Chart (right) displays current impact levels across all five outcome metrics. Both update instantly as you adjust policy intensities."
+      answer: "The Time Series Chart (left) shows how your selected policies will impact key metrics over 15 years (2025-2039). The Spider Chart (right) displays current impact levels across all five outcome metrics. Both update instantly as you adjust policy intensities."
     },
     {
       question: "What are the five outcome metrics?",
@@ -2180,7 +2180,10 @@ const StartScreenModal = ({ isOpen, onClose, activeObjectiveTab, setActiveObject
             <div className="mb-8">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-2xl font-bold text-slate-800 flex items-center">
-                  <span className="mr-3">🎯</span>Objectives
+                  <svg className="w-6 h-6 mr-3 text-slate-700" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                  </svg>
+                  Objectives
                 </h2>
                 
                 {/* Tab Navigation */}
@@ -2189,8 +2192,8 @@ const StartScreenModal = ({ isOpen, onClose, activeObjectiveTab, setActiveObject
                     onClick={() => setActiveObjectiveTab('objectives')}
                     className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
                       activeObjectiveTab === 'objectives'
-                        ? 'bg-white text-slate-800 shadow-sm'
-                        : 'text-slate-600 hover:text-slate-800'
+                        ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg font-semibold'
+                        : 'bg-gradient-to-r from-orange-400 to-red-500 text-white shadow-md font-semibold hover:from-orange-500 hover:to-red-600'
                     }`}
                   >
                     General Objectives
@@ -2200,9 +2203,7 @@ const StartScreenModal = ({ isOpen, onClose, activeObjectiveTab, setActiveObject
                     className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
                       activeObjectiveTab === 'educator'
                         ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg font-semibold'
-                        : activeObjectiveTab === 'objectives'
-                        ? 'bg-gradient-to-r from-orange-400 to-red-500 text-white shadow-md font-semibold hover:from-orange-500 hover:to-red-600 animate-pulse'
-                        : 'text-slate-600 hover:text-blue-600 hover:bg-blue-50'
+                        : 'bg-gradient-to-r from-orange-400 to-red-500 text-white shadow-md font-semibold hover:from-orange-500 hover:to-red-600'
                     }`}
                   >
                     Educator Instructions
@@ -2213,23 +2214,33 @@ const StartScreenModal = ({ isOpen, onClose, activeObjectiveTab, setActiveObject
               {/* Tab Content */}
               {activeObjectiveTab === 'objectives' && (
                 <div>
-                  <div className="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-xl p-6 mb-6">
-                    <p className="text-lg text-slate-700 mb-4">
-                      <strong>Keep all outcome metrics above 80, except:</strong>
-                    </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                        <span className="text-slate-700"><strong>Budget Strain:</strong> Keep under 70</span>
+                  <div className="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-xl p-5 mb-4">
+                    <div className="flex items-center space-x-3 mb-4">
+                      <div className="flex items-center justify-center w-6 h-6 bg-green-100 rounded-full">
+                        <svg className="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
                       </div>
-                      <div className="flex items-center space-x-3">
-                        <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                        <span className="text-slate-700"><strong>AI Vulnerability:</strong> Keep under 40</span>
+                      <span className="text-sm text-slate-700">
+                        <strong>Target 80+ on all outcome metrics, except:</strong>
+                      </span>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <div className="bg-white rounded-lg p-3 border border-red-200">
+                        <div className="flex items-center space-x-4">
+                          <span className="font-semibold text-slate-800 text-sm">Budget Strain</span>
+                          <span className="text-red-600 font-semibold text-sm">⚠️ Don't exceed 70</span>
+                        </div>
+                      </div>
+                      
+                      <div className="bg-white rounded-lg p-3 border border-red-200">
+                        <div className="flex items-center space-x-4">
+                          <span className="font-semibold text-slate-800 text-sm">AI Vulnerability</span>
+                          <span className="text-red-600 font-semibold text-sm">⚠️ Don't exceed 40</span>
+                        </div>
                       </div>
                     </div>
-                    <p className="text-sm text-slate-600">
-                      💡 <strong>Tip:</strong> Lower values for Budget Strain and AI Vulnerability are better!
-                    </p>
                   </div>
                   
                   {/* Metrics Visual */}
@@ -2326,7 +2337,7 @@ const StartScreenModal = ({ isOpen, onClose, activeObjectiveTab, setActiveObject
                         <p className="text-slate-300 text-lg">Interactive Policy Design Lesson</p>
                       </div>
                       <div className="text-right">
-                        <div className="text-sm text-slate-300">Grade Level: 8-12</div>
+                        <div className="text-sm text-slate-300">Grade Level: 11-12</div>
                         <div className="text-sm text-slate-300">Duration: 60 minutes</div>
                         <div className="text-sm text-slate-300">Subject: AP® U.S. Government and Politics / Social Studies</div>
                       </div>
@@ -2361,7 +2372,7 @@ const StartScreenModal = ({ isOpen, onClose, activeObjectiveTab, setActiveObject
                               <div className="text-slate-700 text-sm">• Critical Thinking</div>
                               <div className="text-slate-700 text-sm">• Collaboration</div>
                               <div className="text-slate-700 text-sm">• Systems Thinking</div>
-                              <div className="text-slate-700 text-sm">• Digital Literacy</div>
+                              <div className="text-slate-700 text-sm">• Future Thinking</div>
                             </div>
                           </div>
                         </div>
@@ -2386,7 +2397,7 @@ const StartScreenModal = ({ isOpen, onClose, activeObjectiveTab, setActiveObject
                             </p>
                             <ul className="ml-4 space-y-1">
                               <li>• LO 5.7.A: Explain how various political actors influence public policy outcomes.</li>
-                              <li>• BIG IDEA 4: COMPETING POLICYMAKING INTERESTS --Multiple actors and institutions interact to produce and implement possible policies.</li>
+                              <li>• BIG IDEA 4: COMPETING POLICYMAKING INTERESTS — Multiple actors and institutions interact to produce and implement possible policies.</li>
                             </ul>
                           </div>
                           <div>
@@ -2451,7 +2462,7 @@ const StartScreenModal = ({ isOpen, onClose, activeObjectiveTab, setActiveObject
                               </li>
                               <li className="flex items-start">
                                 <span className="font-semibold text-blue-600 mr-2">3.</span>
-                                <span>View example lesson plan</span>
+                                <span>Read example lesson plan for reference</span>
                               </li>
                             </ol>
                         </div>
@@ -2479,20 +2490,35 @@ const StartScreenModal = ({ isOpen, onClose, activeObjectiveTab, setActiveObject
                           </div>
                           {expandedPhases.phase1 && (
                             <div className="p-4 bg-white">
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              <div className="space-y-4">
                                 <div>
                                   <h6 className="font-semibold text-slate-800 mb-2">Teacher Script</h6>
                                   <div className="bg-blue-50 p-3 rounded border-l-4 border-blue-400">
                                     <p className="italic text-slate-700 text-sm">"Today you're AI policy advisors designing future school systems. You'll use this dashboard to make real policy decisions and see their impact."</p>
                                   </div>
                                 </div>
-                                <div>
-                                  <h6 className="font-semibold text-slate-800 mb-2">Student Activities</h6>
-                                  <ol className="space-y-1 text-sm text-slate-600">
-                                    <li>1. Demonstrate Dashboard and Policy Tradeoffs</li>
-                                    <li>2. Form District Teams & Distribute Role Cards</li>
-                                    <li>3. Review Team Goals</li>
-                                  </ol>
+                                <div className="space-y-3">
+                                  <div className="flex items-start space-x-3">
+                                    <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">1</span>
+                                    <div>
+                                      <h6 className="font-semibold text-slate-800 mb-1">Demonstrate Dashboard and Policy Tradeoffs</h6>
+                                      <p className="text-sm text-slate-600">Show students how the simulator works and explain policy interactions</p>
+                                    </div>
+                                  </div>
+                                  <div className="flex items-start space-x-3">
+                                    <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">2</span>
+                                    <div>
+                                      <h6 className="font-semibold text-slate-800 mb-1">Form District Teams & Distribute <a href="https://drive.google.com/drive/folders/1pvDnESHIt1Yd_kJMsx-yf34rgg9ozMZU?usp=sharing" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">Role Cards</a></h6>
+                                      <p className="text-sm text-slate-600">Organize students into stakeholder groups and assign roles</p>
+                                    </div>
+                                  </div>
+                                  <div className="flex items-start space-x-3">
+                                    <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">3</span>
+                                    <div>
+                                      <h6 className="font-semibold text-slate-800 mb-1">Review Team Goals</h6>
+                                      <p className="text-sm text-slate-600">Each team understands their stakeholder priorities and objectives</p>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -2670,7 +2696,7 @@ const StartScreenModal = ({ isOpen, onClose, activeObjectiveTab, setActiveObject
                     <ul className="text-sm text-slate-600 space-y-2">
                       <li>• <strong>Top Section:</strong> View time series projections and radar charts showing how your policies affect metrics over time</li>
                       <li>• <strong>Bottom Section:</strong> Adjust policy levers organized by stakeholder groups</li>
-                      <li>• <strong>Metrics Display:</strong> Monitor 8 key outcome metrics that update instantly as you make policy changes</li>
+                      <li>• <strong>Metrics Display:</strong> Monitor 5 key outcome metrics that update instantly as you make policy changes</li>
                     </ul>
                   </div>
                   
@@ -2678,7 +2704,7 @@ const StartScreenModal = ({ isOpen, onClose, activeObjectiveTab, setActiveObject
                     <h3 className="font-semibold text-slate-800 mb-3">Exploring Policy Impacts</h3>
                     <ul className="text-sm text-slate-600 space-y-2">
                       <li>• Use the "Why these impacts" button to see detailed stories about how your policy choices create real change</li>
-                      <li>• Click the information buttons (i) on policies and metrics to access detailed explanations and research resources</li>
+                      <li>• Click the information buttons <span className="inline-flex items-center justify-center w-4 h-4 bg-blue-500 text-white rounded-full text-xs font-bold ml-1 mr-1">i</span> on policies and metrics to access detailed explanations and research resources</li>
                       <li>• Experiment with different policy combinations using the Reset button to start fresh</li>
                     </ul>
                   </div>
@@ -2700,7 +2726,7 @@ const StartScreenModal = ({ isOpen, onClose, activeObjectiveTab, setActiveObject
                 <div className="bg-slate-50 rounded-lg p-4 text-center">
                   <div className="text-2xl mb-2">📈</div>
                   <h3 className="font-semibold text-slate-800 mb-2">Time Series Analysis</h3>
-                  <p className="text-sm text-slate-600">Project impacts over 16 years into the future</p>
+                  <p className="text-sm text-slate-600">Project impacts over 15 years into the future</p>
                 </div>
                 <div className="bg-slate-50 rounded-lg p-4 text-center">
                   <div className="text-2xl mb-2">🎯</div>
@@ -3010,14 +3036,8 @@ function App() {
                   </svg>
               </div>
               <div>
-                  <h1 className="text-3xl font-bold text-slate-800 flex items-center gap-2">
-                    <svg className="w-8 h-8 text-blue-600 icon-animated" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/>
-                    </svg>
+                  <h1 className="text-3xl font-bold text-slate-800">
                     AI Education Policy Simulator
-                    <svg className="w-8 h-8 text-purple-600 icon-glow" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                    </svg>
                   </h1>
               </div>
             </div>
@@ -3054,7 +3074,7 @@ function App() {
                 title="Help & Instructions"
               >
                 <svg className="w-6 h-6 icon-pulse" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-6h2v6zm0-8h-2V7h2v4z"/>
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
                 </svg>
               </button>
               <button
