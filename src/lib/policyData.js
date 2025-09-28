@@ -20,7 +20,7 @@ export const policyDefinitions = {
   },
   EDUC_AUTONOMY: {
     id: 'EDUC_AUTONOMY',
-    name: 'Educator Autonomy',
+    name: 'Teacher Freedom',
     description: 'Giving teachers the freedom to choose their own AI adventure. Instead of forcing every teacher to use identical AI tools (boring!), this policy lets them pick what actually works for their teaching style and your learning needs. It\'s like having a playlist where each teacher can choose their own mix of traditional and AI-enhanced methods.',
     stakeholder: 'School Principal'
   },
