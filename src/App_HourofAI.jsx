@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo, useRef } from 'react'
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts'
 import { policyDefinitions, outcomeMetrics, calculateCurrentMetrics, generateTimeSeriesData } from './lib/policyData'
+import html2canvas from 'html2canvas'
+import jsPDF from 'jspdf'
 
 // Time Series Chart Component
 function TimeSeriesChart({ metricIds, selectedPolicies, policyIntensities }) {
@@ -115,7 +117,7 @@ const FAQModal = ({ isOpen, onClose }) => {
     },
     {
       question: "How do I understand policy interactions?",
-      answer: "Some policies work better together (synergies) while others may conflict. The dashboard shows these relationships through the outcome metrics. For example, high Teacher Training often improves AI Literacy, while high Infrastructure Investment reduces Budget Strain over time."
+      answer: "Some policies work better together (synergies) while others may conflict. The dashboard shows these relationships through the outcome metrics. For example, high Teacher Training often improves AI Literacy, while high Technology Infrastructure investment increases Budget Strain over time."
     },
     {
       question: "What if I want to start over?",
@@ -2687,7 +2689,7 @@ const StartScreenModal = ({ isOpen, onClose, activeObjectiveTab, setActiveObject
               </h2>
               <div className="bg-slate-50 rounded-xl p-6">
                 <p className="text-slate-700 mb-4">
-                  The simulator allows you to experiment with different AI education policy combinations by adjusting 15 policy levers across 5 stakeholder groups. As you move the sliders, you'll see real-time updates to 8 outcome metrics displayed as circular indicators at the bottom of the screen.
+                  The simulator allows you to experiment with different AI education policy combinations by adjusting 9 policy levers across 3 stakeholder groups. As you move the sliders, you'll see real-time updates to 5 outcome metrics displayed as circular indicators at the bottom of the screen.
                 </p>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
@@ -3023,8 +3025,115 @@ function App() {
     return resources[policyId] || 'Resources not available.'
   }
 
+  // Download functionality
+  const dashboardRef = useRef(null)
+  const exploreImpactsRef = useRef(null)
+
+  const downloadDashboardPDF = async () => {
+    try {
+      const pdf = new jsPDF('p', 'mm', 'a4')
+      
+      // Close any open dropdowns and modals before capture
+      const dropdowns = document.querySelectorAll('[data-state="open"]')
+      dropdowns.forEach(dropdown => {
+        if (dropdown.click) dropdown.click() // Close dropdown
+      })
+      
+      // Close any open select elements
+      const selects = document.querySelectorAll('select:focus, [role="combobox"]:focus')
+      selects.forEach(select => {
+        if (select.blur) select.blur()
+      })
+      
+      // Wait for UI to settle
+      await new Promise(resolve => setTimeout(resolve, 300))
+      
+      // Capture the main dashboard container specifically
+      const dashboardContainer = document.querySelector('.min-h-screen.playful-bg')
+      if (dashboardContainer) {
+        // Scroll to top to ensure we capture everything
+        window.scrollTo(0, 0)
+        await new Promise(resolve => setTimeout(resolve, 100))
+        
+        const canvas = await html2canvas(dashboardContainer, {
+          scale: 0.7,
+          useCORS: true,
+          allowTaint: true,
+          backgroundColor: '#ffffff',
+          logging: false,
+          width: dashboardContainer.scrollWidth,
+          height: dashboardContainer.scrollHeight,
+          scrollX: 0,
+          scrollY: 0,
+          windowWidth: window.innerWidth,
+          windowHeight: window.innerHeight
+        })
+        
+        console.log('Canvas dimensions:', canvas.width, 'x', canvas.height)
+        
+        const imgData = canvas.toDataURL('image/png', 1.0)
+        const imgWidth = 210 // A4 width in mm
+        const pageHeight = 295 // A4 height in mm
+        const imgHeight = (canvas.height * imgWidth) / canvas.width
+        let heightLeft = imgHeight
+
+        let position = 0
+
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight)
+        heightLeft -= pageHeight
+
+        while (heightLeft >= 0) {
+          position = heightLeft - imgHeight
+          pdf.addPage()
+          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight)
+          heightLeft -= pageHeight
+        }
+      }
+
+      // Add explore impacts if modal is open
+      if (showExploreImpacts && exploreImpactsRef.current) {
+        pdf.addPage()
+        const canvas = await html2canvas(exploreImpactsRef.current, {
+          scale: 0.8,
+          useCORS: true,
+          allowTaint: true,
+          backgroundColor: '#ffffff',
+          logging: false,
+          width: exploreImpactsRef.current.scrollWidth,
+          height: exploreImpactsRef.current.scrollHeight
+        })
+        
+        const imgData = canvas.toDataURL('image/png', 1.0)
+        const imgWidth = 210
+        const pageHeight = 295
+        const imgHeight = (canvas.height * imgWidth) / canvas.width
+        let heightLeft = imgHeight
+
+        let position = 0
+
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight)
+        heightLeft -= pageHeight
+
+        while (heightLeft >= 0) {
+          position = heightLeft - imgHeight
+          pdf.addPage()
+          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight)
+          heightLeft -= pageHeight
+        }
+      }
+
+      // Generate filename with timestamp
+      const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-')
+      pdf.save(`ai-policy-simulator-${timestamp}.pdf`)
+      
+    } catch (error) {
+      console.error('Error generating PDF:', error)
+      alert('Error generating PDF. Please try again.')
+    }
+  }
+
   return (
-      <div className="min-h-screen playful-bg">
+      <div ref={dashboardRef} className="min-h-screen playful-bg">
       {/* Header */}
       <div className="bg-white/80 backdrop-blur-sm shadow-lg border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-6 py-4">
@@ -3516,12 +3625,14 @@ function App() {
       />
       
       {/* Explore Impacts Modal */}
-      <ExploreImpactsModal
-        isOpen={showExploreImpacts}
-        onClose={() => setShowExploreImpacts(false)}
-        selectedPolicies={selectedPolicies}
-        policyIntensities={policyIntensities}
-      />
+      <div ref={exploreImpactsRef}>
+        <ExploreImpactsModal
+          isOpen={showExploreImpacts}
+          onClose={() => setShowExploreImpacts(false)}
+          selectedPolicies={selectedPolicies}
+          policyIntensities={policyIntensities}
+        />
+      </div>
       
       {/* Start Screen Modal */}
       <StartScreenModal
