@@ -2458,11 +2458,11 @@ const StartScreenModal = ({ isOpen, onClose, activeObjectiveTab, setActiveObject
                               </li>
                               <li className="flex items-start">
                                 <span className="font-semibold text-blue-600 mr-2">2.</span>
-                                <span>Watch the dashboard overview video</span>
+                                <span>Watch the dashboard overview <a href="https://youtu.be/Ofo5W4rFLPc" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline font-semibold">video</a></span>
                               </li>
                               <li className="flex items-start">
                                 <span className="font-semibold text-blue-600 mr-2">3.</span>
-                                <span>Read example lesson plan for reference</span>
+                                <span>Read <a href="https://drive.google.com/file/d/1p3PL0yrh3WgppUIoJVmLpQb3F4k8axw_/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline font-semibold">example lesson plan</a> for reference</span>
                               </li>
                             </ol>
                         </div>
