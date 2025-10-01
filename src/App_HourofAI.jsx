@@ -2464,7 +2464,7 @@ const StartScreenModal = ({ isOpen, onClose, activeObjectiveTab, setActiveObject
                               </li>
                               <li className="flex items-start">
                                 <span className="font-semibold text-blue-600 mr-2">3.</span>
-                                <span>Read <a href="https://drive.google.com/file/d/1p3PL0yrh3WgppUIoJVmLpQb3F4k8axw_/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline font-semibold">example lesson plan</a> for reference</span>
+                                <span>Read <a href="https://drive.google.com/file/d/1wuLz8OJooj7WE8rDbpqj8A5eP-vevC7p/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline font-semibold">example lesson plan</a> for reference</span>
                               </li>
                             </ol>
                         </div>
@@ -3031,7 +3031,8 @@ function App() {
 
   const downloadDashboardPDF = async () => {
     try {
-      const pdf = new jsPDF('p', 'mm', 'a4')
+      // Start with landscape orientation for dashboard
+      const pdf = new jsPDF('l', 'mm', 'a4') // landscape mode
       
       // Close any open dropdowns and modals before capture
       const dropdowns = document.querySelectorAll('[data-state="open"]')
@@ -3048,87 +3049,133 @@ function App() {
       // Wait for UI to settle
       await new Promise(resolve => setTimeout(resolve, 300))
       
-      // Capture the main dashboard container specifically
-      const dashboardContainer = document.querySelector('.min-h-screen.playful-bg')
-      if (dashboardContainer) {
-        // Scroll to top to ensure we capture everything
-        window.scrollTo(0, 0)
-        await new Promise(resolve => setTimeout(resolve, 100))
-        
-        const canvas = await html2canvas(dashboardContainer, {
-          scale: 0.7,
-          useCORS: true,
-          allowTaint: true,
-          backgroundColor: '#ffffff',
-          logging: false,
-          width: dashboardContainer.scrollWidth,
-          height: dashboardContainer.scrollHeight,
-          scrollX: 0,
-          scrollY: 0,
-          windowWidth: window.innerWidth,
-          windowHeight: window.innerHeight
-        })
-        
-        console.log('Canvas dimensions:', canvas.width, 'x', canvas.height)
-        
-        const imgData = canvas.toDataURL('image/png', 1.0)
-        const imgWidth = 210 // A4 width in mm
-        const pageHeight = 295 // A4 height in mm
-        const imgHeight = (canvas.height * imgWidth) / canvas.width
-        let heightLeft = imgHeight
+      // Capture the main dashboard container (landscape)
+      try {
+        const dashboardContainer = document.querySelector('.min-h-screen.playful-bg')
+        if (dashboardContainer) {
+          // Scroll to top to ensure we capture everything
+          window.scrollTo(0, 0)
+          await new Promise(resolve => setTimeout(resolve, 200))
+          
+          const canvas = await html2canvas(dashboardContainer, {
+            scale: 1.0, // Conservative scale to avoid memory issues
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: '#ffffff',
+            logging: false, // Disable logging to avoid console spam
+            width: dashboardContainer.scrollWidth,
+            height: dashboardContainer.scrollHeight,
+            scrollX: 0,
+            scrollY: 0,
+            windowWidth: window.innerWidth,
+            windowHeight: window.innerHeight,
+            foreignObjectRendering: false,
+            imageTimeout: 8000,
+            removeContainer: true,
+            scaleWindow: true
+          })
+          
+          // Validate canvas before proceeding
+          if (!canvas || canvas.width === 0 || canvas.height === 0) {
+            throw new Error('Failed to capture dashboard - canvas is empty')
+          }
+          
+          const imgData = canvas.toDataURL('image/jpeg', 0.8) // Use JPEG for better compatibility
+          const imgWidth = 297 // A4 landscape width in mm
+          const pageHeight = 210 // A4 landscape height in mm
+          const imgHeight = (canvas.height * imgWidth) / canvas.width
+          let heightLeft = imgHeight
 
-        let position = 0
+          let position = 0
 
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight)
-        heightLeft -= pageHeight
-
-        while (heightLeft >= 0) {
-          position = heightLeft - imgHeight
-          pdf.addPage()
-          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight)
+          pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight)
           heightLeft -= pageHeight
+
+          while (heightLeft >= 0) {
+            position = heightLeft - imgHeight
+            pdf.addPage('l') // Add landscape pages
+            pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight)
+            heightLeft -= pageHeight
+          }
+        } else {
+          throw new Error('Dashboard container not found')
         }
+      } catch (dashboardError) {
+        console.error('Dashboard capture failed:', dashboardError)
+        throw new Error(`Dashboard capture failed: ${dashboardError.message}`)
       }
 
-      // Add explore impacts if modal is open
-      if (showExploreImpacts && exploreImpactsRef.current) {
-        pdf.addPage()
-        const canvas = await html2canvas(exploreImpactsRef.current, {
-          scale: 0.8,
-          useCORS: true,
-          allowTaint: true,
-          backgroundColor: '#ffffff',
-          logging: false,
-          width: exploreImpactsRef.current.scrollWidth,
-          height: exploreImpactsRef.current.scrollHeight
-        })
-        
-        const imgData = canvas.toDataURL('image/png', 1.0)
-        const imgWidth = 210
-        const pageHeight = 295
-        const imgHeight = (canvas.height * imgWidth) / canvas.width
-        let heightLeft = imgHeight
+      // Always add explore impacts if we have enough policies
+      if (selectedPolicies.length >= 3) {
+        try {
+          // Temporarily open the modal for capture
+          const wasModalOpen = showExploreImpacts
+          if (!wasModalOpen) {
+            setShowExploreImpacts(true)
+            await new Promise(resolve => setTimeout(resolve, 1000)) // Wait longer for modal to fully render
+          }
+          
+          // Wait a bit more for the modal content to be fully rendered
+          await new Promise(resolve => setTimeout(resolve, 500))
+          
+          if (exploreImpactsRef.current) {
+            pdf.addPage('p') // Add portrait page for explore impacts
+            
+            const canvas = await html2canvas(exploreImpactsRef.current, {
+              scale: 1.0, // Conservative scale
+              useCORS: true,
+              allowTaint: true,
+              backgroundColor: '#ffffff',
+              logging: false, // Disable logging
+              width: exploreImpactsRef.current.scrollWidth,
+              height: exploreImpactsRef.current.scrollHeight,
+              foreignObjectRendering: false,
+              imageTimeout: 8000,
+              removeContainer: true,
+              scaleWindow: true
+            })
+            
+            // Validate canvas before proceeding
+            if (!canvas || canvas.width === 0 || canvas.height === 0) {
+              console.warn('Failed to capture explore impacts - canvas is empty')
+            } else {
+              const imgData = canvas.toDataURL('image/jpeg', 0.8) // Use JPEG for better compatibility
+              const imgWidth = 210 // A4 portrait width in mm
+              const pageHeight = 295 // A4 portrait height in mm
+              const imgHeight = (canvas.height * imgWidth) / canvas.width
+              let heightLeft = imgHeight
 
-        let position = 0
+              let position = 0
 
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight)
-        heightLeft -= pageHeight
+              pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight)
+              heightLeft -= pageHeight
 
-        while (heightLeft >= 0) {
-          position = heightLeft - imgHeight
-          pdf.addPage()
-          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight)
-          heightLeft -= pageHeight
+              while (heightLeft >= 0) {
+                position = heightLeft - imgHeight
+                pdf.addPage('p') // Add portrait pages
+                pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight)
+                heightLeft -= pageHeight
+              }
+            }
+          }
+          
+          // Restore modal state if it wasn't originally open
+          if (!wasModalOpen) {
+            setShowExploreImpacts(false)
+          }
+        } catch (exploreError) {
+          console.warn('Explore impacts capture failed:', exploreError)
+          // Continue with PDF generation even if explore impacts fails
         }
       }
 
       // Generate filename with timestamp
       const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-')
-      pdf.save(`ai-policy-simulator-${timestamp}.pdf`)
+      pdf.save(`ai-policy-simulator-comprehensive-${timestamp}.pdf`)
       
     } catch (error) {
       console.error('Error generating PDF:', error)
-      alert('Error generating PDF. Please try again.')
+      alert(`Error generating PDF: ${error.message}. Please try again.`)
     }
   }
 
