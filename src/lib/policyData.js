@@ -51,7 +51,7 @@ export const policyDefinitions = {
   AI_INTEGRATION: {
     id: 'AI_INTEGRATION',
     name: 'AI Integration',
-    description: 'Bringing AI tools directly into your daily learning experience. This policy determines how much AI becomes part of your regular classroom activities - from AI tutors that help with homework to smart writing assistants that improve your essays. It\'s like having a super-smart study buddy available 24/7, but only if your school decides to make it happen.',
+    description: 'Bringing AI tools directly into your daily learning experience. This policy determines how much AI becomes part of your regular classroom activities - from AI tutors that help with homework to smart writing assistants that improve your essays to automation tools that help teachers with workload management, like developing cool new lesson plans. It\'s like having a super-smart study buddy available 24/7 or a teaching assistant, but only if your school decides to make it happen.',
     stakeholder: 'School Principal'
   }
 };
