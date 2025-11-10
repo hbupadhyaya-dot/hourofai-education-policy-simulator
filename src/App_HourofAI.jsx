@@ -3183,7 +3183,7 @@ function App() {
   return (
     <div ref={dashboardRef} className="min-h-screen playful-bg">
       <img
-        src="https://studio.code.org/api/hour/begin_<aipolicyleaders>.png"
+        src="https://studio.code.org/api/hour/begin_aipolicyleaders.png"
         alt=""
         style={{ position: 'absolute', width: 1, height: 1, border: 0, clip: 'rect(0 0 0 0)' }}
         aria-hidden="true"
