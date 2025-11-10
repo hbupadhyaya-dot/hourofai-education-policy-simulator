@@ -3181,7 +3181,13 @@ function App() {
   }
 
   return (
-      <div ref={dashboardRef} className="min-h-screen playful-bg">
+    <div ref={dashboardRef} className="min-h-screen playful-bg">
+      <img
+        src="https://studio.code.org/api/hour/begin_<aipolicyleaders>.png"
+        alt=""
+        style={{ position: 'absolute', width: 1, height: 1, border: 0, clip: 'rect(0 0 0 0)' }}
+        aria-hidden="true"
+      />
       {/* Header */}
       <div className="bg-white/80 backdrop-blur-sm shadow-lg border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-6 py-4">
